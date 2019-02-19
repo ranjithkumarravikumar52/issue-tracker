@@ -1,0 +1,49 @@
+# Maven work directory
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Build output directories
+/target
+*/target
+*/**/target
+/build
+*/build
+testdb
+lib
+
+# IntelliJ specific files/directories
+out
+.idea
+*.ipr
+*.iws
+*.iml
+atlassian-ide-plugin.xml
+
+
+# Miscellaneous
+*.log
+.clover
+.DS_Store
+
+# JBoss Transactions
+ObjectStore
+
+# Profiler and heap dumps
+*.jps
+*.hprof
+/.nb-gradle/
+
+# Additional databases used in local envs
+databases/mysql/
+
+# Vim
+*.swp
+*.swo
