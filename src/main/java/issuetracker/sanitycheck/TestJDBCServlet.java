@@ -10,21 +10,32 @@ import java.sql.SQLException;
 @WebServlet("/TestJDBCServlet")
 public class TestJDBCServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        String user = "springstudent";
-        String pass = "springstudent";
+        String user = "issuetrackeradmin";
+        String pass = "password123";
 
         String jdbcUrl = "jdbc:mysql://localhost:3306/issue-tracker?useSSL=false";
-        String driver = "com.mysql.jdbc.Driver";
+        String driver = "com.mysql.cj.jdbc.Driver";
+	    PrintWriter out = response.getWriter();
+	    Connection myConnection = null;
 
         //connection to database
         try{
-            PrintWriter out = response.getWriter();
             out.println("Connection to database: "+jdbcUrl);
             Class.forName(driver);
-            Connection myConnection = DriverManager.getConnection(jdbcUrl, user, pass);
+            myConnection = DriverManager.getConnection(jdbcUrl, user, pass);
             out.println("Connection successful");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            out.println(e.getMessage());
+        }finally {
+        	if(myConnection != null){
+		        try {
+			        myConnection.close();
+		        } catch (SQLException e) {
+			        e.printStackTrace();
+			        out.println(e.getMessage());
+		        }
+	        }
         }
     }
 }
