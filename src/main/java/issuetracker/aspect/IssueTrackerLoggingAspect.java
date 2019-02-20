@@ -13,61 +13,68 @@ import java.util.logging.Logger;
 @Aspect
 @Component
 public class IssueTrackerLoggingAspect {
-    //setup logger
-    private Logger logger = Logger.getLogger(getClass().getName());
 
-    /**
-     * Pointcut declarations for controller, service, DAO
-     */
+	private Logger logger = Logger.getLogger(getClass().getName());
 
-
-    //controller
-    @Pointcut("execution(* issuetracker.controller.*.*(..))")
-    private void forControllerPackage() {
-    }
-
-    //service
-    @Pointcut("execution(* issuetracker.service.*.*(..))")
-    private void forServicePackage() {
-    }
-
-    //DAO
-    //service
-    @Pointcut("execution(* issuetracker.dao.*.*(..))")
-    private void forDAOPackage() {
-    }
+	/**
+	 * Pointcut declarations for controller, service, DAO
+	 */
 
 
-    //special combine
-    @Pointcut("forControllerPackage() || forServicePackage() || forDAOPackage()")
-    private void forAppFlow() {
-    }
+	/**
+	 * for controller
+	 */
+	@Pointcut("execution(* issuetracker.controller.*.*(..))")
+	private void forControllerPackage() {
+	}
 
-    //add @Before
-    @Before("forAppFlow()")
-    public void before(JoinPoint joinPoint) {
-        //display method we are calling
-        String methodSignature = joinPoint.getSignature().toShortString();
-        logger.info("====> in @Before: calling method: " + methodSignature);
+	/**
+	 * for classes in service
+	 */
+	@Pointcut("execution(* issuetracker.service.*.*(..))")
+	private void forServicePackage() {
+	}
 
-        //display the arguments to the method
-        Object[] args = joinPoint.getArgs();
-        for (Object arg : args) {
-            logger.info("====> arguments: " + arg.toString());
-        }
+	/**
+	 * for classes in dao
+	 */
+	@Pointcut("execution(* issuetracker.dao.*.*(..))")
+	private void forDAOPackage() {
+	}
 
-    }
 
-    //add @AfterReturning
-    @AfterReturning(pointcut = "forAppFlow()", returning = "result")
-    public void afterReturning(JoinPoint joinPoint, Object result) {
-        //display method we are returning from
-        String methodSignature = joinPoint.getSignature().toShortString();
-        logger.info("====> in @AfterReturning: from method: " + methodSignature);
+	/**
+	 * for classes in controller, service and dao
+	 */
+	@Pointcut("forControllerPackage() || forServicePackage() || forDAOPackage()")
+	private void forAppFlow() {
+	}
 
-        //display data we are returning
-        logger.info( "=====> result: " + result);
-    }
+	//add @Before
+	@Before("forAppFlow()")
+	public void before(JoinPoint joinPoint) {
+		//display method we are calling
+		String methodSignature = joinPoint.getSignature().toShortString();
+		logger.info("====> in @Before: calling method: " + methodSignature);
+
+		//display the arguments to the method
+		Object[] args = joinPoint.getArgs();
+		for (Object arg : args) {
+			logger.info("====> arguments: " + arg.toString());
+		}
+
+	}
+
+	//add @AfterReturning
+	@AfterReturning(pointcut = "forAppFlow()", returning = "result")
+	public void afterReturning(JoinPoint joinPoint, Object result) {
+		//display method we are returning from
+		String methodSignature = joinPoint.getSignature().toShortString();
+		logger.info("====> in @AfterReturning: from method: " + methodSignature);
+
+		//display data we are returning
+		logger.info("=====> result: " + result);
+	}
 
 
 }
