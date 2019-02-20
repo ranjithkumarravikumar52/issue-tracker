@@ -55,12 +55,12 @@ public class IssueTrackerLoggingAspect {
 	public void before(JoinPoint joinPoint) {
 		//display method we are calling
 		String methodSignature = joinPoint.getSignature().toShortString();
-		logger.info("====> in @Before: calling method: " + methodSignature);
+		logger.info("====> Calling method: " + methodSignature);
 
 		//display the arguments to the method
 		Object[] args = joinPoint.getArgs();
 		for (Object arg : args) {
-			logger.info("====> arguments: " + arg.toString());
+			logger.info("====> Arguments: " + arg.toString());
 		}
 
 	}
@@ -70,10 +70,10 @@ public class IssueTrackerLoggingAspect {
 	public void afterReturning(JoinPoint joinPoint, Object result) {
 		//display method we are returning from
 		String methodSignature = joinPoint.getSignature().toShortString();
-		logger.info("====> in @AfterReturning: from method: " + methodSignature);
+		logger.info("====> Returning from method: " + methodSignature);
 
 		//display data we are returning
-		logger.info("=====> result: " + result);
+		logger.info("=====> Resultant data from returning method: " + result);
 	}
 
 
