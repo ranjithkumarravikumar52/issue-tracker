@@ -4,26 +4,32 @@
 <html>
     <head>
         <title>List users</title>
+        <%@ include file="sourcefiles.jsp" %>
     </head>
     <body>
-        <table>
-            <tr>
-                <th>id</th>
-                <th>user_name</th>
-                <th>password</th>
-                <th>email</th>
-                <th>user_role</th>
-            </tr>
-            <c:forEach var="user" items="${users}">
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.userName}</td>
-                    <td>${user.password}</td>
-                    <td>${user.email}</td>
-                    <td>${user.userRole}</td>
-                </tr>
-            </c:forEach>
-        </table>
-
+        <div class="container">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>user_name</th>
+                        <th>password</th>
+                        <th>email</th>
+                        <th>user_role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.userName}</td>
+                            <td>${user.password}</td>
+                            <td>${user.email}</td>
+                            <td>${user.userRole}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
