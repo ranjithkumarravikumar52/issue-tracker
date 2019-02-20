@@ -70,10 +70,10 @@ public class IssueTrackerLoggingAspect {
 	public void afterReturning(JoinPoint joinPoint, Object result) {
 		//display method we are returning from
 		String methodSignature = joinPoint.getSignature().toShortString();
-		logger.info("====> Returning from method: " + methodSignature);
+		logger.info("<==== Returning from method: " + methodSignature);
 
 		//display data we are returning
-		logger.info("=====> Resultant data from returning method: " + result);
+		logger.info("<===== Resultant data from returning method: " + result);
 	}
 
 
