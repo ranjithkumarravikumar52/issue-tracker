@@ -13,8 +13,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("issuetracker")
 public class DemoAppConfig implements WebMvcConfigurer {
 
-
-	// define a bean for ViewResolver
+	/**
+	 * Define a bean for ViewResolver
+	 */
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
