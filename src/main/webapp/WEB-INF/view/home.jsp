@@ -1,17 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Ranjith
-  Date: 2/19/2019
-  Time: 1:25 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
         <title>Issue Tracker</title>
+        <%@ include file="sourcefiles.jsp" %>
     </head>
     <body>
-        <p>Hello</p>
-        <a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a>
+      <div class="container">
+          <a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a>
+          <br>
+          <a href="${pageContext.request.contextPath}/user/listusers">List Users</a>
+      </div>
     </body>
 </html>
