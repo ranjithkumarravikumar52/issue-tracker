@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Home</title>
+        <title>Issue Tracker</title>
     </head>
     <body>
         <p>Hello</p>
+        <a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a>
     </body>
 </html>
