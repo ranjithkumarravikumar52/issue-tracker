@@ -21,6 +21,7 @@
 		<springframework.version>5.1.5.RELEASE</springframework.version>
 		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 		<aspectjweaver.version>1.9.2</aspectjweaver.version>
+		<mysql-connector-java.version>8.0.11</mysql-connector-java.version>
 
 
 	</properties>
@@ -58,6 +59,14 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectjweaver.version}</version>
 		</dependency>
+
+		<!-- mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+
 	</dependencies>
 
 
