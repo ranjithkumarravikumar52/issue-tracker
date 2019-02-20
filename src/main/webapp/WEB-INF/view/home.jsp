@@ -13,5 +13,6 @@
     <body>
         <p>Hello</p>
         <a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a>
+        <a href="${pageContext.request.contextPath}/user/listusers">List Users</a>
     </body>
 </html>
