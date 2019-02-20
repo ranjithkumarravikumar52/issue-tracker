@@ -67,6 +67,12 @@
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
 
+		<!-- jsp -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 	</dependencies>
 
 
