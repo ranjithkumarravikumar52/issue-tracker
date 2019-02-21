@@ -31,6 +31,7 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Home</a>
         </div>
     </body>
 </html>
