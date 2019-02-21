@@ -11,6 +11,7 @@
                 <div class="col">
                     <form:form action="${pageContext.request.contextPath}/user/addUser" modelAttribute="user"
                                method="POST">
+                        <form:hidden path="id"/>
                         <div class="form-group">
                             <label>Username*: </label>
                             <form:input path="userName" type="text" class="form-control"/>
