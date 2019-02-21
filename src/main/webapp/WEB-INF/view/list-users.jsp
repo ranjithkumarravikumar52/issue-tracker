@@ -16,16 +16,22 @@
                         <th>password</th>
                         <th>email</th>
                         <th>user_role</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="user" items="${users}">
+                        <%--update link--%>
+                        <c:url var="updateLink" value="/user/showUpdateForm">
+                            <c:param name="userId" value="${user.id}"/>
+                        </c:url>
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.userName}</td>
                             <td>${user.password}</td>
                             <td>${user.email}</td>
                             <td>${user.userRole}</td>
+                            <td><a href="${updateLink}" class="btn btn-sm btn-info">Update</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>
