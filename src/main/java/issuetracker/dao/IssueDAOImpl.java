@@ -35,6 +35,7 @@ public class IssueDAOImpl implements IssueDAO {
 	public void addIssue(Issue issue) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		//testing with user id
+		//TODO later to replaced with embedded link
 		User user = currentSession.get(User.class, 1);
 		//set the other Fk to null
 		issue.setPostedBy(user);
