@@ -1,6 +1,7 @@
 package issuetracker.dao;
 
 import issuetracker.entity.Issue;
+import issuetracker.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,5 +29,21 @@ public class IssueDAOImpl implements IssueDAO {
 
 		//return list
 		return resultList;
+	}
+
+	@Override
+	public void addIssue(Issue issue) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		//testing with user id
+		User user = currentSession.get(User.class, 1);
+		//set the other Fk to null
+		issue.setPostedBy(user);
+		issue.setOpenedBy(null);
+		issue.setFixedBy(null);
+		issue.setClosedBy(null);
+		//add it to the user
+		user.addIssueToPostedByList(issue);
+		//save the issue
+		currentSession.save(issue);
 	}
 }

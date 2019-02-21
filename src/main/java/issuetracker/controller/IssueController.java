@@ -32,6 +32,7 @@ public class IssueController {
 	}
 	@PostMapping("/addIssue")
 	public String addIssue(@ModelAttribute("issue") Issue issue){
+		issueService.addIssue(issue);
 		return "redirect:/issue/issueList";
 	}
 }
