@@ -6,9 +6,11 @@
     </head>
     <body>
       <div class="container">
-          <a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a>
-          <br>
-          <a href="${pageContext.request.contextPath}/user/listusers">List Users</a>
+         <div class ="row">
+             <div class="col"><a href="${pageContext.request.contextPath}/TestJDBCServlet">Test DB Connection</a></div>
+             <div class="col"><a href="${pageContext.request.contextPath}/user/listusers">List Users</a></div>
+             <div class="col"><a href="${pageContext.request.contextPath}/issue/issueList">List Issues</a></div>
+         </div>
       </div>
     </body>
 </html>
