@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IssueDAO {
 	List<Issue> getIssues();
+
+	void addIssue(Issue issue);
 }

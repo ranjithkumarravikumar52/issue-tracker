@@ -19,4 +19,10 @@ public class IssueServiceImpl implements IssueService{
 	public List<Issue> getIssueList() {
 		return issueDAO.getIssues();
 	}
+
+	@Override
+	@Transactional
+	public void addIssue(Issue issue) {
+		issueDAO.addIssue(issue);
+	}
 }

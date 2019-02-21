@@ -23,7 +23,7 @@ public class Issue {
 	private String issueDescription;
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinColumn(name = "posted_by", insertable = false, updatable = false)
+	@JoinColumn(name = "posted_by", nullable = false)
 	private User postedBy;
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -43,8 +43,7 @@ public class Issue {
 	 * posted_by.addIssueToPostedByList(issue)
 	 * session.save(issue)
 	 */
-	public Issue(String issueDescription, User postedBy) {
+	public Issue(String issueDescription) {
 		this.issueDescription = issueDescription;
-		this.postedBy = postedBy;
 	}
 }
