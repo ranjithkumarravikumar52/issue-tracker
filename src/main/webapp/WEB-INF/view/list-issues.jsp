@@ -7,14 +7,15 @@
     </head>
     <body>
         <div class="container">
-            <table class="table">
-                <thead class="thead-light">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
                     <tr>
-                        <th>id</th>
-                        <th>user_name</th>
-                        <th>password</th>
-                        <th>email</th>
-                        <th>user_role</th>
+                        <th>Issue Id</th>
+                        <th>Issue Description</th>
+                        <th>Posted By</th>
+                        <th>Opened By</th>
+                        <th>Fixed By</th>
+                        <th>Closed By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,10 +23,10 @@
                         <tr>
                             <td>${issue.id}</td>
                             <td>${issue.issueDescription}</td>
-                            <td>${issue.postedBy.userName}</td>
-                            <td>${issue.openedBy.userName}</td>
-                            <td>${issue.fixedBy.userName}</td>
-                            <td>${issue.closedBy.userName}</td>
+                            <td>${issue.postedBy.userName == null ? "-" : issue.postedBy.userName}</td>
+                            <td>${issue.openedBy.userName == null ? "-" : issue.openedBy.userName}</td>
+                            <td>${issue.fixedBy.userName == null ? "-" : issue.fixedBy.userName}</td>
+                            <td>${issue.closedBy.userName == null ? "-" : issue.closedBy.userName}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
