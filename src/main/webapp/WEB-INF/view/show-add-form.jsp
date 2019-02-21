@@ -1,11 +1,4 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Ranjith
-  Date: 2/20/2019
-  Time: 10:24 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -18,28 +11,40 @@
                 <div class="col">
                     <form:form action="${pageContext.request.contextPath}/user/addUser" modelAttribute="user"
                                method="POST">
-                        <div class="form-group"><label>Username: </label> <form:input path="userName" type="text" class="form-control"/><br></div>
-                        <div class="form-group"><label>Password: </label> <form:input path="password" type="text" class="form-control"/><br></div>
-                        <div class="form-group"><label>Email: </label> <form:input path="email" type="email" class="form-control"/><br></div>
+                        <div class="form-group">
+                            <label>Username*: </label>
+                            <form:input path="userName" type="text" class="form-control"/>
+                            <form:errors path="userName"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Password*: </label>
+                            <form:input path="password" type="text" class="form-control"/>
+                            <form:errors path="password"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Email*: </label>
+                            <form:input path="email" type="email" class="form-control"/>
+                            <form:errors path="email"/>
+                        </div>
                         <%--radio boxes--%>
-                        <label>Role: </label>
+                        <label>Role*: </label>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole"
-                                                  value="developer"
-                                                  class="form-check-input"/>Developer</label>
+                                <form:radiobutton path="userRole" value="developer" class="form-check-input" />Developer
+                                <form:errors path="userRole"/>
+                            </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole"
-                                                  value="tester"
-                                                  class="form-check-input"/>Tester</label>
+                                <form:radiobutton path="userRole" value="tester" class="form-check-input"/>Tester
+                                <form:errors path="userRole"/>
+                            </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole"
-                                                  value="admin"
-                                                  class="form-check-input"/>Admin</label>
+                                <form:radiobutton path="userRole" value="admin" class="form-check-input"/>Admin
+                                <form:errors path="userRole"/>
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </form:form>
