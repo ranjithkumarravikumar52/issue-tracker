@@ -32,6 +32,7 @@
                 </tbody>
             </table>
             <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Home</a>
+            <a href="${pageContext.request.contextPath}/issue/showAddForm" class="btn btn-warning">Add New Issue</a>
         </div>
     </body>
 </html>
