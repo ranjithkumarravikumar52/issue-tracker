@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -28,5 +29,10 @@ public class UserController {
 		User user = new User();
 		model.addAttribute("user", user);
 		return "show-add-form";
+	}
+	@PostMapping("/addUser")
+	public String addUser(@ModelAttribute("user") User user){
+		userService.addUser(user);
+		return "redirect:/user/listusers";
 	}
 }
