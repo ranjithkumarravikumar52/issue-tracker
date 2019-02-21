@@ -22,4 +22,10 @@ public class IssueController {
 		model.addAttribute("issues", issueList);
 		return "list-issues";
 	}
+	@RequestMapping("/showAddForm")
+	public String showAddForm(Model model){
+		Issue issue = new Issue();
+		model.addAttribute("issue", issue);
+		return "show-add-issue-form";
+	}
 }

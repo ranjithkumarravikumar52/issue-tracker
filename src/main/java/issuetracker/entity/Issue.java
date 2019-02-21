@@ -38,5 +38,13 @@ public class Issue {
 	@JoinColumn(name = "closed_by")
 	private User closedBy;
 
-
+	/**
+	 * Issue issue = new Issue(issue_description, posted_by)
+	 * posted_by.addIssueToPostedByList(issue)
+	 * session.save(issue)
+	 */
+	public Issue(String issueDescription, User postedBy) {
+		this.issueDescription = issueDescription;
+		this.postedBy = postedBy;
+	}
 }
