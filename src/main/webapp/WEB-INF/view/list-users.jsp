@@ -30,6 +30,9 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <a href="${pageContext.request.contextPath}/user/showAddForm" class="btn btn-primary">Add New User</a>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Home</a>
+
         </div>
     </body>
 </html>

@@ -29,4 +29,13 @@ public class UserDAOImpl implements UserDAO {
 		// return the results
 		return users;
 	}
+
+
+	@Override
+	public void addUser(User user) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		// save
+		currentSession.save(user);
+	}
 }
