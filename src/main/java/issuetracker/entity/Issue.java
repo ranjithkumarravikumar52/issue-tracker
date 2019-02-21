@@ -43,8 +43,7 @@ public class Issue {
 	 * posted_by.addIssueToPostedByList(issue)
 	 * session.save(issue)
 	 */
-	public Issue(String issueDescription, User postedBy) {
+	public Issue(String issueDescription) {
 		this.issueDescription = issueDescription;
-		this.postedBy = postedBy;
 	}
 }

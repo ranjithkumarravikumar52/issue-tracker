@@ -16,11 +16,11 @@
                             <form:textarea class = "textarea form-control" path="issueDescription" rows="5" />
                             <form:errors path="issueDescription"/>
                         </div>
-                        <div class="form-group">
+                        <%--<div class="form-group">
                             <label>Posted by*: </label>
                             <form:input path="postedBy" type="text" class="form-control"/>
                             <form:errors path="postedBy"/>
-                        </div>
+                        </div>--%>
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </form:form>
                 </div>
