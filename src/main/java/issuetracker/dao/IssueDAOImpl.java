@@ -47,6 +47,12 @@ public class IssueDAOImpl implements IssueDAO {
 		user.addIssueToPostedByList(issue);
 
 		//save the issue
-		currentSession.save(issue);
+		currentSession.saveOrUpdate(issue);
+	}
+
+	@Override
+	public Issue getIssue(int issueId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		return currentSession.get(Issue.class, issueId);
 	}
 }

@@ -11,6 +11,8 @@
                 <div class="col">
                     <form:form action="${pageContext.request.contextPath}/issue/addIssue" modelAttribute="issue"
                                method="POST">
+                        <form:hidden path="id"/>
+
                         <div class="form-group">
                             <label>Issue description*: </label>
                             <form:textarea class = "textarea form-control" path="issueDescription" rows="5" />

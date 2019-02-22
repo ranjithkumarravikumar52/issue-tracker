@@ -8,4 +8,6 @@ public interface IssueDAO {
 	List<Issue> getIssues();
 
 	void addIssue(Issue issue);
+
+	Issue getIssue(int issueId);
 }

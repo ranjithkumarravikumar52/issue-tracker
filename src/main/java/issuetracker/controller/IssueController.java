@@ -5,9 +5,7 @@ import issuetracker.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +38,12 @@ public class IssueController {
 	public String addIssue(@ModelAttribute("issue") Issue issue){
 		issueService.addIssue(issue);
 		return "redirect:/issue/issueList";
+	}
+
+	@GetMapping("/showUpdateForm")
+	public String showUpdateForm(@RequestParam("issueId") int issueId, Model model){
+		Issue issue = issueService.getIssue(issueId);
+		model.addAttribute(issue);
+		return "show-add-issue-form";
 	}
 }

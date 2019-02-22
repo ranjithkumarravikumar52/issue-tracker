@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     <c:forEach var="issue" items="${issues}">
-                        <c:url var="updateIssueLink" value="/issue/showAddForm">
+                        <c:url var="updateIssueLink" value="/issue/showUpdateForm">
                             <c:param name="issueId" value="${issue.id}"/>
                             <c:param name="postedByUserId" value="${issue.postedBy.id}"/>
                         </c:url>
