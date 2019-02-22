@@ -10,4 +10,6 @@ public interface IssueDAO {
 	void addIssue(Issue issue);
 
 	Issue getIssue(int issueId);
+
+	void deleteIssue(int issueId);
 }

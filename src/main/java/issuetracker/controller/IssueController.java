@@ -47,6 +47,7 @@ public class IssueController {
 
 	@GetMapping("/delete")
 	public String deleteIssue(@RequestParam("issueId") int issueId){
+		issueService.deleteIssue(issueId);
 		return "redirect:/issue/issueList";
 	}
 }
