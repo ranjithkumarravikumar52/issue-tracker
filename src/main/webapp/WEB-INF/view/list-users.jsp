@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="container">
-            <table class="table">
+            <table class="table table-striped table-hover table-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th>id</th>
@@ -16,7 +16,7 @@
                         <th>password</th>
                         <th>email</th>
                         <th>user_role</th>
-                        <th>action</th>
+                        <th class="text-center">action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,7 @@
                             <td>${user.email}</td>
                             <td>${user.userRole}</td>
 
-                            <td>
+                            <td class="text-center">
                                 <div class="btn-group">
                                     <a href="${updateLink}" class="btn btn-sm btn-info">Update</a>
                                     <a href="${deleteLink}" class="btn btn-sm btn-danger">Delete</a>
@@ -50,8 +50,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <a href="${pageContext.request.contextPath}/user/showAddForm" class="btn btn-primary">Add New User</a>
-            <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Home</a>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-primary btn-sm">Home</a>
+            <a href="${pageContext.request.contextPath}/user/showAddForm" class="btn btn-warning btn-sm">Add New User</a>
 
         </div>
     </body>

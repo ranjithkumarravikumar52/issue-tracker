@@ -31,4 +31,10 @@ public class IssueServiceImpl implements IssueService{
 	public Issue getIssue(int issueId) {
 		return issueDAO.getIssue(issueId);
 	}
+
+	@Override
+	@Transactional
+	public void deleteIssue(int issueId) {
+		issueDAO.deleteIssue(issueId);
+	}
 }

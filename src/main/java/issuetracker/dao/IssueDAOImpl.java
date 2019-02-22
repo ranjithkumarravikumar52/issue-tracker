@@ -76,4 +76,11 @@ public class IssueDAOImpl implements IssueDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		return currentSession.get(Issue.class, issueId);
 	}
+
+	@Override
+	public void deleteIssue(int issueId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Issue issue = currentSession.get(Issue.class, issueId);
+		currentSession.remove(issue);
+	}
 }

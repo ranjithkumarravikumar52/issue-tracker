@@ -23,7 +23,9 @@
                     <c:forEach var="issue" items="${issues}">
                         <c:url var="updateIssueLink" value="/issue/showUpdateForm">
                             <c:param name="issueId" value="${issue.id}"/>
-                            <c:param name="postedByUserId" value="${issue.postedBy.id}"/>
+                        </c:url>
+                        <c:url var="deleteIssueLink" value="/issue/delete">
+                            <c:param name="issueId" value="${issue.id}"/>
                         </c:url>
                         <tr>
                             <td>${issue.id}</td>
@@ -32,7 +34,12 @@
                             <td>${issue.openedBy.userName == null ? "-" : issue.openedBy.userName}</td>
                             <td>${issue.fixedBy.userName == null ? "-" : issue.fixedBy.userName}</td>
                             <td>${issue.closedBy.userName == null ? "-" : issue.closedBy.userName}</td>
-                            <td><a href="${updateIssueLink}" class="btn btn-sm btn-dark">Update</a></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="${updateIssueLink}" class="btn btn-sm btn-dark">Update</a>
+                                    <a href="${deleteIssueLink}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

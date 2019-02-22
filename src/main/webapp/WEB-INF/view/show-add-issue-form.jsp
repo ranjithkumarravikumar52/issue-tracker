@@ -43,7 +43,7 @@
                             <form:errors path="closedBy.id"/>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">New Issue</button>
+                        <button type="submit" class="btn btn-primary">Save Issue</button>
                     </form:form>
                 </div>
             </div>
