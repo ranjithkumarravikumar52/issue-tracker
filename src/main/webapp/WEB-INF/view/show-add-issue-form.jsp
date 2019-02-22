@@ -16,12 +16,14 @@
                             <form:textarea class = "textarea form-control" path="issueDescription" rows="5" />
                             <form:errors path="issueDescription"/>
                         </div>
-                        <%--<div class="form-group">
-                            <label>Posted by*: </label>
-                            <form:input path="postedBy" type="text" class="form-control"/>
-                            <form:errors path="postedBy"/>
-                        </div>--%>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+
+                        <div class="form-group">
+                            <label>Posted by Id:*: </label>
+                            <form:input class = "form-control" path="postedBy.id" />
+                            <form:errors path="issueDescription"/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">New Issue</button>
                     </form:form>
                 </div>
             </div>

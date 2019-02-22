@@ -24,6 +24,12 @@ public class IssueController {
 		model.addAttribute("issues", issueList);
 		return "list-issues";
 	}
+
+	/**
+	 * For adding new issue
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/showAddForm")
 	public String showAddForm(Model model){
 		Issue issue = new Issue();

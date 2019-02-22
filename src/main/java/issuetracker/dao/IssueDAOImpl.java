@@ -34,16 +34,18 @@ public class IssueDAOImpl implements IssueDAO {
 	@Override
 	public void addIssue(Issue issue) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		//testing with user id
-		//TODO later to replaced with embedded link
-		User user = currentSession.get(User.class, 1);
+
+		User user = currentSession.get(User.class, issue.getPostedBy().getId());
+
 		//set the other Fk to null
 		issue.setPostedBy(user);
 		issue.setOpenedBy(null);
 		issue.setFixedBy(null);
 		issue.setClosedBy(null);
+
 		//add it to the user
 		user.addIssueToPostedByList(issue);
+
 		//save the issue
 		currentSession.save(issue);
 	}
