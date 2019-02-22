@@ -44,4 +44,9 @@ public class IssueController {
 		model.addAttribute(issue);
 		return "show-add-issue-form";
 	}
+
+	@GetMapping("/delete")
+	public String deleteIssue(@RequestParam("issueId") int issueId){
+		return "redirect:/issue/issueList";
+	}
 }
