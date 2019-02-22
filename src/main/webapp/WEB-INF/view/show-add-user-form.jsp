@@ -29,6 +29,7 @@
                         </div>
                         <%--radio boxes--%>
                         <label>Role*: </label>
+                        <br>
                         <div class="form-check-inline">
                             <label class="form-check-label">
                                 <form:radiobutton path="userRole" value="developer" class="form-check-input" />Developer
@@ -47,7 +48,9 @@
                                 <form:errors path="userRole"/>
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Save User</button>
                     </form:form>
                 </div>
             </div>
