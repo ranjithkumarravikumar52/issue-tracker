@@ -50,8 +50,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <a href="${pageContext.request.contextPath}/user/showAddForm" class="btn btn-primary">Add New User</a>
-            <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Home</a>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-primary btn-sm">Home</a>
+            <a href="${pageContext.request.contextPath}/user/showAddForm" class="btn btn-warning btn-sm">Add New User</a>
 
         </div>
     </body>
