@@ -45,4 +45,9 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "show-add-user-form";
 	}
+	@GetMapping("/delete")
+	public String deleteUser(@RequestParam("userId") int userId){
+		//TODO delete user based on userId
+		return "redirect:/user/listusers";
+	}
 }

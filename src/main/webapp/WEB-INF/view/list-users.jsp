@@ -25,13 +25,27 @@
                         <c:url var="updateLink" value="/user/showUpdateForm">
                             <c:param name="userId" value="${user.id}"/>
                         </c:url>
+
+                        <%--delete link--%>
+                        <c:url var="deleteLink" value="/user/delete">
+                            <c:param name="userId" value="${user.id}"/>
+                        </c:url>
+
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.userName}</td>
                             <td>${user.password}</td>
                             <td>${user.email}</td>
                             <td>${user.userRole}</td>
-                            <td><a href="${updateLink}" class="btn btn-sm btn-info">Update</a></td>
+
+                            <td>
+                                <div class="btn-group">
+                                    <a href="${updateLink}" class="btn btn-sm btn-info">Update</a>
+                                    <a href="${deleteLink}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            </td>
+                            <%--<td><a href="${updateLink}" class="btn btn-sm btn-info">Update</a>--%>
+                            <%--<a href="${deleteLink}" class="btn btn-sm btn-danger">Update</a></td>--%>
                         </tr>
                     </c:forEach>
                 </tbody>
