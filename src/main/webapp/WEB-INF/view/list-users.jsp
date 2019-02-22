@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="container">
-            <table class="table">
+            <table class="table table-striped table-hover table-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th>id</th>
@@ -16,7 +16,7 @@
                         <th>password</th>
                         <th>email</th>
                         <th>user_role</th>
-                        <th>action</th>
+                        <th class="text-center">action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,7 @@
                             <td>${user.email}</td>
                             <td>${user.userRole}</td>
 
-                            <td>
+                            <td class="text-center">
                                 <div class="btn-group">
                                     <a href="${updateLink}" class="btn btn-sm btn-info">Update</a>
                                     <a href="${deleteLink}" class="btn btn-sm btn-danger">Delete</a>
