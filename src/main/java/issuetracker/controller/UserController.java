@@ -47,7 +47,7 @@ public class UserController {
 	}
 	@GetMapping("/delete")
 	public String deleteUser(@RequestParam("userId") int userId){
-		//TODO delete user based on userId
+		userService.delete(userId);
 		return "redirect:/user/listusers";
 	}
 }
