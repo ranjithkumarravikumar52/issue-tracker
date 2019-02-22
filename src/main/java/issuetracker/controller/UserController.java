@@ -28,12 +28,12 @@ public class UserController {
 	public String showAddForm(Model model){
 		User user = new User();
 		model.addAttribute("user", user);
-		return "show-add-form";
+		return "show-add-user-form";
 	}
 	@PostMapping("/addUser")
 	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
-			return "show-add-form";
+			return "show-add-user-form";
 		}else{
 			userService.addUser(user);
 			return "redirect:/user/listusers";
@@ -43,6 +43,6 @@ public class UserController {
 	public String showUpdateForm(@RequestParam("userId") int userId, Model model){
 		User user = userService.getUser(userId);
 		model.addAttribute("user", user);
-		return "show-add-form";
+		return "show-add-user-form";
 	}
 }

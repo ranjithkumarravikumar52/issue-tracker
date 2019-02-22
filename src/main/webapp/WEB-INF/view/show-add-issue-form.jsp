@@ -22,7 +22,13 @@
                         <div class="form-group">
                             <label>Posted by Id:*: </label>
                             <form:input class = "form-control" path="postedBy.id" />
-                            <form:errors path="issueDescription"/>
+                            <form:errors path="postedBy.id"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Opened by Id:*: </label>
+                            <form:input class = "form-control" path="openedBy.id" />
+                            <form:errors path="openedBy.id"/>
                         </div>
 
                         <button type="submit" class="btn btn-primary">New Issue</button>

@@ -13,7 +13,7 @@
                         <th>Issue Id</th>
                         <th>Issue Description</th>
                         <th>Posted By</th>
-                        <%--<th>Opened By</th>--%>
+                        <th>Opened By</th>
                         <%--<th>Fixed By</th>--%>
                         <%--<th>Closed By</th>--%>
                         <th>Action</th>
@@ -29,7 +29,7 @@
                             <td>${issue.id}</td>
                             <td>${issue.issueDescription}</td>
                             <td>${issue.postedBy.userName == null ? "-" : issue.postedBy.userName}</td>
-                            <%--<td>${issue.openedBy.userName == null ? "-" : issue.openedBy.userName}</td>--%>
+                            <td>${issue.openedBy.userName == null ? "-" : issue.openedBy.userName}</td>
                             <%--<td>${issue.fixedBy.userName == null ? "-" : issue.fixedBy.userName}</td>--%>
                             <%--<td>${issue.closedBy.userName == null ? "-" : issue.closedBy.userName}</td>--%>
                             <td><a href="${updateIssueLink}" class="btn btn-sm btn-dark">Update</a></td>

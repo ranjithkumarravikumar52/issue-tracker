@@ -65,6 +65,6 @@ public class User {
 			postedByIssuesList = new ArrayList<>();
 		}
 		postedByIssuesList.add(issue);
-		issue.setOpenedBy(this);
+		issue.setPostedBy(this);
 	}
 }

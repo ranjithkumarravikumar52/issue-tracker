@@ -25,8 +25,6 @@ public class IssueController {
 
 	/**
 	 * For adding new issue
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping("/showAddForm")
 	public String showAddForm(Model model){

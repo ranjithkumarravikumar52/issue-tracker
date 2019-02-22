@@ -35,16 +35,37 @@ public class IssueDAOImpl implements IssueDAO {
 	public void addIssue(Issue issue) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		User user = currentSession.get(User.class, issue.getPostedBy().getId());
+		User userPostedBy = null;
+		User userOpenedBy = null;
+		User userFixedBy = null;
+		User userClosedBy = null;
+
+		User postedBy = issue.getPostedBy();
+		User openedBy = issue.getOpenedBy();
+		User fixedBy = issue.getFixedBy();
+		User closedBy = issue.getClosedBy();
+		if(postedBy != null){
+			userPostedBy = currentSession.get(User.class, postedBy.getId());
+		}
+		if(openedBy != null){
+			userOpenedBy = currentSession.get(User.class, openedBy.getId());
+		}
+		if(fixedBy != null){
+			userFixedBy = currentSession.get(User.class, fixedBy.getId());
+		}
+		if(closedBy != null){
+			userClosedBy = currentSession.get(User.class, closedBy.getId());
+		}
+
 
 		//set the other Fk to null
-		issue.setPostedBy(user);
-		issue.setOpenedBy(null);
-		issue.setFixedBy(null);
-		issue.setClosedBy(null);
+		issue.setPostedBy(userPostedBy);
+		issue.setOpenedBy(userOpenedBy);
+		issue.setFixedBy(userFixedBy);
+		issue.setClosedBy(userClosedBy);
 
 		//add it to the user
-		user.addIssueToPostedByList(issue);
+		//  userPostedBy.addIssueToPostedByList(issue);
 
 		//save the issue
 		currentSession.saveOrUpdate(issue);
