@@ -31,6 +31,18 @@
                             <form:errors path="openedBy.id"/>
                         </div>
 
+                        <div class="form-group">
+                            <label>Fixed by Id:*: </label>
+                            <form:input class = "form-control" path="fixedBy.id" />
+                            <form:errors path="fixedBy.id"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Closed by Id:*: </label>
+                            <form:input class = "form-control" path="closedBy.id" />
+                            <form:errors path="closedBy.id"/>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">New Issue</button>
                     </form:form>
                 </div>
