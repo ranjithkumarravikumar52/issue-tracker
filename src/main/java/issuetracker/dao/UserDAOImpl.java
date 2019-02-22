@@ -45,4 +45,11 @@ public class UserDAOImpl implements UserDAO {
 		User user = currentSession.get(User.class, userId);
 		return user;
 	}
+
+	@Override
+	public void deleteUser(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = currentSession.get(User.class, userId);
+		currentSession.remove(user);
+	}
 }
