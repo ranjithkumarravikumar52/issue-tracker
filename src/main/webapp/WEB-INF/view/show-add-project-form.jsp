@@ -12,7 +12,7 @@
                     <form:form action="${pageContext.request.contextPath}/project/addProject" modelAttribute="project"
                                method="POST">
                         <div class="form-group">
-                            <form:input path="id" class="form-control" disabled="true"/>
+                            <form:input path="id" class="form-control"/>
                         </div>
                         <div class="form-group">
                             <label>Project Description*: </label>
