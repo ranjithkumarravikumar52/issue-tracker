@@ -56,7 +56,7 @@ public class User {
 		this.email = email;
 		this.userRole = userRole;
 	}
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "users_has_projects",
 			joinColumns = @JoinColumn(name = "users_id"),

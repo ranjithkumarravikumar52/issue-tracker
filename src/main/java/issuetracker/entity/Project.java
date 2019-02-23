@@ -23,7 +23,7 @@ public class Project {
 	@Column(name = "project_description")
 	private String projectDescription;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "users_has_projects",
 			joinColumns = @JoinColumn(name = "projects_id"),
