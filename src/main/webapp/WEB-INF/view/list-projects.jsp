@@ -14,19 +14,27 @@
                     <tr>
                         <th>id</th>
                         <th>description</th>
-                        <th>action</th>
+                        <th class="text-center">action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <c:forEach var="project" items="${projects}">
+                        <%--update--%>
                         <c:url var="updateLink" value="/project/showUpdateForm">
+                            <c:param name="projectId" value="${project.id}"/>
+                        </c:url>
+                        <%--delete--%>
+                        <c:url var="deleteLink" value="/project/delete">
                             <c:param name="projectId" value="${project.id}"/>
                         </c:url>
                         <tr>
                             <td>${project.id}</td>
                             <td>${project.projectDescription}</td>
-                            <td><a href="${updateLink}" class="btn btn-sm btn-info">Update</a></td>
+                            <td class="text-center">
+                                <a href="${updateLink}" class="btn btn-sm btn-info">Update</a>
+                                <a href="${deleteLink}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
