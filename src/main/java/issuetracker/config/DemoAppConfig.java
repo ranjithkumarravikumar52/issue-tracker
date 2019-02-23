@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -137,5 +138,20 @@ public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMv
 				.withUser(users.password("john").password("test123").roles("EMPLOYEE"))
 				.withUser(users.password("mary").password("test123").roles("MANAGER"))
 				.withUser(users.password("susan").password("test123").roles("ADMIN"));
+	}
+
+	/**
+	 * To create end points for our login form
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.formLogin()
+					.loginPage("/showMyLoginPage")
+				.loginProcessingUrl("/authenticateTheUser")
+				.permitAll();
 	}
 }
