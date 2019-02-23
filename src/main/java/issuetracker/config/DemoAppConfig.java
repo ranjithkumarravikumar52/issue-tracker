@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -24,6 +25,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 @Configuration //for getting beans created in this class
+@EnableWebSecurity
 @EnableWebMvc //for web.xml migration
 @EnableAspectJAutoProxy //for AOP logging
 @ComponentScan("issuetracker") //scan beans across all the packages
@@ -123,9 +125,12 @@ public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMv
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
-				.addResourceHandler("/webjars/**")
-				.addResourceLocations("/webjars/")
+				.addResourceHandler("/webjars/**", "/lib/**")
+				.addResourceLocations("/webjars/", "/lib/")
 				.resourceChain(false); //for the agnostic version to work
+/*		registry
+				.addResourceHandler("/lib/**")
+				.addResourceLocations("/lib/");*/
 	}
 
 	/**
@@ -133,11 +138,11 @@ public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMv
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		User.UserBuilder users = User.withDefaultPasswordEncoder();
+		User.UserBuilder user = User.withDefaultPasswordEncoder();
 		auth.inMemoryAuthentication()
-				.withUser(users.password("john").password("test123").roles("EMPLOYEE"))
-				.withUser(users.password("mary").password("test123").roles("MANAGER"))
-				.withUser(users.password("susan").password("test123").roles("ADMIN"));
+				.withUser(user.username("john").password("fun123").roles("EMPLOYEE"))
+				.withUser(user.username("mary").password("fun123").roles("EMPLOYEE", "MANAGER"))
+				.withUser(user.username("susan").password("fun123").roles("EMPLOYEE", "ADMIN"));
 	}
 
 	/**
