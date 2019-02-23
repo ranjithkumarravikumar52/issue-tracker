@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProjectDAO {
 	List<Project> listProjects();
+
+	void addProject(Project project);
 }
