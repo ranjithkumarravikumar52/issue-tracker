@@ -49,4 +49,11 @@ public class ProjectController {
 		projectService.delete(projectId);
 		return "redirect:/project/list";
 	}
+
+	@GetMapping("/projectUserList")
+	public String showProjectUserForm(Model model){
+		List<Project> projects = projectService.listProjects();
+		model.addAttribute("projects", projects);
+		return "show-projects-users-form";
+	}
 }

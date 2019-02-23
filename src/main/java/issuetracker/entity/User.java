@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"projectList"})
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,15 +56,13 @@ public class User {
 		this.email = email;
 		this.userRole = userRole;
 	}
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_has_projects",
+			joinColumns = @JoinColumn(name = "users_id"),
+			inverseJoinColumns = @JoinColumn(name = "projects_id")
+	)
+	private List<Project> projectList;
 
-	/**
-	 * Convenience method for bidirectional relationship
-	 */
-	public void addIssueToPostedByList(Issue issue){
-		if(postedByIssuesList == null){
-			postedByIssuesList = new ArrayList<>();
-		}
-		postedByIssuesList.add(issue);
-		issue.setPostedBy(this);
-	}
+
 }

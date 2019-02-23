@@ -44,9 +44,8 @@
                                     <a href="${deleteLink}" class="btn btn-sm btn-danger">Delete</a>
                                 </div>
                             </td>
-                            <%--<td><a href="${updateLink}" class="btn btn-sm btn-info">Update</a>--%>
-                            <%--<a href="${deleteLink}" class="btn btn-sm btn-danger">Update</a></td>--%>
                         </tr>
+
                     </c:forEach>
                 </tbody>
             </table>
