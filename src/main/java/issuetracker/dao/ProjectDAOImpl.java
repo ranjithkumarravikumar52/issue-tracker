@@ -35,4 +35,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		Project project = currentSession.get(Project.class, projectId);
 		return project;
 	}
+
+	@Override
+	public void delete(int projectId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Project project = currentSession.get(Project.class, projectId);
+		currentSession.remove(project);
+	}
 }

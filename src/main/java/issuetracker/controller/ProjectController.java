@@ -30,15 +30,23 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		return "show-add-project-form";
 	}
+
 	@PostMapping("/addProject")
 	public String addProject(@ModelAttribute ("project") Project project){
 		projectService.addProject(project);
 		return "redirect:/project/list";
 	}
+
 	@GetMapping("/showUpdateForm")
 	public String showUpdateForm(@RequestParam("projectId") int projectId, Model model){
 		Project project = projectService.getProject(projectId);
 		model.addAttribute("project", project);
 		return "show-add-project-form";
+	}
+
+	@GetMapping("/delete")
+	public String deleteProject(@RequestParam("projectId") int projectId){
+		projectService.delete(projectId);
+		return "redirect:/project/list";
 	}
 }

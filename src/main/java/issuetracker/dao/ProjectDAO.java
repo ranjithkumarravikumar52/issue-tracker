@@ -10,4 +10,6 @@ public interface ProjectDAO {
 	void addProject(Project project);
 
 	Project getProject(int projectId);
+
+	void delete(int projectId);
 }
