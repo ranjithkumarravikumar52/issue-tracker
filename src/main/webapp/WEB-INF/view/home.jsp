@@ -20,6 +20,8 @@
                                     class="btn btn-primary">List Users</a></div>
                 <div class="col"><a href="${pageContext.request.contextPath}/issue/issueList"
                                     class="btn btn-primary">List Issues</a></div>
+                <div class="col"><a href="${pageContext.request.contextPath}/project/list"
+                                    class="btn btn-primary">List Project</a></div>
             </div>
         </div>
     </body>
