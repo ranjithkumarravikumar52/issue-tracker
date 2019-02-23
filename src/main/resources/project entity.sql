@@ -151,9 +151,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `issue-tracker`;
-INSERT INTO `issue-tracker`.`project` (`id`, `project_description`) VALUES (1, 'core module');
-INSERT INTO `issue-tracker`.`project` (`id`, `project_description`) VALUES (2, 'front end module');
-INSERT INTO `issue-tracker`.`project` (`id`, `project_description`) VALUES (3, 'back end module');
+INSERT INTO `issue-tracker`.projects (`id`, `project_description`) VALUES (1, 'core module');
+INSERT INTO `issue-tracker`.projects (`id`, `project_description`) VALUES (2, 'front end module');
+INSERT INTO `issue-tracker`.projects (`id`, `project_description`) VALUES (3, 'back end module');
 
 COMMIT;
 
