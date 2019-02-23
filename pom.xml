@@ -19,6 +19,7 @@
 		<mysql-connector-java.version>8.0.11</mysql-connector-java.version>
 
 		<springframework.version>5.1.5.RELEASE</springframework.version>
+		<springsecurity-version>5.1.4.RELEASE</springsecurity-version>
 		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 		<aspectjweaver.version>1.9.2</aspectjweaver.version>
 		<mysql-connector-java.version>8.0.11</mysql-connector-java.version>
@@ -27,18 +28,21 @@
 	</properties>
 
 	<dependencies>
+
 		<!--spring mvc-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
+
 		<!--servlet api-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet-api.version}</version>
 		</dependency>
+
 		<!-- Spring AOP Dependency -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -60,14 +64,12 @@
 			<version>${aspectjweaver.version}</version>
 		</dependency>
 
-
 		<!-- jsp -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>RELEASE</version>
 		</dependency>
-
 
 		<!--lombok-->
 		<dependency>
@@ -82,7 +84,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
-
 
 		<!-- hibernate-validator -->
 		<dependency>
@@ -122,20 +123,20 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+		<!--bootstrap -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.2.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+		<!-- jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.webjars.bower/popper.js -->
+		<!-- popper.js -->
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>popper.js</artifactId>
@@ -148,6 +149,30 @@
 		</dependency>
 
 
+		<!--security starts here-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${springsecurity-version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springsecurity-version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${springsecurity-version}</version>
+		</dependency>
+
+
+
+
 		<!--testing-->
 		<dependency>
 			<groupId>junit</groupId>
@@ -158,7 +183,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.3.2.RELEASE</version>
+			<version>${springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!--For effective asserting of results, we’re going to also use Hamcrest and JSON path:-->
