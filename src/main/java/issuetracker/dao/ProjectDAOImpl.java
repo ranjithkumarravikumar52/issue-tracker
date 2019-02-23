@@ -26,6 +26,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public void addProject(Project project) {
 		Session currentSession = sessionFactory.getCurrentSession();
+		//TODO check for bi-directional update
 		currentSession.saveOrUpdate(project);
 	}
 
