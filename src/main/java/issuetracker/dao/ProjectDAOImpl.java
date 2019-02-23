@@ -22,4 +22,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 		List<Project> resultList = from_project.getResultList();
 		return resultList;
 	}
+
+	@Override
+	public void addProject(Project project) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.save(project);
+	}
 }

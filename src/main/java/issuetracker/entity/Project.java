@@ -21,4 +21,8 @@ public class Project {
 
 	@Column(name = "project_description")
 	private String projectDescription;
+
+	public Project(String projectDescription) {
+		this.projectDescription = projectDescription;
+	}
 }
