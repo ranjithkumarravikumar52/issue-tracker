@@ -28,4 +28,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(project);
 	}
+
+	@Override
+	public Project getProject(int projectId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Project project = currentSession.get(Project.class, projectId);
+		return project;
+	}
 }
