@@ -124,13 +124,14 @@ public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMv
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//bootstrap jquery and jpopper
 		registry
-				.addResourceHandler("/webjars/**", "/lib/**")
-				.addResourceLocations("/webjars/", "/lib/")
-				.resourceChain(false); //for the agnostic version to work
-/*		registry
+				.addResourceHandler("/webjars/**")
+				.addResourceLocations("/webjars/");
+		//custom css
+		registry
 				.addResourceHandler("/lib/**")
-				.addResourceLocations("/lib/");*/
+				.addResourceLocations("/lib/");
 	}
 
 	/**
@@ -150,12 +151,13 @@ public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMv
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.formLogin()
-					.loginPage("/showMyLoginPage")
+		http
+			.authorizeRequests()
+				.antMatchers( "/webjars/**").permitAll()
+				.anyRequest().authenticated()
+			.and()
+			.formLogin()
+				.loginPage("/showMyLoginPage")
 				.loginProcessingUrl("/authenticateTheUser")
 				.permitAll();
 	}
