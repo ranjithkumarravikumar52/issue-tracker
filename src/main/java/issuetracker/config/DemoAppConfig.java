@@ -7,6 +7,11 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,12 +25,13 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 @Configuration //for getting beans created in this class
+@EnableWebSecurity
 @EnableWebMvc //for web.xml migration
 @EnableAspectJAutoProxy //for AOP logging
 @ComponentScan("issuetracker") //scan beans across all the packages
 @EnableTransactionManagement
 @PropertySource({"classpath:persistence-issue-tracker-mysql.properties"}) //read props file
-public class DemoAppConfig implements WebMvcConfigurer {
+public class DemoAppConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
 	@Autowired
 	private Environment environment;
@@ -83,8 +89,8 @@ public class DemoAppConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 *
 	 * Create and access session factory
+	 *
 	 * @return
 	 */
 	@Bean
@@ -118,10 +124,44 @@ public class DemoAppConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//bootstrap jquery and jpopper
 		registry
 				.addResourceHandler("/webjars/**")
-				.addResourceLocations("/webjars/")
-				.resourceChain(false); //for the agnostic version to work
+				.addResourceLocations("/webjars/");
+		//custom css
+		registry
+				.addResourceHandler("/lib/**")
+				.addResourceLocations("/lib/");
 	}
 
+	/**
+	 * To add our users for in-memory authentication
+	 */
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		User.UserBuilder user = User.withDefaultPasswordEncoder();
+		auth.inMemoryAuthentication()
+				.withUser(user.username("john").password("fun123").roles("EMPLOYEE"))
+				.withUser(user.username("mary").password("fun123").roles("EMPLOYEE", "MANAGER"))
+				.withUser(user.username("susan").password("fun123").roles("EMPLOYEE", "ADMIN"));
+	}
+
+	/**
+	 * To create end points for our login form
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.authorizeRequests()
+				.antMatchers( "/webjars/**").permitAll()
+				.anyRequest().authenticated()
+			.and()
+			.formLogin()
+				.loginPage("/showMyLoginPage")
+				.loginProcessingUrl("/authenticateTheUser")
+				.permitAll()
+			.and()
+				.logout()
+				.permitAll();
+	}
 }
