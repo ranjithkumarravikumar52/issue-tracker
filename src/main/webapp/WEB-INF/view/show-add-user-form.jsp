@@ -40,27 +40,7 @@
                             <form:input path="email" type="email" class="form-control"/>
                             <form:errors path="email"/>
                         </div>
-                        <%--radio boxes--%>
-                        <%--<label>Role*: </label>
-                        <br>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <form:radiobutton path="roleList" value="developer" class="form-check-input" />Developer
-                                <form:errors path="roleList"/>
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <form:radiobutton path="roleList" value="tester" class="form-check-input"/>Tester
-                                <form:errors path="roleList"/>
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <form:radiobutton path="roleList" value="admin" class="form-check-input"/>Admin
-                                <form:errors path="roleList"/>
-                            </label>
-                        </div>--%>
+                       
                         <br>
                         <br>
                         <button type="submit" class="btn btn-primary">Save User</button>

@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "roleList")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +56,7 @@ public class User {
 	@JoinTable(name = "users_has_role", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roleList;
 
-	public User(@NotNull(message = "is required") @Size(min = 3, max = 10, message = "min is 3, max is 10") String userName, @NotNull(message = "is required") @NotEmpty(message = "can't be empty") @Size(min = 3, max = 254, message = "min is 3, max is 10") String password, @Email(message = "Invalid Email") @Size(max = 254, message = "It is too big") @NotNull(message = "Please, set here the user email") String email, @NotNull(message = "is required") @Size(min = 3, max = 10, message = "min is 3, max is 10") String firstName, @NotNull(message = "is required") @Size(min = 3, max = 10, message = "min is 3, max is 10") String lastName) {
+	public User(String userName, String password, String email, String firstName, String lastName) {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
@@ -64,11 +64,4 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public void addRole(){
-		if(this.roleList == null){
-			roleList = new ArrayList<>();
-		}
-		//TODO implement enums
-		roleList.add(new Role("developer"));
-	}
 }

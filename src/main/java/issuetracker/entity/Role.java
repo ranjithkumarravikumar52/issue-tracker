@@ -6,13 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "role")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "userList")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,12 @@ public class Role {
 	private int id;
 	@Column(name = "name")
 	private String name;
+
+	/**
+	 * Bi-directional relationship with user
+	 */
+	@ManyToMany(mappedBy = "roleList")
+	private List<User> userList;
 
 	public Role(String name) {
 		this.name = name;

@@ -17,6 +17,7 @@
                         <th>first_name</th>
                         <th>last_name</th>
                         <th>email</th>
+                        <th>role</th>
                         <th class="text-center">action</th>
                     </tr>
                 </thead>
@@ -39,7 +40,16 @@
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td>${user.email}</td>
-
+                            
+                           <%-- <c:if test="${user.roleList == null || user.roleList.size() == 0}" >
+                                <td>-</td>
+                            </c:if>
+                            <c:forEach var = "role" items="${user.roleList}">
+                                <td>
+                                    ${role.name}
+                                </td>
+                            </c:forEach>--%>
+                            
                             <td class="text-center">
                                 <div class="btn-group">
                                     <a href="${updateLink}" class="btn btn-sm btn-info">Update</a>
