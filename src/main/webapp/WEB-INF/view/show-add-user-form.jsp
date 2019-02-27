@@ -22,32 +22,45 @@
                             <form:input path="password" type="text" class="form-control"/>
                             <form:errors path="password"/>
                         </div>
+    
+                        <div class="form-group">
+                            <label>First Name*: </label>
+                            <form:input path="firstName" type="text" class="form-control"/>
+                            <form:errors path="firstName"/>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Last Name*: </label>
+                            <form:input path="lastName" type="text" class="form-control"/>
+                            <form:errors path="lastName"/>
+                        </div>
+                        
                         <div class="form-group">
                             <label>Email*: </label>
                             <form:input path="email" type="email" class="form-control"/>
                             <form:errors path="email"/>
                         </div>
                         <%--radio boxes--%>
-                        <label>Role*: </label>
+                        <%--<label>Role*: </label>
                         <br>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole" value="developer" class="form-check-input" />Developer
-                                <form:errors path="userRole"/>
+                                <form:radiobutton path="roleList" value="developer" class="form-check-input" />Developer
+                                <form:errors path="roleList"/>
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole" value="tester" class="form-check-input"/>Tester
-                                <form:errors path="userRole"/>
+                                <form:radiobutton path="roleList" value="tester" class="form-check-input"/>Tester
+                                <form:errors path="roleList"/>
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <form:radiobutton path="userRole" value="admin" class="form-check-input"/>Admin
-                                <form:errors path="userRole"/>
+                                <form:radiobutton path="roleList" value="admin" class="form-check-input"/>Admin
+                                <form:errors path="roleList"/>
                             </label>
-                        </div>
+                        </div>--%>
                         <br>
                         <br>
                         <button type="submit" class="btn btn-primary">Save User</button>
