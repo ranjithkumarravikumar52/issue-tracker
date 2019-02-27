@@ -14,9 +14,10 @@
 					</p>
 				</div>
 			</div>
+			<%--TODO implement thymeleaf templates here--%>
 			<div class="row">
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/TestJDBCServlet" class="btn btn-info">Test DB
+					<a href="${pageContext.request.contextPath}/sanityCheck/dbConnection" class="btn btn-info">Test DB
 						Connection</a>
 				</div>
 				<div class="col">
