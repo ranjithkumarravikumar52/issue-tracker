@@ -14,8 +14,9 @@
                         <th>id</th>
                         <th>user_name</th>
                         <th>password</th>
+                        <th>first_name</th>
+                        <th>last_name</th>
                         <th>email</th>
-                        <th>user_role</th>
                         <th class="text-center">action</th>
                     </tr>
                 </thead>
@@ -35,8 +36,9 @@
                             <td>${user.id}</td>
                             <td>${user.userName}</td>
                             <td>${user.password}</td>
+                            <td>${user.firstName}</td>
+                            <td>${user.lastName}</td>
                             <td>${user.email}</td>
-                            <td>${user.userRole}</td>
 
                             <td class="text-center">
                                 <div class="btn-group">

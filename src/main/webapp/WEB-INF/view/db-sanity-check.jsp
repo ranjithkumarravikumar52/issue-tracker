@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<c:out value="${sanity}"/>
+			<p>${sanity}</p>
 		</div>
 	</body>
 </html>
