@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {"projectList"})
+@ToString(exclude = "roleList")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,27 +42,26 @@ public class User {
 	@NotNull(message = "Please, set here the user email")
 	private String email;
 
-	@Column(name = "user_role")
+	@Column(name = "first_name")
 	@NotNull(message = "is required")
-	@NotEmpty(message = "can't be empty")
-	private String userRole;
+	@Size(min = 3, max = 10, message = "min is 3, max is 10")
+	private String firstName;
 
-	@OneToMany(mappedBy = "postedBy", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	private List<Issue> postedByIssuesList;
+	@Column(name = "last_name")
+	@NotNull(message = "is required")
+	@Size(min = 3, max = 10, message = "min is 3, max is 10")
+	private String lastName;
 
-	public User(String userName, String password, String email, String userRole) {
+	@ManyToMany
+	@JoinTable(name = "users_has_role", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roleList;
+
+	public User(String userName, String password, String email, String firstName, String lastName) {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		this.userRole = userRole;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "users_has_projects",
-			joinColumns = @JoinColumn(name = "users_id"),
-			inverseJoinColumns = @JoinColumn(name = "projects_id")
-	)
-	private List<Project> projectList;
-
 
 }
