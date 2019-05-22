@@ -14,11 +14,9 @@
 					</p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<a href="${pageContext.request.contextPath}/TestJDBCServlet" class="btn btn-info">Test DB
-						Connection</a>
-				</div>
+			<%--TODO implement thymeleaf templates here--%>
+			<%--list entities--%>
+			<div class="row mt-5">
 				<div class="col">
 					<a href="${pageContext.request.contextPath}/user/listusers" class="btn btn-primary">List Users</a>
 				</div>
@@ -29,20 +27,35 @@
 					<a href="${pageContext.request.contextPath}/project/list" class="btn btn-primary">List Project</a>
 				</div>
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/project/projectUserList" class="btn btn-warning">List
-						Projects by Users</a>
-				</div>
-				<div class="col">
-					<a href="${pageContext.request.contextPath}/user/userProjectList" class="btn btn-warning">List Users
-						by Project</a>
-				</div>
-				<div class="col">
-					<form:form action="${pageContext.request.contextPath}/logout" method="post">
-						<input type="submit" value="logout"/>
-					</form:form>
-					
+					<a href="${pageContext.request.contextPath}/role/list" class="btn btn-primary">List Roles</a>
 				</div>
 			</div>
+			
+			<%--admin buttons here--%>
+			<div class="row mt-5">
+				<div class="col">
+					<a href="${pageContext.request.contextPath}/sanityCheck/dbConnection" class="btn btn-info">Test DB Connection</a>
+				</div>
+				<div class="col">
+					<a href="${pageContext.request.contextPath}/project/projectUserList" class="btn btn-warning">List Projects by Users(WIP)</a>
+				</div>
+				<div class="col">
+					<a href="${pageContext.request.contextPath}/user/userProjectList" class="btn btn-warning">List Users by Project(WIP)</a>
+				</div>
+			</div>
+			
+			
+			<%--Logout button--%>
+			<div class="row mt-5">
+				<div class="col align-center">
+					<div class="col">
+						<form:form action="${pageContext.request.contextPath}/logout" method="post">
+							<input type="submit" class="btn btn-danger" value="logout"/>
+						</form:form>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</body>
 </html>
