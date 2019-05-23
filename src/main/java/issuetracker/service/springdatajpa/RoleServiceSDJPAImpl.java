@@ -1,13 +1,13 @@
 package issuetracker.service.springdatajpa;
 
-import issuetracker.repository.RoleRepository;
 import issuetracker.entity.Role;
+import issuetracker.repository.RoleRepository;
 import issuetracker.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class RoleServiceSDJPAImpl implements RoleService {
 
@@ -17,27 +17,30 @@ public class RoleServiceSDJPAImpl implements RoleService {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
-	@Override
-	public List<Role> getRolesList() {
-		return roleRepository.getRolesList();
-	}
+    @Override
+    public Set<Role> findAll() {
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findAll().forEach(roles:: add);
+        return roles;
+    }
 
-	@Override
-	@Transactional
-	public Role getRole(int roleId) {
-		return roleRepository.getRole(roleId);
-	}
+    @Override
+    public Role findById(Integer integer) {
+        return roleRepository.findById(integer).orElse(null);
+    }
 
-	@Override
-	@Transactional
-	public void deleteRole(int roleId) {
-		roleRepository.deleteRole(roleId);
-	}
+    @Override
+    public Role save(Role object) {
+        return roleRepository.save(object);
+    }
 
-	@Override
-	@Transactional
-	public void addRole(Role role) {
-		roleRepository.addRole(role);
-	}
+    @Override
+    public void delete(Role object) {
+        roleRepository.delete(object);
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+        roleRepository.deleteById(integer);
+    }
 }
