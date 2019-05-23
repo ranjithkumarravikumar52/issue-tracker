@@ -3,12 +3,14 @@ package issuetracker.service.springdatajpa;
 import issuetracker.entity.Project;
 import issuetracker.repository.ProjectRepository;
 import issuetracker.service.ProjectService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Profile("springdatajpa")
 public class ProjectServiceSDJPAImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;

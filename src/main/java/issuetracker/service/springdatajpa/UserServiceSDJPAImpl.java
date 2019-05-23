@@ -3,6 +3,7 @@ package issuetracker.service.springdatajpa;
 import issuetracker.entity.User;
 import issuetracker.repository.UserRepository;
 import issuetracker.service.UserService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Profile("springdatajpa")
 public class UserServiceSDJPAImpl implements UserService {
 
     private final UserRepository userRepository;
