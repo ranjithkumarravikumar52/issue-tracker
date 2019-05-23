@@ -1,4 +1,4 @@
-package issuetracker.service.springdatajpa;
+package issuetracker.sanitycheck;
 
 import issuetracker.config.DBCheckConfig;
 import org.springframework.stereotype.Service;

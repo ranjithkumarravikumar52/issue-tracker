@@ -9,12 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceSDJPAImpl implements RoleService {
 
-	@Autowired
-	private RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
 
-	@Transactional
+    public RoleServiceSDJPAImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Transactional
 	@Override
 	public List<Role> getRolesList() {
 		return roleRepository.getRolesList();
