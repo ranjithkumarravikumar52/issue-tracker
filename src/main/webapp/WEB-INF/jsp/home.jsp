@@ -27,7 +27,7 @@
 					<a href="${pageContext.request.contextPath}/project/list" class="btn btn-primary">List Project</a>
 				</div>
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/role/list" class="btn btn-primary">List Roles</a>
+					<a href="${pageContext.request.contextPath}/listRoles" class="btn btn-primary">List Roles</a>
 				</div>
 			</div>
 			
