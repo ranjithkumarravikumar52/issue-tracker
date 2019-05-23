@@ -4,9 +4,9 @@ import issuetracker.entity.Project;
 import issuetracker.repository.ProjectRepository;
 import issuetracker.service.ProjectService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ProjectServiceSDJPAImpl implements ProjectService {
@@ -17,27 +17,31 @@ public class ProjectServiceSDJPAImpl implements ProjectService {
         this.projectRepository = projectRepository;
     }
 
+
     @Override
-    @Transactional
-    public List<Project> listProjects() {
-        return projectRepository.listProjects();
+    public Set<Project> findAll() {
+        Set<Project> projects = new HashSet<>();
+        projectRepository.findAll().forEach(projects :: add);
+        return projects;
     }
 
     @Override
-    @Transactional
-    public void addProject(Project project) {
-        projectRepository.addProject(project);
+    public Project findById(Integer integer) {
+        return projectRepository.findById(integer).orElse(null);
     }
 
     @Override
-    @Transactional
-    public Project getProject(int projectId) {
-        return projectRepository.getProject(projectId);
+    public Project save(Project object) {
+        return projectRepository.save(object);
     }
 
     @Override
-    @Transactional
-    public void delete(int projectId) {
-        projectRepository.delete(projectId);
+    public void delete(Project object) {
+        projectRepository.delete(object);
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+        projectRepository.deleteById(integer);
     }
 }

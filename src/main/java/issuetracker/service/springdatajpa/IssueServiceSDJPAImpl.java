@@ -4,9 +4,9 @@ import issuetracker.entity.Issue;
 import issuetracker.repository.IssueRepository;
 import issuetracker.service.IssueService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class IssueServiceSDJPAImpl implements IssueService {
@@ -18,26 +18,29 @@ public class IssueServiceSDJPAImpl implements IssueService {
     }
 
     @Override
-	@Transactional
-	public List<Issue> getIssueList() {
-		return issueRepository.getIssues();
-	}
+    public Set<Issue> findAll() {
+        Set<Issue> issues = new HashSet<>();
+        issueRepository.findAll().forEach(issues :: add);
+        return issues;
+    }
 
-	@Override
-	@Transactional
-	public void addIssue(Issue issue) {
-		issueRepository.addIssue(issue);
-	}
+    @Override
+    public Issue findById(Integer integer) {
+        return issueRepository.findById(integer).orElse(null);
+    }
 
-	@Override
-	@Transactional
-	public Issue getIssue(int issueId) {
-		return issueRepository.getIssue(issueId);
-	}
+    @Override
+    public Issue save(Issue object) {
+        return issueRepository.save(object);
+    }
 
-	@Override
-	@Transactional
-	public void deleteIssue(int issueId) {
-		issueRepository.deleteIssue(issueId);
-	}
+    @Override
+    public void delete(Issue object) {
+        issueRepository.delete(object);
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+        issueRepository.deleteById(integer);
+    }
 }
