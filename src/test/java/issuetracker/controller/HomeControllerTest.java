@@ -1,8 +1,5 @@
 package issuetracker.controller;
 
-import static org.junit.Assert.*;
-
-import issuetracker.config.DemoAppConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
