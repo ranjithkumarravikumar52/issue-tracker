@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class RoleDAOImpl implements RoleDAO {
 
-	@Autowired
+//	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override

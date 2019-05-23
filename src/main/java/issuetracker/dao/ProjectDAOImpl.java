@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
 
-	@Autowired
+//	@Autowired
 	SessionFactory sessionFactory;
 
 	@Override

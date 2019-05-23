@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class IssueDAOImpl implements IssueDAO {
 
-	@Autowired
+//	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
