@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -14,21 +17,18 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString(exclude = "userList")
-public class Role {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
-	@Column(name = "name")
-	private String name;
+public class Role extends BaseEntity {
 
-	/**
-	 * Bi-directional relationship with user
-	 */
-	@ManyToMany(mappedBy = "roleList")
-	private List<User> userList;
+    @Column(name = "name")
+    private String name;
 
-	public Role(String name) {
-		this.name = name;
-	}
+    /**
+     * Bi-directional relationship with user
+     */
+    @ManyToMany(mappedBy = "roleList")
+    private List<User> userList;
+
+    public Role(String name) {
+        this.name = name;
+    }
 }

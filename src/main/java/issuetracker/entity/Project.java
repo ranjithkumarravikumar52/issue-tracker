@@ -14,11 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString(exclude = {"userList"})
-public class Project {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+public class Project extends BaseEntity {
 
 	@Column(name = "project_description")
 	private String projectDescription;
