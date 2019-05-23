@@ -18,7 +18,7 @@
 			<%--list entities--%>
 			<div class="row mt-5">
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/listUsers" class="btn btn-primary">List Users</a>
+                    <a href="${pageContext.request.contextPath}/user/listUsers" class="btn btn-primary">List Users</a>
 				</div>
 				<div class="col">
 					<a href="${pageContext.request.contextPath}/issue/issueList" class="btn btn-primary">List Issues</a>
