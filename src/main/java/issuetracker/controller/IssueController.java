@@ -2,52 +2,68 @@ package issuetracker.controller;
 
 import issuetracker.entity.Issue;
 import issuetracker.service.IssueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/issue")
 public class IssueController {
 
-	@Autowired
-	private IssueService issueService;
+    private static final String VIEW_SHOW_ADD_ISSUE_FORM = "show-add-issue-form";
+    private final IssueService issueService;
 
-	@RequestMapping("/issueList")
-	public String getissueList(Model model){
-		List<Issue> issueList = issueService.getIssueList();
-		model.addAttribute("issues", issueList);
-		return "list-issues";
-	}
+    public IssueController(IssueService issueService) {
+        this.issueService = issueService;
+    }
 
-	/**
-	 * For adding new issue
-	 */
-	@RequestMapping("/showAddForm")
-	public String showAddForm(Model model){
-		Issue issue = new Issue();
-		model.addAttribute("issue", issue);
-		return "show-add-issue-form";
-	}
-	@PostMapping("/addIssue")
-	public String addIssue(@ModelAttribute("issue") Issue issue){
-		issueService.addIssue(issue);
-		return "redirect:/issue/issueList";
-	}
+    /**
+     * List all issues
+     */
+    @RequestMapping("/issueList")
+    public String getIssueList(Model model) {
+        Set<Issue> issueList = issueService.findAll();
+        model.addAttribute("issues", issueList);
+        return "list-issues";
+    }
 
-	@GetMapping("/showUpdateForm")
-	public String showUpdateForm(@RequestParam("issueId") int issueId, Model model){
-		Issue issue = issueService.getIssue(issueId);
-		model.addAttribute(issue);
-		return "show-add-issue-form";
-	}
+    /**
+     * Show form for saving new issue
+     */
+    @GetMapping("/showAddForm")
+    public String showAddForm(Model model) {
+        Issue issue = new Issue();
+        model.addAttribute("issue", issue);
+        return VIEW_SHOW_ADD_ISSUE_FORM;
+    }
 
-	@GetMapping("/delete")
-	public String deleteIssue(@RequestParam("issueId") int issueId){
-		issueService.deleteIssue(issueId);
-		return "redirect:/issue/issueList";
-	}
+    /**
+     * Post mapping to save new issue
+     */
+    @PostMapping("/addIssue")
+    public String addIssue(@ModelAttribute("issue") Issue issue) {
+        issueService.save(issue);
+        return "redirect:/issue/issueList";
+    }
+
+    /**
+     * Show form for updating an issue
+     */
+    @GetMapping("/showUpdateForm")
+    public String showUpdateForm(@RequestParam("issueId") int issueId, Model model) {
+        Issue issue = issueService.findById(issueId);
+        model.addAttribute(issue);
+        return VIEW_SHOW_ADD_ISSUE_FORM;
+    }
+
+    /**
+     * Delete an issue
+     */
+    @GetMapping("/delete")
+    public String deleteIssue(@RequestParam("issueId") int issueId) {
+        issueService.deleteById(issueId);
+        return "redirect:/issue/issueList";
+    }
 }
