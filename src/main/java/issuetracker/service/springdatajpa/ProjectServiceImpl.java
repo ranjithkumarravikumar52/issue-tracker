@@ -1,7 +1,8 @@
-package issuetracker.service;
+package issuetracker.service.springdatajpa;
 
 import issuetracker.repository.ProjectRepository;
 import issuetracker.entity.Project;
+import issuetracker.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

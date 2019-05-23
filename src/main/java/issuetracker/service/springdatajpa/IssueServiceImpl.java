@@ -1,7 +1,8 @@
-package issuetracker.service;
+package issuetracker.service.springdatajpa;
 
 import issuetracker.repository.IssueRepository;
 import issuetracker.entity.Issue;
+import issuetracker.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class IssueServiceImpl implements IssueService{
+public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	private IssueRepository issueRepository;

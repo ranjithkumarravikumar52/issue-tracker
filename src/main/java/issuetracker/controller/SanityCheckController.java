@@ -1,7 +1,7 @@
 package issuetracker.controller;
 
 import issuetracker.config.DBCheckConfig;
-import issuetracker.service.SanityCheckService;
+import issuetracker.sanitycheck.SanityCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
