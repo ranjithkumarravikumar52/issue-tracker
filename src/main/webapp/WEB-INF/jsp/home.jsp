@@ -18,16 +18,17 @@
 			<%--list entities--%>
 			<div class="row mt-5">
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/listUsers" class="btn btn-primary">List Users</a>
+                    <a href="${pageContext.request.contextPath}/user/listUsers" class="btn btn-primary">List Users</a>
 				</div>
 				<div class="col">
 					<a href="${pageContext.request.contextPath}/issue/issueList" class="btn btn-primary">List Issues</a>
 				</div>
 				<div class="col">
-                    <a href="${pageContext.request.contextPath}/listProjects" class="btn btn-primary">List Project</a>
+                    <a href="${pageContext.request.contextPath}/project/listProjects" class="btn btn-primary">List
+                        Project</a>
 				</div>
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/listRoles" class="btn btn-primary">List Roles</a>
+                    <a href="${pageContext.request.contextPath}/role/listRoles" class="btn btn-primary">List Roles</a>
 				</div>
 			</div>
 			
