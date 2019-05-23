@@ -1,6 +1,6 @@
 package issuetracker.service;
 
-import issuetracker.dao.ProjectDAO;
+import issuetracker.repository.ProjectRepository;
 import issuetracker.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,29 +12,29 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
-	private ProjectDAO projectDAO;
+	private ProjectRepository projectRepository;
 
 	@Override
 	@Transactional
 	public List<Project> listProjects() {
-		return projectDAO.listProjects();
+		return projectRepository.listProjects();
 	}
 
 	@Override
 	@Transactional
 	public void addProject(Project project) {
-		projectDAO.addProject(project);
+		projectRepository.addProject(project);
 	}
 
 	@Override
 	@Transactional
 	public Project getProject(int projectId) {
-		return projectDAO.getProject(projectId);
+		return projectRepository.getProject(projectId);
 	}
 
 	@Override
 	@Transactional
 	public void delete(int projectId) {
-		projectDAO.delete(projectId);
+		projectRepository.delete(projectId);
 	}
 }

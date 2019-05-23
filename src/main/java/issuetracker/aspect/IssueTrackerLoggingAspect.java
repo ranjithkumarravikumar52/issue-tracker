@@ -36,15 +36,15 @@ public class IssueTrackerLoggingAspect {
 	}
 
 	/**
-	 * for classes in dao
+	 * for classes in repository
 	 */
-	@Pointcut("execution(* issuetracker.dao.*.*(..))")
+	@Pointcut("execution(* issuetracker.repository.*.*(..))")
 	private void forDAOPackage() {
 	}
 
 
 	/**
-	 * for classes in controller, service and dao
+	 * for classes in controller, service and repository
 	 */
 	@Pointcut("forControllerPackage() || forServicePackage() || forDAOPackage()")
 	private void forAppFlow() {

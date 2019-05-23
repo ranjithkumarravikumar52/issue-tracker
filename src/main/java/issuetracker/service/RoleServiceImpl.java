@@ -1,6 +1,6 @@
 package issuetracker.service;
 
-import issuetracker.dao.RoleDAO;
+import issuetracker.repository.RoleRepository;
 import issuetracker.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,29 +11,29 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 
 	@Autowired
-	private RoleDAO roleDAO;
+	private RoleRepository roleRepository;
 
 	@Transactional
 	@Override
 	public List<Role> getRolesList() {
-		return roleDAO.getRolesList();
+		return roleRepository.getRolesList();
 	}
 
 	@Override
 	@Transactional
 	public Role getRole(int roleId) {
-		return roleDAO.getRole(roleId);
+		return roleRepository.getRole(roleId);
 	}
 
 	@Override
 	@Transactional
 	public void deleteRole(int roleId) {
-		roleDAO.deleteRole(roleId);
+		roleRepository.deleteRole(roleId);
 	}
 
 	@Override
 	@Transactional
 	public void addRole(Role role) {
-		roleDAO.addRole(role);
+		roleRepository.addRole(role);
 	}
 }

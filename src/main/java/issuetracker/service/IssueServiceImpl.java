@@ -1,6 +1,6 @@
 package issuetracker.service;
 
-import issuetracker.dao.IssueDAO;
+import issuetracker.repository.IssueRepository;
 import issuetracker.entity.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,29 +12,29 @@ import java.util.List;
 public class IssueServiceImpl implements IssueService{
 
 	@Autowired
-	private IssueDAO issueDAO;
+	private IssueRepository issueRepository;
 
 	@Override
 	@Transactional
 	public List<Issue> getIssueList() {
-		return issueDAO.getIssues();
+		return issueRepository.getIssues();
 	}
 
 	@Override
 	@Transactional
 	public void addIssue(Issue issue) {
-		issueDAO.addIssue(issue);
+		issueRepository.addIssue(issue);
 	}
 
 	@Override
 	@Transactional
 	public Issue getIssue(int issueId) {
-		return issueDAO.getIssue(issueId);
+		return issueRepository.getIssue(issueId);
 	}
 
 	@Override
 	@Transactional
 	public void deleteIssue(int issueId) {
-		issueDAO.deleteIssue(issueId);
+		issueRepository.deleteIssue(issueId);
 	}
 }

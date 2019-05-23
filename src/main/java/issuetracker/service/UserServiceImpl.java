@@ -1,6 +1,6 @@
 package issuetracker.service;
 
-import issuetracker.dao.UserDAO;
+import issuetracker.repository.UserRepository;
 import issuetracker.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,29 +12,29 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserDAO userDAO;
+	private UserRepository userRepository;
 
 	@Override
 	@Transactional
 	public List<User> getUsers() {
-		return userDAO.getUsers();
+		return userRepository.getUsers();
 	}
 
 	@Override
 	@Transactional
 	public void addUser(User user) {
-		userDAO.addUser(user);
+		userRepository.addUser(user);
 	}
 
 	@Override
 	@Transactional
 	public User getUser(int userId) {
-		return userDAO.getUser(userId);
+		return userRepository.getUser(userId);
 	}
 
 	@Override
 	@Transactional
 	public void delete(int userId) {
-		userDAO.deleteUser(userId);
+		userRepository.deleteUser(userId);
 	}
 }
