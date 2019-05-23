@@ -2,58 +2,62 @@ package issuetracker.controller;
 
 import issuetracker.entity.Project;
 import issuetracker.service.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.logging.Logger;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
 
-	@Autowired
-	ProjectService projectService;
+    private final ProjectService projectService;
+    private final String VIEW_LIST_PROJECTS = "list-projects";
+    private final String VIEW_SHOW_ADD_PROJECT_FORM = "show-add-project-form";
 
-	@GetMapping("/list")
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    @GetMapping("/listProjects")
 	public String listProjects(Model model) {
-		List<Project> projects = projectService.listProjects();
+        Set<Project> projects = projectService.findAll();
 		model.addAttribute("projects", projects);
-		return "list-projects";
+        return VIEW_LIST_PROJECTS;
 	}
 
 	@GetMapping("/showAddForm")
 	public String showProjectAddForm(Model model){
 		Project project = new Project();
 		model.addAttribute("project", project);
-		return "show-add-project-form";
+        return VIEW_SHOW_ADD_PROJECT_FORM;
 	}
 
 	@PostMapping("/addProject")
 	public String addProject(@ModelAttribute ("project") Project project){
-		projectService.addProject(project);
-		return "redirect:/project/list";
+        projectService.save(project);
+        return "redirect:/" + VIEW_LIST_PROJECTS;
 	}
 
 	@GetMapping("/showUpdateForm")
 	public String showUpdateForm(@RequestParam("projectId") int projectId, Model model){
-		Project project = projectService.getProject(projectId);
+        Project project = projectService.findById(projectId);
 		model.addAttribute("project", project);
-		return "show-add-project-form";
+        return VIEW_SHOW_ADD_PROJECT_FORM;
 	}
 
 	@GetMapping("/delete")
 	public String deleteProject(@RequestParam("projectId") int projectId){
-		projectService.delete(projectId);
-		return "redirect:/project/list";
-	}
+        projectService.deleteById(projectId);
+        return "redirect:/" + VIEW_LIST_PROJECTS;
+    }
 
-	@GetMapping("/projectUserList")
+    //TODO Chain different ids probably using initBinder
+	/*@GetMapping("/projectUserList")
 	public String showProjectUserForm(Model model){
 		List<Project> projects = projectService.listProjects();
 		model.addAttribute("projects", projects);
 		return "show-projects-users-form";
-	}
+	}*/
 }
