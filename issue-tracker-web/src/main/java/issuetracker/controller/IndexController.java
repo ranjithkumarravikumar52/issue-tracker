@@ -14,6 +14,6 @@ public class IndexController {
 
     @GetMapping("/oops")
     public String showNothingImplemented() {
-        return "nothing-implemented";
+        return "nothingImplemented";
     }
 }
