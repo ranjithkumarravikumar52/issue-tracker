@@ -12,6 +12,7 @@
     <modules>
         <module>issue-tracker-web</module>
         <module>issue-tracker-data</module>
+        <module>issue-tracker-service</module>
     </modules>
 
     <parent>
