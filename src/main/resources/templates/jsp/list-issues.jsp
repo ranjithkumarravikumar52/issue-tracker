@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Issues List</title>
-        <%@ include file="sourcefiles.jsp" %>
+        <%@ include file="../sourcefiles.html" %>
     </head>
     <body>
         <div class="container">

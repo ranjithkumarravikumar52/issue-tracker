@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<title>Login</title>
-		<%@ include file="sourcefiles.jsp" %>
+		<%@ include file="../sourcefiles.html" %>
 	</head>
 	
 	

@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title>DB sanity check report</title>
-		<%@ include file="sourcefiles.jsp" %>
+		<%@ include file="../sourcefiles.html" %>
 	</head>
 	<body>
 		<div class="container">

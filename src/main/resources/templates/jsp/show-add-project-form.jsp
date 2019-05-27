@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Add new project</title>
-        <%@ include file="sourcefiles.jsp" %>
+        <%@ include file="../sourcefiles.html" %>
     </head>
     <body>
         <div class="container">
