@@ -15,8 +15,8 @@ import java.util.Set;
 public class UserController {
 
     private final UserService userService;
-    private final String VIEW_SHOW_ADD_USER_FORM = "show-add-user-form";
-    private final String VIEW_LIST_ALL_USERS = "list-users";
+    private final String VIEW_SHOW_ADD_USER_FORM = "users/showAddOrUpdateUserForm";
+    private final String VIEW_LIST_ALL_USERS = "users/listUsers";
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -42,7 +42,7 @@ public class UserController {
             return VIEW_SHOW_ADD_USER_FORM;
         } else {
             userService.save(user);
-            return "redirect:/listUsers";
+            return "redirect:/" + VIEW_LIST_ALL_USERS;
         }
     }
 
@@ -56,6 +56,6 @@ public class UserController {
     @GetMapping("/delete")
     public String deleteUser(@RequestParam("userId") int userId) {
         userService.deleteById(userId);
-        return "redirect:/listUsers";
+        return "redirect:/" + VIEW_LIST_ALL_USERS;
     }
 }
