@@ -9,48 +9,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final String VIEW_LIST_PROJECTS = "list-projects";
-    private final String VIEW_SHOW_ADD_PROJECT_FORM = "show-add-project-form";
+    private final String VIEW_SHOW_ADD_PROJECT_FORM = "projects/showAddOrUpdate";
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
 
-    @GetMapping("/listProjects")
+    @GetMapping("/list")
 	public String listProjects(Model model) {
         Set<Project> projects = projectService.findAll();
 		model.addAttribute("projects", projects);
-        return VIEW_LIST_PROJECTS;
+        return "projects/home";
 	}
 
-	@GetMapping("/showAddForm")
+	@GetMapping("/new")
 	public String showProjectAddForm(Model model){
 		Project project = new Project();
 		model.addAttribute("project", project);
         return VIEW_SHOW_ADD_PROJECT_FORM;
 	}
 
-	@PostMapping("/addProject")
+	@PostMapping("/new")
 	public String addProject(@ModelAttribute ("project") Project project){
         projectService.save(project);
-        return "redirect:/" + VIEW_LIST_PROJECTS;
+        return "redirect:/projects/list";
 	}
 
-	@GetMapping("/showUpdateForm")
-	public String showUpdateForm(@RequestParam("projectId") int projectId, Model model){
+	@GetMapping("/edit/{projectId}")
+	public String showUpdateForm(@PathVariable("projectId") int projectId, Model model){
         Project project = projectService.findById(projectId);
 		model.addAttribute("project", project);
         return VIEW_SHOW_ADD_PROJECT_FORM;
 	}
 
-	@GetMapping("/delete")
-	public String deleteProject(@RequestParam("projectId") int projectId){
+	@DeleteMapping("/delete/{projectId}")
+	public String deleteProject(@PathVariable("projectId") int projectId){
         projectService.deleteById(projectId);
-        return "redirect:/" + VIEW_LIST_PROJECTS;
+        return "redirect:/projects/list";
     }
 
     //TODO Chain different ids probably using initBinder
