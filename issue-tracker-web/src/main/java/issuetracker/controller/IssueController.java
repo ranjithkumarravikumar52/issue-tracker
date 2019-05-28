@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/issue")
+@RequestMapping("/issues")
 public class IssueController {
 
-    private static final String VIEW_SHOW_ADD_ISSUE_FORM = "show-add-issue-form";
-    private final IssueService issueService;
+    private static final String VIEW_SHOW_ADD_OR_UPDATE_ISSUE_FORM = "issues/showAddOrUpdate";
+    private static final String VIEW_LIST_ALL_ISSUES = "issues/home";
 
+    private final IssueService issueService;
     public IssueController(IssueService issueService) {
         this.issueService = issueService;
     }
@@ -22,48 +23,46 @@ public class IssueController {
     /**
      * List all issues
      */
-    @RequestMapping("/issueList")
+    @GetMapping("/list")
     public String getIssueList(Model model) {
-        Set<Issue> issueList = issueService.findAll();
-        model.addAttribute("issues", issueList);
-        return "list-issues";
+        model.addAttribute("issues", issueService.findAll());
+        return VIEW_LIST_ALL_ISSUES;
     }
 
     /**
      * Show form for saving new issue
      */
-    @GetMapping("/showAddForm")
+    @GetMapping("/new")
     public String showAddForm(Model model) {
-        Issue issue = new Issue();
-        model.addAttribute("issue", issue);
-        return VIEW_SHOW_ADD_ISSUE_FORM;
+        model.addAttribute("issue", new Issue());
+        return VIEW_SHOW_ADD_OR_UPDATE_ISSUE_FORM;
     }
 
     /**
      * Post mapping to save new issue
      */
-    @PostMapping("/addIssue")
+    @PostMapping("/new")
     public String addIssue(@ModelAttribute("issue") Issue issue) {
         issueService.save(issue);
-        return "redirect:/issue/issueList";
+        return "redirect:/issue/list";
     }
 
     /**
      * Show form for updating an issue
      */
-    @GetMapping("/showUpdateForm")
-    public String showUpdateForm(@RequestParam("issueId") int issueId, Model model) {
+    @GetMapping("/edit/{issueId}")
+    public String showUpdateForm(@PathVariable("issueId") int issueId, Model model) {
         Issue issue = issueService.findById(issueId);
         model.addAttribute(issue);
-        return VIEW_SHOW_ADD_ISSUE_FORM;
+        return VIEW_SHOW_ADD_OR_UPDATE_ISSUE_FORM;
     }
 
     /**
      * Delete an issue
      */
-    @GetMapping("/delete")
-    public String deleteIssue(@RequestParam("issueId") int issueId) {
+    @GetMapping("/delete/{issueId}")
+    public String deleteIssue(@PathVariable("issueId") int issueId) {
         issueService.deleteById(issueId);
-        return "redirect:/issue/issueList";
+        return "redirect:/issues/list";
     }
 }

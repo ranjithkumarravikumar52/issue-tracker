@@ -11,39 +11,50 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form action="@{/issue/addIssue}" modelAttribute="issue" method="POST">
+                    <form th:action="@{/issues/new}" th:object="${issue}" method="POST">
                         <input type="hidden" th:field="*{id}"/>
 
                         <div class="form-group">
-                            <label>Issue description*: </label>
-                            <input type="text" class="textarea form-control" th:field="*{issueDescription}" rows="5"/>
+                            <label for="issueDescription">Issue description*: </label>
+                            <input type="text" class="textarea form-control"
+                                   id="issueDescription" th:field="*{issueDescription}"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Posted by Id:*: </label>
-                            <input type="number" class="form-control" th:field="*{postedBy.id}"/>
-
+                            <label for="postedBy">Posted by Id:*: </label>
+                            <input type="number" class="form-control" id="postedBy" th:field="*{postedBy.id}"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Opened by Id:*: </label>
-                            <input type="number" class="form-control" th:field="*{postedBy.id}"/>
+                            <label for="openedBy">Opened by Id:*: </label>
+                            <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Fixed by Id:*: </label>
-                            <input type="number" class="form-control" th:field="*{fixedBy.id}"/>
+                            <label for="fixedBy">Fixed by Id:*: </label>
+                            <input type="number" class="form-control" id="fixedBy" th:field="*{fixedBy.id}"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Closed by Id:*: </label>
-                            <input type = "number" class="form-control" th:field="*{closedBy.id}"/>
+                            <label for="closedBy">Closed by Id:*: </label>
+                            <input type = "number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Save Issue</button>
                     </form>
                 </div>
             </div>
+        </div>
+        <div lang="en" th:replace="fragments/footer :: footer">
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                    crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                    crossorigin="anonymous"></script>
         </div>
     </body>
 </html>

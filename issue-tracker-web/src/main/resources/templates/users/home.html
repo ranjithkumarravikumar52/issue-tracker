@@ -24,21 +24,23 @@
                 </thead>
                 <tbody>
                     <tr th:each="user : ${users}">
-                        <tr>
-                            <td th:text="${user.id}">1</td>
-                            <td th:text="${user.userName}">johnDoe</td>
-                            <td th:text="${user.password}">password123</td>
-                            <td th:text="${user.firstName}">John</td>
-                            <td th:text="${user.lastName}">Doe</td>
-                            <td th:text="${user.email}">johnDoe@something.com</td>
-                            <td th:text="${user.role}">Developer</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="@{/user/showUpdateForm/(userId = ${user.id})" class="btn btn-sm btn-info">Update</a>
-                                    <a href="@{/user/delete/(userId = ${user.id})" class="btn btn-sm btn-danger">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.userName}">johnDoe</td>
+                        <td th:text="${user.password}">password123</td>
+                        <td th:text="${user.firstName}">John</td>
+                        <td th:text="${user.lastName}">Doe</td>
+                        <td th:text="${user.email}">johnDoe@something.com</td>
+                        <!--TODO check list in the roles-->
+                        <td th:text="${user.roleList}">Developer</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a th:href="@{/user/showUpdateForm/(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
+                                <a th:href="@{/user/delete/(userId = ${user.id})}"
+                                   class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </td>
+
 
                     </tr>
                 </tbody>

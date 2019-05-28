@@ -11,51 +11,51 @@ import javax.validation.Valid;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
-    private final String VIEW_SHOW_ADD_USER_FORM = "users/showAddOrUpdateUserForm";
-    private final String VIEW_LIST_ALL_USERS = "users/listUsers";
+    private final String VIEW_SHOW_ADD_USER_FORM = "users/showAddOrUpdate";
+    private final String VIEW_LIST_ALL_USERS = "users/home";
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/listUsers")
+    @GetMapping("/list")
     public String listUsers(Model model) {
         Set<User> users = userService.findAll();
         model.addAttribute("users", users);
         return VIEW_LIST_ALL_USERS;
     }
 
-    @GetMapping("/showAddForm")
+    @GetMapping("/new")
     public String showAddForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return VIEW_SHOW_ADD_USER_FORM;
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/new")
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return VIEW_SHOW_ADD_USER_FORM;
         } else {
             userService.save(user);
-            return "redirect:/" + VIEW_LIST_ALL_USERS;
+            return "redirect:/users/list";
         }
     }
 
-    @GetMapping("/showUpdateForm")
-    public String showUpdateForm(@RequestParam("userId") int userId, Model model) {
+    @GetMapping("/edit/{userId}")
+    public String showUpdateForm(@PathVariable("userId") int userId, Model model) {
         User user = userService.findById(userId);
         model.addAttribute("user", user);
         return VIEW_SHOW_ADD_USER_FORM;
     }
 
-    @GetMapping("/delete")
-    public String deleteUser(@RequestParam("userId") int userId) {
+    @DeleteMapping("/delete/{userId}")
+    public String deleteUser(@PathVariable("userId") int userId) {
         userService.deleteById(userId);
-        return "redirect:/" + VIEW_LIST_ALL_USERS;
+        return "redirect:/users/list";
     }
 }

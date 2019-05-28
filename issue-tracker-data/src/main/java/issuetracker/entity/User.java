@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -58,5 +55,17 @@ public class User extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    @Builder
+    public User(int id, String userName, String password, String email, String firstName, String lastName, List<Role> roleList) {
+        super(id);
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roleList = roleList;
+    }
+
 
 }

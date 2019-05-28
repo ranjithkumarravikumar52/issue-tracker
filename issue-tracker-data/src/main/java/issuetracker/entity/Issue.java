@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -42,5 +39,23 @@ public class Issue extends BaseEntity {
      */
     public Issue(String issueDescription) {
         this.issueDescription = issueDescription;
+    }
+
+    @Builder
+    public Issue(int id, String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+        super(id);
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
+        this.openedBy = openedBy;
+        this.fixedBy = fixedBy;
+        this.closedBy = closedBy;
+    }
+
+    public Issue(String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
+        this.openedBy = openedBy;
+        this.fixedBy = fixedBy;
+        this.closedBy = closedBy;
     }
 }
