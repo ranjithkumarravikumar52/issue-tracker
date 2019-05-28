@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
 @NoArgsConstructor
-@AllArgsConstructor
 public class Issue extends BaseEntity {
 
 
@@ -40,5 +39,23 @@ public class Issue extends BaseEntity {
      */
     public Issue(String issueDescription) {
         this.issueDescription = issueDescription;
+    }
+
+    @Builder
+    public Issue(int id, String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+        super(id);
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
+        this.openedBy = openedBy;
+        this.fixedBy = fixedBy;
+        this.closedBy = closedBy;
+    }
+
+    public Issue(String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
+        this.openedBy = openedBy;
+        this.fixedBy = fixedBy;
+        this.closedBy = closedBy;
     }
 }

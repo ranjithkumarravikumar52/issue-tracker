@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,4 +28,10 @@ public class Project extends BaseEntity {
 		this.projectDescription = projectDescription;
 	}
 
+	@Builder
+    public Project(int id, String projectDescription, List<User> userList) {
+        super(id);
+        this.projectDescription = projectDescription;
+        this.userList = userList;
+    }
 }

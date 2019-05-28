@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,5 +27,12 @@ public class Role extends BaseEntity {
 
     public Role(String name) {
         this.name = name;
+    }
+
+    @Builder
+    public Role(int id, String name, List<User> userList) {
+        super(id);
+        this.name = name;
+        this.userList = userList;
     }
 }
