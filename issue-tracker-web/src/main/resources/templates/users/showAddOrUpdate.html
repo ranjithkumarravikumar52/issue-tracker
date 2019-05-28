@@ -8,33 +8,55 @@
               crossorigin="anonymous">
     </head>
     <body>
+        <nav th:replace="fragments/navbar :: navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Issues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Roles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Test DB Connection</a>
+                </li>
+            </ul>
+        </nav>
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form th:action="@{/user/addUser}" th:object="${user}" method="POST">
-                        <input type="hidden" th:field="*{id}" />
+                    <form th:action="@{/users/new}" th:object="${user}" method="POST">
+                        <input type="hidden" th:field="*{id}"/>
                         <div class="form-group">
-                            <label>Username*: </label>
-                            <input th:field="*{userName}" type="text" class="form-control"/>
+                            <label for="userName">Username*: </label>
+                            <input th:field="*{userName}" type="text" id="userName" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label>Password*: </label>
-                            <input th:field="*{password}" type="text" class="form-control"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label>First Name*: </label>
-                            <input th:field="*{firstName}" type="text" class="form-control"/>
+                            <label for="password">Password*: </label>
+                            <input th:field="*{password}" type="text" id="password" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Last Name*: </label>
-                            <input th:field="*{lastName}" type="text" class="form-control"/>
+                            <label for="firstName">First Name*: </label>
+                            <input th:field="*{firstName}" type="text" id="firstName" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Email*: </label>
-                            <input th:field="*{email}" type="email" class="form-control"/>
+                            <label for="lastName">Last Name*: </label>
+                            <input th:field="*{lastName}" type="text" id="lastName" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email*: </label>
+                            <input th:field="*{email}" type="email" id="email" class="form-control"/>
                         </div>
 
                         <br>

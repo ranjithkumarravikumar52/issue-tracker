@@ -7,6 +7,28 @@
               crossorigin="anonymous">
     </head>
     <body>
+        <nav th:replace="fragments/navbar :: navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Issues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Roles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Test DB Connection</a>
+                </li>
+            </ul>
+        </nav>
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -19,30 +41,29 @@
             <!--list entities-->
             <div class="row mt-5">
                 <div class="col">
-                    <a th:href="@{/user/listUsers}" class="btn btn-primary">List Users</a>
+                    <a th:href="@{/users/list}" class="btn btn-primary">List Users</a>
                 </div>
                 <div class="col">
                     <a th:href="@{/issues/list}" class="btn btn-primary">List Issues</a>
                 </div>
                 <div class="col">
-                    <a th:href="@{/project/listProjects}" class="btn btn-primary">List
-                        Project</a>
+                    <a th:href="@{/projects/list}" class="btn btn-primary">List Projects</a>
                 </div>
                 <div class="col">
-                    <a th:href="@{/role/listRoles}" class="btn btn-primary">List Roles</a>
+                    <a th:href="@{/roles/list}" class="btn btn-primary">List Roles</a>
                 </div>
             </div>
 
             <!--admin buttons here-->
             <div class="row mt-5">
                 <div class="col">
-                    <a th:href="@{/sanityCheck/dbConnection}" class="btn btn-info">Test DB Connection</a>
+                    <a th:href="@{/oops}" class="btn btn-info">Test DB Connection</a>
                 </div>
                 <div class="col">
-                    <a th:href="@{/project/projectUserList}" class="btn btn-warning">List Projects by Users(WIP)</a>
+                    <a th:href="@{/oops}" class="btn btn-warning">List Projects by Users(WIP)</a>
                 </div>
                 <div class="col">
-                    <a th:href="@{/user/userProjectList}" class="btn btn-warning">List Users by Project(WIP)</a>
+                    <a th:href="@{/oops}" class="btn btn-warning">List Users by Project(WIP)</a>
                 </div>
             </div>
 
