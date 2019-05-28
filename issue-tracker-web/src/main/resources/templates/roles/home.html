@@ -3,7 +3,7 @@
         <title>Listing users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Prototype</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        <link rel="stylesheet" th:href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
     </head>
@@ -18,22 +18,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="roles : ${roles}">
-                        <tr>
-                            <td>${role.id}</td>
-                            <td>${role.name}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="@{/role/showUpdateForm/(roleId = ${role.id})}" class="btn btn-sm btn-info">Update</a>
-                                    <a href="@{/role/delete/(roleId = ${role.id})}" class="btn btn-sm btn-danger">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr th:each="role : ${roles}">
+                        <td>${role.id}</td>
+                        <td>${role.name}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a th:href="@{/roles/new/(roleId = ${role.id})}" class="btn btn-sm btn-info">Update</a>
+                                <a th:href="@{/roles/delete/(roleId = ${role.id})}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <a href="@{/}" class="btn btn-primary btn-sm">Home</a>
-            <a href="@{/role/showAddForm}" class="btn btn-warning btn-sm">Add New Role</a>
+            <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
+            <a th:href="@{/roles/new}" class="btn btn-warning btn-sm">Add New Role</a>
 
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">

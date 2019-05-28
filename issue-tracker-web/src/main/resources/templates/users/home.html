@@ -35,9 +35,8 @@
                         <td th:text="${user.roleList}">Developer</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a th:href="@{/user/showUpdateForm/(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
-                                <a th:href="@{/user/delete/(userId = ${user.id})}"
-                                   class="btn btn-sm btn-danger">Delete</a>
+                                <a th:href="@{/users/new/(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
+                                <a th:href="@{/users/delete/(userId = ${user.id})}" class="btn btn-sm btn-danger">Delete</a>
                             </div>
                         </td>
 
@@ -46,7 +45,7 @@
                 </tbody>
             </table>
             <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
-            <a th:href="@{/user/showAddForm}" class="btn btn-warning btn-sm">Add New User</a>
+            <a th:href="@{/users/new}" class="btn btn-warning btn-sm">Add New User</a>
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

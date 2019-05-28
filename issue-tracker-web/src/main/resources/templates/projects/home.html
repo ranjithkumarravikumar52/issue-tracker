@@ -21,21 +21,19 @@
 
                 <tbody>
                     <tr th:each="project : ${projects}">
-                        <tr>
-                            <td>${project.id}</td>
-                            <td>${project.projectDescription}</td>
-                            <td class="text-center">
-                                <a href="@{/project/showUpdateForm/(projectId = ${project.id}}" class="btn btn-sm btn-info">Update</a>
-                                <a href="@{/project/delete/(projectId = ${project.id}}" class="btn btn-sm btn-danger">Delete</a>
-                            </td>
-                        </tr>
+                        <td>${project.id}</td>
+                        <td>${project.projectDescription}</td>
+                        <td class="text-center">
+                            <a th:href="@{/projects/new/(projectId = ${project.id})}" class="btn btn-sm btn-info">Update</a>
+                            <a th:href="@{/projects/delete/(projectId = ${project.id})}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
 
             </table>
 
-            <a href="@{/}" class="btn btn-primary btn-sm">Home</a>
-            <a href="@{/project/showAddForm}" class="btn btn-primary btn-sm btn-warning">Add New Project</a>
+            <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
+            <a th:href="@{/projects/new}" class="btn btn-primary btn-sm btn-warning">Add New Project</a>
         </div>
     </body>
 </html>
