@@ -17,54 +17,79 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(IssueController.class)
 public class IssueControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private IssueService issueService;
 
-    User user;
-    Issue issue;
+    private Issue blockerIssue;
+    private Issue graphicsIssue;
 
     @Before
-    public void setup(){
-        user = new User("johnDoe", "password123", "johnDoe@gmail.com", "john", "doe");
-        user.setId(1);
-        issue = new Issue("Fake Issue Description", user, user,user,user);
-        issue.setId(1);
+    public void setup() {
+        User johnDoe = User.builder()
+                .id(1)
+                .userName("johnDoe")
+                .password("pass123")
+                .email("johnDoe@gmail.com")
+                .firstName("john")
+                .lastName("doe")
+                .build();
+
+        User janeDoe = User.builder()
+                .id(2)
+                .userName("janeDoe")
+                .password("pass456")
+                .email("janeDoe@gmail.com")
+                .firstName("jane")
+                .lastName("doe")
+                .build();
+
+        blockerIssue = Issue.builder()
+                .id(1)
+                .issueDescription("blocker issue")
+                .postedBy(johnDoe)
+                .openedBy(johnDoe)
+                .fixedBy(johnDoe)
+                .closedBy(johnDoe)
+                .build();
+
+        graphicsIssue = Issue.builder()
+                .id(2)
+                .issueDescription("graphics issue")
+                .postedBy(janeDoe)
+                .openedBy(johnDoe)
+                .fixedBy(janeDoe)
+                .closedBy(johnDoe)
+                .build();
     }
 
     @Test
-    public void getIssuesList() throws Exception{
+    public void getIssuesList() throws Exception {
         Set<Issue> issues = new HashSet<>();
-        issues.add(issue);
+        issues.add(blockerIssue);
+        issues.add(graphicsIssue);
         when(issueService.findAll()).thenReturn(issues);
 
         mockMvc.perform(get("/issues/list"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("issues"))
-                .andExpect(model().attribute("issues", hasSize(1)))
+                .andExpect(model().attribute("issues", hasSize(2)))
                 .andExpect(view().name("issues/home"));
 
     }
 
     @Test
-    public void showAddForm() throws Exception{
+    public void showAddForm() throws Exception {
         mockMvc.perform(get("/issues/new"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("issue"))
@@ -75,7 +100,7 @@ public class IssueControllerTest {
 
     @Test
     public void addIssue() throws Exception {
-        when(issueService.save(ArgumentMatchers.any())).thenReturn(issue);
+        when(issueService.save(ArgumentMatchers.any())).thenReturn(blockerIssue);
 
         mockMvc.perform(post("/issues/new"))
                 .andExpect(status().is3xxRedirection())
@@ -85,8 +110,8 @@ public class IssueControllerTest {
     }
 
     @Test
-    public void showUpdateForm() throws Exception{
-        when(issueService.findById(anyInt())).thenReturn(issue);
+    public void showUpdateForm() throws Exception {
+        when(issueService.findById(anyInt())).thenReturn(blockerIssue);
 
         mockMvc.perform(get("/issues/edit/1"))
                 .andExpect(status().isOk())
@@ -96,13 +121,13 @@ public class IssueControllerTest {
         verify(issueService).findById(anyInt());
     }
 
+    /**
+     * Mocking void methods is a bit different. In below code we created a mock of the {@link IssueServiceSDJPAImpl}<br>
+     * particularly deleteById().
+     * And then we verify that method is called exactly once.
+     */
     @Test
     public void deleteIssue() throws Exception {
-        /**
-         * Mocking void methods is a bit different. In below code we created a mock of the {@link IssueServiceSDJPAImpl}<br>
-         *     particularly deleteById().
-         *     And then we verify that method is called exactly once.
-         */
         IssueServiceSDJPAImpl mock = mock(IssueServiceSDJPAImpl.class);
         doNothing().when(mock).deleteById(1);
 
