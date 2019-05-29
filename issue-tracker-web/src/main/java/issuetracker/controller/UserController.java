@@ -53,7 +53,7 @@ public class UserController {
         return VIEW_SHOW_ADD_USER_FORM;
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @GetMapping("/delete/{userId}")
     public String deleteUser(@PathVariable("userId") int userId) {
         userService.deleteById(userId);
         return "redirect:/users/list";
