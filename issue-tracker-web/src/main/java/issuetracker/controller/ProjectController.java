@@ -46,7 +46,7 @@ public class ProjectController {
         return VIEW_SHOW_ADD_PROJECT_FORM;
 	}
 
-	@DeleteMapping("/delete/{projectId}")
+	@GetMapping("/delete/{projectId}")
 	public String deleteProject(@PathVariable("projectId") int projectId){
         projectService.deleteById(projectId);
         return "redirect:/projects/list";

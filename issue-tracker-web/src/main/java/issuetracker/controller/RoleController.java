@@ -47,7 +47,7 @@ public class RoleController {
         return VIEW_SHOW_ADD_ROLE_FORM;
     }
 
-    @DeleteMapping("/delete/{roleId}")
+    @GetMapping("/delete/{roleId}")
     public String deleteRole(@PathVariable("roleId") int roleId) {
         roleService.deleteById(roleId);
         return "redirect:/roles/list";
