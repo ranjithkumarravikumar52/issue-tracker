@@ -54,8 +54,9 @@
                         <td th:text="${user.email}">johnDoe@something.com</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a th:href="@{/users/new/(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
-                                <a th:href="@{/users/delete/(userId = ${user.id})}" class="btn btn-sm btn-danger">Delete</a>
+                                <a th:href="@{/users/edit/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
+                                <a th:href="@{/users/delete/{userId}(userId = ${user.id})}"
+                                   class="btn btn-sm btn-danger">Delete</a>
                             </div>
                         </td>
 
