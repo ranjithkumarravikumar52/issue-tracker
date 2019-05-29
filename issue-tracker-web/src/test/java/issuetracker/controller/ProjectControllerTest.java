@@ -18,7 +18,8 @@ import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -108,7 +109,7 @@ public class ProjectControllerTest {
 
     @Test
     public void deleteProject() throws Exception{
-        mockMvc.perform(delete("/projects/delete/1"))
+        mockMvc.perform(get("/projects/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/list"));
     }
