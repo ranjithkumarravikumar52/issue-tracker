@@ -53,16 +53,25 @@
                         <div class="form-group">
                             <label for="firstName">First Name*: </label>
                             <input th:field="*{firstName}" type="text" id="firstName" class="form-control"/>
+                            <!--display firstName validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid FirstName</p>
                         </div>
 
                         <div class="form-group">
                             <label for="lastName">Last Name*: </label>
                             <input th:field="*{lastName}" type="text" id="lastName" class="form-control"/>
+                            <!--display lastName validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid LastName</p>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email*: </label>
                             <input th:field="*{email}" type="email" id="email" class="form-control"/>
+                            <!--display email validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid Email</p>
                         </div>
 
                         <br>
