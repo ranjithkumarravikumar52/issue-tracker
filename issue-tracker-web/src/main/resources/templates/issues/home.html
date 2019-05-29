@@ -53,8 +53,8 @@
                         <td th:text="${issue.closedBy.userName}">John4</td>
                         <td>
                             <div class="btn-group">
-                                <a th:href="@{/issues/edit/(issueId = ${issue.id})}" class="btn btn-sm btn-dark">Update</a>
-                                <a th:href="@{/issues/delete/(issueId = ${issue.id})}" class="btn btn-sm btn-danger">Delete</a>
+                                <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}" class="btn btn-sm btn-dark">Update</a>
+                                <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}" class="btn btn-sm btn-danger">Delete</a>
                             </div>
                         </td>
                     </tr>
