@@ -3,7 +3,7 @@
         <title>Listing users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Prototype</title>
-        <link rel="stylesheet" th:href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
     </head>
@@ -41,8 +41,8 @@
                 </thead>
                 <tbody>
                     <tr th:each="role : ${roles}">
-                        <td>${role.id}</td>
-                        <td>${role.name}</td>
+                        <td th:text="${role.id}">1</td>
+                        <td th:text="${role.name}">Test role</td>
                         <td class="text-center">
                             <div class="btn-group">
                                 <a th:href="@{/roles/new/(roleId = ${role.id})}" class="btn btn-sm btn-info">Update</a>
