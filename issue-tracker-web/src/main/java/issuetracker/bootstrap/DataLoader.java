@@ -110,8 +110,8 @@ public class DataLoader implements CommandLineRunner {
 
     private void loadProjectsData() {
         Project freePlay = Project.builder().id(1).projectDescription("Sims Free play").userList(Arrays.asList(johnDoe, janeDoe)).build();
-        Project johnWick3 = Project.builder().id(1).projectDescription("John Wick 3").userList(Arrays.asList(johnDoe, janeDoe)).build();
-        Project endgame = Project.builder().id(1).projectDescription("Endgame").userList(Arrays.asList(johnDoe, janeDoe)).build();
+        Project johnWick3 = Project.builder().id(2).projectDescription("John Wick 3").userList(Arrays.asList(johnDoe, janeDoe)).build();
+        Project endgame = Project.builder().id(3).projectDescription("Endgame").userList(Arrays.asList(johnDoe, janeDoe)).build();
         projectService.save(freePlay);
         projectService.save(johnWick3);
         projectService.save(endgame);
@@ -120,7 +120,7 @@ public class DataLoader implements CommandLineRunner {
 
     private void loadRolesData() {
         Role developerRole = Role.builder().id(1).name("Developer").userList(Collections.singletonList(johnDoe)).build();
-        Role testerRole = Role.builder().id(1).name("Tester").userList(Collections.singletonList(janeDoe)).build();
+        Role testerRole = Role.builder().id(2).name("Tester").userList(Collections.singletonList(janeDoe)).build();
         roleService.save(developerRole);
         roleService.save(testerRole);
         log.info("Saved roles objects");
