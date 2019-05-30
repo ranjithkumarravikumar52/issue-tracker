@@ -46,12 +46,12 @@ public class DataLoader implements CommandLineRunner {
         if (userService.findAll().size() == 0) {
             loadUsersData();
         }
-        /*//load data only if there is no data in the issue repo
+        //load data only if there is no data in the issue repo
         if (issueService.findAll().size() == 0) {
             loadIssuesData();
         }
 
-        //load data only if there is no data in the project repo
+        /*//load data only if there is no data in the project repo
         if (projectService.findAll().size() == 0) {
             loadProjectsData();
         }
@@ -110,30 +110,16 @@ public class DataLoader implements CommandLineRunner {
         roleService.findById(2).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
     }
 
-    /*private void loadIssuesData() {
-        Issue blockerIssue = Issue.builder()
-                .id(1)
-                .issueDescription("blocker issue")
-                .postedBy(johnDoe)
-                .openedBy(janeDoe)
-                .fixedBy(johnDoe)
-                .closedBy(janeDoe)
-                .build();
+    private void loadIssuesData() {
+        Issue blockerIssue = Issue.builder().id(1).issueDescription("blocker issue").postedBy(johnDoe).build();
+        Issue graphicsIssue = Issue.builder().id(2).issueDescription("graphics issue").postedBy(janeDoe).build();
 
-        Issue graphicsIssue = Issue.builder()
-                .id(2)
-                .issueDescription("graphics issue")
-                .postedBy(janeDoe)
-                .openedBy(johnDoe)
-                .fixedBy(janeDoe)
-                .closedBy(johnDoe)
-                .build();
         issueService.save(blockerIssue);
         issueService.save(graphicsIssue);
         log.info("Saved issue objects");
     }
 
-    private void loadProjectsData() {
+   /* private void loadProjectsData() {
         Project freePlay = Project.builder().id(1).projectDescription("Sims Free play").userList(Arrays.asList(johnDoe, janeDoe)).build();
         Project johnWick3 = Project.builder().id(2).projectDescription("John Wick 3").userList(Arrays.asList(johnDoe, janeDoe)).build();
         Project endgame = Project.builder().id(3).projectDescription("Endgame").userList(Arrays.asList(johnDoe, janeDoe)).build();

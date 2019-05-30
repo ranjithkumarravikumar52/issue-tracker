@@ -42,10 +42,17 @@ public class Issue extends BaseEntity {
     }
 
     //avoid using other entities inside the builder
+    //adding postedBy cos this field is not null
     @Builder
-    public Issue(int id, String issueDescription) {
+    public Issue(int id, String issueDescription, User postedBy) {
         super(id);
         this.issueDescription = issueDescription;
+        this.postedBy =  postedBy;
+    }
+
+    public Issue(String issueDescription, User postedBy) {
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
     }
 
     public Issue(String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
