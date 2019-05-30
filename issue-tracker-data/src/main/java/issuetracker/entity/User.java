@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "roleList")
 public class User extends BaseEntity {
 
     @Column(name = "user_name")
@@ -44,9 +43,12 @@ public class User extends BaseEntity {
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String lastName;
 
-    @ManyToMany //TODO this is not many-many but many-one
-    @JoinTable(name = "users_has_role", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roleList;
+    //TODO this is not many-many but many-one
+    //user has many-one with roles
+    //roles has one-many with user
+    //the direction is bi-directional
+    @ManyToOne
+    private Role role;
 
     //the foreign key is present on User side of the relationship - this means User table becomes the owning side
     //So the owning side of the relationship will always have CascadeType.ALL
@@ -62,14 +64,14 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    public User(int id, String userName, String password, String email, String firstName, String lastName, List<Role> roleList) {
+    public User(int id, String userName, String password, String email, String firstName, String lastName, Role role) {
         super(id);
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.roleList = roleList;
+        this.role = role;
     }
 
 

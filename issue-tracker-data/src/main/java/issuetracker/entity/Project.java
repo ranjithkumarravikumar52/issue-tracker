@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {"userList"})
+@ToString(exclude = {"userSet"})
 public class Project extends BaseEntity {
 
 	@Column(name = "project_description")
