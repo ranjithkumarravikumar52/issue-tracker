@@ -3,35 +3,37 @@ package issuetracker.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "projects")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {"userSet"})
 public class Project extends BaseEntity {
 
 	@Column(name = "project_description")
 	private String projectDescription;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "users_has_projects",
-			joinColumns = @JoinColumn(name = "projects_id"),
-			inverseJoinColumns = @JoinColumn(name = "users_id")
-	)
-	private List<User> userList;
+    //TODO test: check if the relationship is valid
+    //User can work on multiple projects
+    //A project can have multiple users
+    //Bi-directional
+    //No cascading delete
+    //fetch type lazy
+    @ManyToMany
+    @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    //creates a table called project_user with columns project_id and user_id
+    //and when the inverse table is also annotated by mappedBy then we get one table
+	private Set<User> users;
 
 	public Project(String projectDescription) {
 		this.projectDescription = projectDescription;
 	}
 
 	@Builder
-    public Project(int id, String projectDescription, List<User> userList) {
+    public Project(int id, String projectDescription, Set<User> users) {
         super(id);
         this.projectDescription = projectDescription;
-        this.userList = userList;
+        this.users = users;
     }
 }

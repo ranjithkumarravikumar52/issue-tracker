@@ -6,14 +6,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "userSet")
+@ToString(exclude = "users")
 public class Role extends BaseEntity {
 
-    @Column(name = "name")
+    @Column
     private String name;
 
     //user has many-one with roles

@@ -39,7 +39,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        //load data only if there is no data in the user repository
+        /*//load data only if there is no data in the user repository
         if (userService.findAll().size() == 0) {
             loadUsersData();
         }
@@ -56,11 +56,11 @@ public class DataLoader implements CommandLineRunner {
         //load data only if there is no data in the role repo
         if (roleService.findAll().size() == 0) {
             loadRolesData();
-        }
+        }*/
 
     }
 
-    private void loadUsersData() {
+   /* private void loadUsersData() {
         johnDoe = User.builder()
                 .id(1)
                 .userName("johnDoe")
@@ -124,5 +124,5 @@ public class DataLoader implements CommandLineRunner {
         roleService.save(developerRole);
         roleService.save(testerRole);
         log.info("Saved roles objects");
-    }
+    }*/
 }

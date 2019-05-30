@@ -8,20 +8,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "email", columnNames = "email"))
 @Getter
 @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-    @Column(name = "user_name")
+    @Column
     @NotNull(message = "is required")
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String userName;
 
-    @Column(name = "password")
+    @Column
     @NotNull(message = "is required")
     @NotEmpty(message = "can't be empty")
     @Size(min = 3, max = 254, message = "min is 3, max is 10")
@@ -29,26 +29,35 @@ public class User extends BaseEntity {
 
     @Email(message = "Invalid Email")
     @Size(max = 254, message = "It is too big")
-    @Column(name = "email")
+    @Column
     @NotNull(message = "Please, set here the user email")
     private String email;
 
-    @Column(name = "first_name")
+    @Column
     @NotNull(message = "is required")
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column
     @NotNull(message = "is required")
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String lastName;
 
-    //TODO this is not many-many but many-one
+    //TODO test: this is not many-many but many-one
     //user has many-one with roles
     //roles has one-many with user
     //the direction is bi-directional
     @ManyToOne
     private Role role;
+
+    //TODO test: check if the relationship is valid
+    //User can work on multiple projects
+    //A project can have multiple users
+    //Bi-directional
+    //No cascading delete
+    //fetch type lazy
+    @ManyToMany(mappedBy = "users") //mappedBy here will join the default two tables into one table which we want
+    private Set<Project> projects;
 
     //the foreign key is present on User side of the relationship - this means User table becomes the owning side
     //So the owning side of the relationship will always have CascadeType.ALL
