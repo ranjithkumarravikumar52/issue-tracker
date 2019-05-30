@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "issues")
+@Table
 @Getter
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Issue extends BaseEntity {
 
 
-    @Column(name = "issue_description")
+    @Column
     private String issueDescription;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

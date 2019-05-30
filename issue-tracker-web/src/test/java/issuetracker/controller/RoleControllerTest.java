@@ -55,7 +55,7 @@ public class RoleControllerTest {
                 .lastName("doe")
                 .build();
 
-        developerRole = Role.builder().id(1).name("Developer").userList(Arrays.asList(johnDoe, janeDoe)).build();
+        developerRole = Role.builder().id(1).name("Developer").build();
     }
 
     @Test
