@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 @Entity //this will close the bridge between object world and relational world
 @Getter
 @Setter
+//assuming that this table is a secondary/child of user and we don't need to create a repository of this.
 class PhoneNumber extends BaseEntity{
     /**
      * The reason being this...
