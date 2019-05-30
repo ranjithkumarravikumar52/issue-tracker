@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+//primary table so we have a project repo
 public class Project extends BaseEntity {
 
 	@Column(name = "project_description")

@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
 @NoArgsConstructor
+//primary table so we have a issue repo
 public class Issue extends BaseEntity {
 
 

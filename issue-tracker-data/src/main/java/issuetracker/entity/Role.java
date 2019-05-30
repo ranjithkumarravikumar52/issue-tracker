@@ -10,6 +10,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString(exclude = "users")
+//primary table so we have a role repo
 public class Role extends BaseEntity {
 
     @Column

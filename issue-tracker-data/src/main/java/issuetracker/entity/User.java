@@ -14,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+//primary table so we have a user repo
 public class User extends BaseEntity {
 
     @Column
