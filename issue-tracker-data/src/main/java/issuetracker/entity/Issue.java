@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table
 @Getter
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
@@ -42,14 +41,11 @@ public class Issue extends BaseEntity {
         this.issueDescription = issueDescription;
     }
 
+    //avoid using other entities inside the builder
     @Builder
-    public Issue(int id, String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+    public Issue(int id, String issueDescription) {
         super(id);
         this.issueDescription = issueDescription;
-        this.postedBy = postedBy;
-        this.openedBy = openedBy;
-        this.fixedBy = fixedBy;
-        this.closedBy = closedBy;
     }
 
     public Issue(String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {

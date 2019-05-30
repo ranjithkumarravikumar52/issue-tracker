@@ -1,9 +1,6 @@
 package issuetracker.bootstrap;
 
-import issuetracker.entity.Issue;
-import issuetracker.entity.Project;
-import issuetracker.entity.Role;
-import issuetracker.entity.User;
+import issuetracker.entity.*;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -30,6 +27,12 @@ public class DataLoader implements CommandLineRunner {
     private User johnDoe;
     private User janeDoe;
 
+    private Role developer;
+    private Role tester;
+
+    private PhoneNumber phoneNumber1;
+    private PhoneNumber phoneNumber2;
+
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService, RoleService roleService) {
         this.userService = userService;
         this.issueService = issueService;
@@ -39,11 +42,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        /*//load data only if there is no data in the user repository
+        //load data only if there is no data in the user repository
         if (userService.findAll().size() == 0) {
             loadUsersData();
         }
-        //load data only if there is no data in the issue repo
+        /*//load data only if there is no data in the issue repo
         if (issueService.findAll().size() == 0) {
             loadIssuesData();
         }
@@ -60,32 +63,54 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
-   /* private void loadUsersData() {
-        johnDoe = User.builder()
-                .id(1)
-                .userName("johnDoe")
-                .password("pass123")
-                .email("johnDoe@gmail.com")
-                .firstName("john")
-                .lastName("doe")
-                .build();
+    private void loadUsersData() {
 
-        janeDoe = User.builder()
-                .id(2)
-                .userName("janeDoe")
-                .password("pass456")
-                .email("janeDoe@gmail.com")
-                .firstName("jane")
-                .lastName("doe")
-                .build();
+        //create dev and tester roles objects
+        developer = Role.builder().id(1).name("developer").build();
+        tester = Role.builder().id(2).name("tester").build();
+
+        //save roles before we can set the child objects
+        roleService.save(developer);
+        roleService.save(tester);
+        log.info("Saved role objects");
+
+        //create 2 phone numbers
+        phoneNumber1 = PhoneNumber.builder().id(1).phoneNumber("1234567890").build();
+        phoneNumber2 = PhoneNumber.builder().id(2).phoneNumber("6789012345").build();
+
+        //create johnDoe and janeDoe user objects
+        johnDoe = User.builder().id(1).userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        janeDoe = User.builder().id(2).userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
+
+        //save the child objects for the roles
+        //bi-directional relationship with roles and user
+        developer.setUserSet(Collections.singleton(johnDoe));
+        tester.setUserSet(Collections.singleton(janeDoe));
+
+        //set the roles child objects for the user
+        johnDoe.setRole(developer);
+        janeDoe.setRole(tester);
+
+        //set the phone number child objects for the user
+        johnDoe.setPhoneNumber(phoneNumber1);
+        janeDoe.setPhoneNumber(phoneNumber2);
 
         //save user objects
         userService.save(johnDoe);
         userService.save(janeDoe);
         log.info("Saved user objects...");
+
+        //save roles before we can set the child objects
+        roleService.save(developer);
+        roleService.save(tester);
+        log.info("Update role objects");
+
+        //check if we can navigate from role to user
+        roleService.findById(1).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
+        roleService.findById(2).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
     }
 
-    private void loadIssuesData() {
+    /*private void loadIssuesData() {
         Issue blockerIssue = Issue.builder()
                 .id(1)
                 .issueDescription("blocker issue")

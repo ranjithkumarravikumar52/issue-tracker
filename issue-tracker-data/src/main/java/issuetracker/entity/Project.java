@@ -31,10 +31,10 @@ public class Project extends BaseEntity {
 		this.projectDescription = projectDescription;
 	}
 
+	//avoid using other entities inside the builder
 	@Builder
-    public Project(int id, String projectDescription, Set<User> users) {
+    public Project(int id, String projectDescription) {
         super(id);
         this.projectDescription = projectDescription;
-        this.users = users;
     }
 }

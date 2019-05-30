@@ -73,15 +73,15 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
+    //avoid using other entities inside the builder
     @Builder
-    public User(int id, String userName, String password, String email, String firstName, String lastName, Role role) {
+    public User(int id, String userName, String password, String email, String firstName, String lastName) {
         super(id);
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
     }
 
 
