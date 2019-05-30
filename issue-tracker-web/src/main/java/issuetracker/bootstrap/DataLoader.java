@@ -33,8 +33,8 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         //create dev and tester roles objects
-        Role developer = Role.builder().id(1).name("developer").build();
-        Role tester = Role.builder().id(2).name("tester").build();
+        Role developer = Role.builder().name("developer").build();
+        Role tester = Role.builder().name("tester").build();
 
         //save roles before we can set the child objects
         roleService.save(developer);
@@ -42,13 +42,13 @@ public class DataLoader implements CommandLineRunner {
         log.info("Saved role objects");
 
         //create 2 phone numbers
-        PhoneNumber phoneNumber1 = PhoneNumber.builder().id(1).phoneNumber("1234567890").build();
-        PhoneNumber phoneNumber2 = PhoneNumber.builder().id(2).phoneNumber("6789012345").build();
+        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
+        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber("6789012345").build();
 
         //create johnDoe and janeDoe user objects
         //field objects
-        User johnDoe = User.builder().id(1).userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
-        User janeDoe = User.builder().id(2).userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
+        User johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        User janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
 
         //save the child objects for the roles
         //bi-directional relationship with roles and user
