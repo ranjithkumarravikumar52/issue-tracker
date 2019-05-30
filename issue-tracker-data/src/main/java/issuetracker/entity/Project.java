@@ -3,6 +3,7 @@ package issuetracker.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,16 +26,16 @@ public class Project extends BaseEntity {
     @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     //creates a table called project_user with columns project_id and user_id
     //and when the inverse table is also annotated by mappedBy then we get one table
-	private Set<User> users;
+	private Set<User> users = new HashSet<>();
 
 	public Project(String projectDescription) {
 		this.projectDescription = projectDescription;
 	}
 
+	//avoid using other entities inside the builder
 	@Builder
-    public Project(int id, String projectDescription, Set<User> users) {
+    public Project(int id, String projectDescription) {
         super(id);
         this.projectDescription = projectDescription;
-        this.users = users;
     }
 }

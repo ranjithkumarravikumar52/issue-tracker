@@ -1,9 +1,6 @@
 package issuetracker.bootstrap;
 
-import issuetracker.entity.Issue;
-import issuetracker.entity.Project;
-import issuetracker.entity.Role;
-import issuetracker.entity.User;
+import issuetracker.entity.*;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -26,10 +23,6 @@ public class DataLoader implements CommandLineRunner {
     private final ProjectService projectService;
     private final RoleService roleService;
 
-    //field objects
-    private User johnDoe;
-    private User janeDoe;
-
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService, RoleService roleService) {
         this.userService = userService;
         this.issueService = issueService;
@@ -39,90 +32,77 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        /*//load data only if there is no data in the user repository
-        if (userService.findAll().size() == 0) {
-            loadUsersData();
-        }
-        //load data only if there is no data in the issue repo
-        if (issueService.findAll().size() == 0) {
-            loadIssuesData();
-        }
+        //create dev and tester roles objects
+        Role developer = Role.builder().name("developer").build();
+        Role tester = Role.builder().name("tester").build();
 
-        //load data only if there is no data in the project repo
-        if (projectService.findAll().size() == 0) {
-            loadProjectsData();
-        }
+        //save roles before we can set the child objects
+        roleService.save(developer);
+        roleService.save(tester);
+        log.info("Saved role objects");
 
-        //load data only if there is no data in the role repo
-        if (roleService.findAll().size() == 0) {
-            loadRolesData();
-        }*/
+        //create 2 phone numbers
+        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
+        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber("6789012345").build();
 
-    }
+        //create johnDoe and janeDoe user objects
+        //field objects
+        User johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        User janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
 
-   /* private void loadUsersData() {
-        johnDoe = User.builder()
-                .id(1)
-                .userName("johnDoe")
-                .password("pass123")
-                .email("johnDoe@gmail.com")
-                .firstName("john")
-                .lastName("doe")
-                .build();
+        //save the child objects for the roles
+        //bi-directional relationship with roles and user
+        developer.setUserSet(Collections.singleton(johnDoe));
+        tester.setUserSet(Collections.singleton(janeDoe));
 
-        janeDoe = User.builder()
-                .id(2)
-                .userName("janeDoe")
-                .password("pass456")
-                .email("janeDoe@gmail.com")
-                .firstName("jane")
-                .lastName("doe")
-                .build();
+        //set the roles child objects for the user
+        johnDoe.setRole(developer);
+        janeDoe.setRole(tester);
+
+        //set the phone number child objects for the user
+        johnDoe.setPhoneNumber(phoneNumber1);
+        janeDoe.setPhoneNumber(phoneNumber2);
 
         //save user objects
         userService.save(johnDoe);
         userService.save(janeDoe);
         log.info("Saved user objects...");
-    }
 
-    private void loadIssuesData() {
-        Issue blockerIssue = Issue.builder()
-                .id(1)
-                .issueDescription("blocker issue")
-                .postedBy(johnDoe)
-                .openedBy(janeDoe)
-                .fixedBy(johnDoe)
-                .closedBy(janeDoe)
-                .build();
+        //save roles before we can set the child objects
+        roleService.save(developer);
+        roleService.save(tester);
+        log.info("Update role objects");
 
-        Issue graphicsIssue = Issue.builder()
-                .id(2)
-                .issueDescription("graphics issue")
-                .postedBy(janeDoe)
-                .openedBy(johnDoe)
-                .fixedBy(janeDoe)
-                .closedBy(johnDoe)
-                .build();
+        //check if we can navigate from role to user
+//        roleService.findById(1).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
+//        roleService.findById(2).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
+
+        //issue object
+        Issue blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(johnDoe).build();
+        Issue graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(janeDoe).build();
         issueService.save(blockerIssue);
         issueService.save(graphicsIssue);
         log.info("Saved issue objects");
-    }
 
-    private void loadProjectsData() {
-        Project freePlay = Project.builder().id(1).projectDescription("Sims Free play").userList(Arrays.asList(johnDoe, janeDoe)).build();
-        Project johnWick3 = Project.builder().id(2).projectDescription("John Wick 3").userList(Arrays.asList(johnDoe, janeDoe)).build();
-        Project endgame = Project.builder().id(3).projectDescription("Endgame").userList(Arrays.asList(johnDoe, janeDoe)).build();
+
+        //init 3 projects
+        Project freePlay = Project.builder().projectDescription("Sims Free play").build();
+        Project johnWick3 = Project.builder().projectDescription("John Wick 3").build();
+        Project endgame = Project.builder().projectDescription("Endgame").build();
         projectService.save(freePlay);
         projectService.save(johnWick3);
         projectService.save(endgame);
         log.info("Saved project objects");
-    }
 
-    private void loadRolesData() {
-        Role developerRole = Role.builder().id(1).name("Developer").userList(Collections.singletonList(johnDoe)).build();
-        Role testerRole = Role.builder().id(2).name("Tester").userList(Collections.singletonList(janeDoe)).build();
-        roleService.save(developerRole);
-        roleService.save(testerRole);
-        log.info("Saved roles objects");
-    }*/
+        //now updating user with projects should be validated in join table - Oh yeah it will fail, cos the relationship needs to be updated
+        //from both direction or NOT?
+        freePlay.setUsers(Collections.singleton(janeDoe));
+        endgame.setUsers(Collections.singleton(johnDoe));
+        johnWick3.getUsers().add(johnDoe);
+        johnWick3.getUsers().add(janeDoe);
+        projectService.save(freePlay);
+        projectService.save(johnWick3);
+        projectService.save(endgame);
+        log.info("updated projects with users");
+    }
 }

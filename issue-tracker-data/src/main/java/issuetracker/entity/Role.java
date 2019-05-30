@@ -9,7 +9,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "users")
 //primary table so we have a role repo
 public class Role extends BaseEntity {
 
@@ -22,7 +21,7 @@ public class Role extends BaseEntity {
     //TODO test: if we delete a role we don't want to delete any user, if we delete a user we don't want to delete any role
     //cos of the above point we are not creating any cascading relationship
     //TODO test: direction is bi-directional since we created annotation on both sides(object navigation from both sides)
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private Set<User> userSet;
 
     public Role(String name) {
@@ -30,9 +29,8 @@ public class Role extends BaseEntity {
     }
 
     @Builder
-    public Role(int id, String name, Set<User> userSet) {
+    public Role(int id, String name) {
         super(id);
         this.name = name;
-        this.userSet = userSet;
     }
 }

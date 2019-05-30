@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table
 @Getter
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
@@ -13,24 +12,19 @@ import javax.persistence.*;
 //primary table so we have a issue repo
 public class Issue extends BaseEntity {
 
-
     @Column
     private String issueDescription;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "posted_by", nullable = false)
+    @ManyToOne
     private User postedBy;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "opened_by")
+    @ManyToOne
     private User openedBy;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "fixed_by")
+    @ManyToOne
     private User fixedBy;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "closed_by")
+    @ManyToOne
     private User closedBy;
 
     /**
@@ -42,14 +36,18 @@ public class Issue extends BaseEntity {
         this.issueDescription = issueDescription;
     }
 
+
+    //adding postedBy cos this field is not null
     @Builder
-    public Issue(int id, String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
+    public Issue(int id, String issueDescription, User postedBy) {
         super(id);
         this.issueDescription = issueDescription;
         this.postedBy = postedBy;
-        this.openedBy = openedBy;
-        this.fixedBy = fixedBy;
-        this.closedBy = closedBy;
+    }
+
+    public Issue(String issueDescription, User postedBy) {
+        this.issueDescription = issueDescription;
+        this.postedBy = postedBy;
     }
 
     public Issue(String issueDescription, User postedBy, User openedBy, User fixedBy, User closedBy) {
