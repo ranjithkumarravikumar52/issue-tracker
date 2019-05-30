@@ -77,12 +77,13 @@ public class DataLoader implements CommandLineRunner {
 //        roleService.findById(1).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
 //        roleService.findById(2).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
 
-        Issue blockerIssue = Issue.builder().id(1).issueDescription("blocker issue").postedBy(johnDoe).build();
-        Issue graphicsIssue = Issue.builder().id(2).issueDescription("graphics issue").postedBy(janeDoe).build();
-
+        //issue object
+        Issue blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(johnDoe).build();
+        Issue graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(janeDoe).build();
         issueService.save(blockerIssue);
         issueService.save(graphicsIssue);
         log.info("Saved issue objects");
+
 
         //init 3 projects
         Project freePlay = Project.builder().projectDescription("Sims Free play").build();
