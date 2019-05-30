@@ -44,9 +44,14 @@ public class User extends BaseEntity {
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String lastName;
 
-    @ManyToMany
+    @ManyToMany //TODO this is not many-many but many-one
     @JoinTable(name = "users_has_role", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roleList;
+
+    //the foreign key is present on User side of the relationship - this means User table becomes the owning side
+    //So the owning side of the relationship will always have CascadeType.ALL
+    @OneToOne(cascade = CascadeType.ALL)
+    private PhoneNumber phoneNumber;
 
     public User(String userName, String password, String email, String firstName, String lastName) {
         this.userName = userName;
