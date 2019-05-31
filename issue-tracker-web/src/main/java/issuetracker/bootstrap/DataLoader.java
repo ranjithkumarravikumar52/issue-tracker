@@ -104,5 +104,6 @@ public class DataLoader implements CommandLineRunner {
         projectService.save(johnWick3);
         projectService.save(endgame);
         log.info("updated projects with users");
+
     }
 }

@@ -44,7 +44,6 @@ public class User extends BaseEntity {
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String lastName;
 
-    //TODO test: this is not many-many but many-one
     //user has many-one with roles
     //roles has one-many with user
     //the direction is bi-directional
