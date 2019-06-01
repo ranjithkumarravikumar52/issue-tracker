@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 //primary table so we have a issue repo
 public class Issue extends BaseEntity {
 
-    @Column
+    @Column(unique = true)
     @NotNull
     private String issueDescription;
 

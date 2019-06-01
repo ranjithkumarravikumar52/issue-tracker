@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.ConstraintViolationException;
@@ -179,6 +180,20 @@ public class UserAndIssuesRepositoryTest {
     public void whenNullIssueDescriptionIsSaved_thenThrowException() throws ConstraintViolationException{
         Issue validIssue = Issue.builder().issueDescription(null).postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
         issueRepository.save(validIssue); //throws exception
+    }
+
+    /**
+     * Two issues can't have same issue description
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void whenTwoIssuesWithSameDescriptionSaved_thenThrowException(){
+        //prep - create a valid issue
+        Issue validIssue1 = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+        Issue validIssue2 = Issue.builder().issueDescription("Text issue").postedBy(johnDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+
+        //action - saveAll
+        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please - DataIntegrityViolationException
+
     }
 
 }
