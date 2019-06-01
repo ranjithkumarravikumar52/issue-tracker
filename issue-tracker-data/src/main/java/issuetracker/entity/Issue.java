@@ -12,11 +12,11 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
 @NoArgsConstructor
-@AllArgsConstructor
 //primary table so we have a issue repo
 public class Issue extends BaseEntity {
 
     @Column
+    @NotNull
     private String issueDescription;
 
     @ManyToOne
@@ -32,15 +32,17 @@ public class Issue extends BaseEntity {
     @ManyToOne
     private User closedBy;
 
-    @Builder //adding postedBy cos this field is not null
-    public Issue(int id, String issueDescription, User postedBy) {
-        super(id);
+    public Issue(String issueDescription, User postedBy) {
         this.issueDescription = issueDescription;
         this.postedBy = postedBy;
     }
 
-    public Issue(String issueDescription, User postedBy) {
+    @Builder //adding postedBy cos this field is not null
+    public Issue(@NotNull String issueDescription, @NotNull User postedBy, User openedBy, User fixedBy, User closedBy) {
         this.issueDescription = issueDescription;
         this.postedBy = postedBy;
+        this.openedBy = openedBy;
+        this.fixedBy = fixedBy;
+        this.closedBy = closedBy;
     }
 }
