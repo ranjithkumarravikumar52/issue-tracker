@@ -2,6 +2,7 @@ package issuetracker.controller;
 
 import issuetracker.entity.Issue;
 import issuetracker.entity.User;
+import issuetracker.repository.UserRepository;
 import issuetracker.service.IssueService;
 import issuetracker.service.springdatajpa.IssueServiceSDJPAImpl;
 import org.junit.Before;
@@ -34,6 +35,7 @@ public class IssueControllerTest {
     private Issue blockerIssue;
     private Issue graphicsIssue;
 
+    //TODO uncomment
     /*@Before
     public void setup() {
         User johnDoe = User.builder()

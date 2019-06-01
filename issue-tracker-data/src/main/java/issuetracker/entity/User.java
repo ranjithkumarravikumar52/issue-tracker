@@ -1,13 +1,15 @@
 package issuetracker.entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -44,10 +46,11 @@ public class User extends BaseEntity {
     @Size(min = 3, max = 10, message = "min is 3, max is 10")
     private String lastName;
 
-    //TODO test: this is not many-many but many-one
-    //user has many-one with roles
-    //roles has one-many with user
-    //the direction is bi-directional
+    /**
+     * user has many-one with roles
+     * roles has one-many with user
+     * the direction is bi-directional
+     */
     @ManyToOne
     private Role role;
 
