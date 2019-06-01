@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(doNotUseGetters = true) //for displaying and logging
 //primary table so we have a user repo
 public class User extends BaseEntity {
 
@@ -63,8 +61,10 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "users") //mappedBy here will join the default two tables into one table which we want
     private Set<Project> projects;
 
-    //the foreign key is present on User side of the relationship - this means User table becomes the owning side
-    //So the owning side of the relationship will always have CascadeType.ALL
+    /**
+     * The foreign key is present on User side of the relationship - this means User table becomes the owning side
+     *  So the owning side of the relationship will always have CascadeType.ALL
+     */
     @OneToOne(cascade = CascadeType.ALL)
     private PhoneNumber phoneNumber;
 
