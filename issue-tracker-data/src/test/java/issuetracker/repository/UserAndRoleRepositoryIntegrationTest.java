@@ -159,16 +159,16 @@ public class UserAndRoleRepositoryIntegrationTest {
 
         //then
         // 1. roleRepo should still hold dev role
-        Optional<Role> roleOptional = roleRepository.findById(1);
+        Optional<Role> roleOptional = roleRepository.findById(developer.getId());
         if (roleOptional.isPresent()) {
-            assertEquals(developer, roleOptional.get());
+            assertEquals(developer.getName(), roleOptional.get().getName());
         } else {
             throw new AssertionError("Not equals");
         }
 
         //then
         //2. user repo shouldn't hold john doe
-        Optional<User> userRepositoryByIdd = userRepository.findById(1);
+        Optional<User> userRepositoryByIdd = userRepository.findById(johnDoe.getId());
         if (userRepositoryByIdd.isPresent()) {
             throw new AssertionError("user failed to delete");
         } else {
@@ -197,7 +197,7 @@ public class UserAndRoleRepositoryIntegrationTest {
         roleRepository.save(developer);
 
         //when
-        User user = userRepository.findById(1).orElse(null);
+        User user = userRepository.findById(johnDoe.getId()).orElse(null);
         if (user != null) {
             log.info("User id by 1 exists");
             assertEquals(johnDoe, user); //assertion
@@ -237,7 +237,7 @@ public class UserAndRoleRepositoryIntegrationTest {
 
         //assertion
         //role shouldn't be deleted
-        Role role = roleRepository.findById(1).orElse(null);
+        Role role = roleRepository.findById(developer.getId()).orElse(null);
         if (role != null) {
             log.info("Role id by 1 is intact");
             assertEquals(developer, role);
@@ -285,7 +285,6 @@ public class UserAndRoleRepositoryIntegrationTest {
         }
 
     }
-
 
 
 }
