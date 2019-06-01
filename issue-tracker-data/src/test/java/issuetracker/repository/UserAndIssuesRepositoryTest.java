@@ -17,6 +17,19 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+/**
+ *  object navigation - uni direction, issues -> user but 4 different ways
+ *  owning side is issues - so FK is present in issues - 4 FKS
+ *  issueDescription and postedBy can't be null/empty
+ *  however other 3 user types in issues can be null
+ *
+ *  //relationship
+ *  issues can be posted by any single user
+ *  any single user can post, open, fix and close multiple issues
+ *
+ *  //validation
+ *  two issues can't have same exact description
+ */
 public class UserAndIssuesRepositoryTest {
 
     @Autowired
@@ -75,9 +88,10 @@ public class UserAndIssuesRepositoryTest {
     }
 
     @Test
-    public void sanityCheck(){
+    public void sanityCheck() {
         assertEquals(2, userRepository.count());
         assertEquals(2, roleRepository.count());
         assertEquals(2, issueRepository.count());
     }
+
 }
