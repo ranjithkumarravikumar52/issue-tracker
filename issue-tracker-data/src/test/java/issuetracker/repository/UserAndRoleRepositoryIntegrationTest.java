@@ -12,7 +12,6 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -170,14 +169,123 @@ public class UserAndRoleRepositoryIntegrationTest {
         //then
         //2. user repo shouldn't hold john doe
         Optional<User> userRepositoryByIdd = userRepository.findById(1);
-        if(userRepositoryByIdd.isPresent()){
+        if (userRepositoryByIdd.isPresent()) {
             throw new AssertionError("user failed to delete");
-        }else{
+        } else {
             assertNull(userRepositoryByIdd.orElse(null));
         }
 
 
     }
+
+    /**
+     * When user and role objects are saved and their corresponding direction is established, then calling findById should return the user,
+     * else there's something wrong with our database or test config setup
+     */
+    @Test
+    public void whenUserFindById_thenReturnAnUser() {
+        //prep
+        Role developer = Role.builder().name("developer").build();
+        roleRepository.save(developer);
+
+        User johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        johnDoe.setRole(developer);
+        userRepository.save(johnDoe);
+
+        //update direction
+        developer.getUserSet().add(johnDoe);
+        roleRepository.save(developer);
+
+        //when
+        User user = userRepository.findById(1).orElse(null);
+        if (user != null) {
+            log.info("User id by 1 exists");
+            assertEquals(johnDoe, user); //assertion
+        } else {
+            throw new AssertionError("User id by 1 doesn't exist"); //exception
+        }
+    }
+
+    /**
+     * when an user is deleted then the expected behavior is user should be deleted however the associated role object shouldn't.
+     */
+    @Test
+    public void whenDeleteAnUser_thenDeleteSuccess() {
+        //prep
+        Role developer = Role.builder().name("developer").build();
+        roleRepository.save(developer);
+
+        User johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        johnDoe.setRole(developer);
+        userRepository.save(johnDoe);
+
+        //update direction
+        developer.getUserSet().add(johnDoe);
+        roleRepository.save(developer);
+
+        //when
+        userRepository.delete(johnDoe);
+
+        //assertion
+        User user = userRepository.findById(1).orElse(null);
+        if (user == null) {
+            log.info("User id by 1 deleted successfully");
+            assertNull(user); //assertion
+        } else {
+            throw new AssertionError("User id by 1 deletion failed"); //exception
+        }
+
+        //assertion
+        //role shouldn't be deleted
+        Role role = roleRepository.findById(1).orElse(null);
+        if (role != null) {
+            log.info("Role id by 1 is intact");
+            assertEquals(developer, role);
+        } else {
+            throw new AssertionError("Role shouldn't have been deleted");
+        }
+    }
+
+    /**
+     * when a role is deleted then the expected behavior is role should be deleted however the associated user object shouldn't.
+     */
+    @Test
+    public void whenDeleteAnRole_thenDeleteSuccess() {
+        //prep
+        Role developer = Role.builder().name("developer").build();
+        roleRepository.save(developer);
+
+        User johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
+        johnDoe.setRole(developer);
+        userRepository.save(johnDoe);
+
+        //update direction
+        developer.getUserSet().add(johnDoe);
+        roleRepository.save(developer);
+
+        //when - delete role
+        roleRepository.delete(developer);
+
+        //assertion for role
+        Role role = roleRepository.findById(1).orElse(null);
+        if (role == null) {
+            log.info("role id by 1 deleted successfully");
+            assertNull(role); //assertion
+        } else {
+            throw new AssertionError("role id by 1 deletion failed"); //exception
+        }
+
+        //assertion for user
+        User user = userRepository.findById(1).orElse(null);
+        if (user != null) {
+            log.info("user id by 1 is intact");
+            assertEquals(johnDoe, user);
+        } else {
+            throw new AssertionError("user shouldn't have been deleted");
+        }
+
+    }
+
 
 
 }

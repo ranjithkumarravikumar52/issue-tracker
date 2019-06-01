@@ -1,8 +1,14 @@
 package issuetracker.entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,12 +22,14 @@ public class Role extends BaseEntity {
     @Column
     private String name;
 
-    //user has many-one with roles
-    //roles has one-many with user
-    //the direction is bi-directional
-    //if we delete a role we don't want to delete any user, if we delete a user we don't want to delete any role
-    //cos of the above point we are not creating any cascading relationship
-    //direction is bi-directional since we created annotation on both sides(object navigation from both sides)
+    /**
+     * user has many-one with roles
+     * roles has one-many with user
+     * the direction is bi-directional
+     * if we delete a role we don't want to delete any user, if we delete a user we don't want to delete any role
+     * cos of the above point we are not creating any cascading relationship
+     * direction is bi-directional since we created annotation on both sides(object navigation from both sides)
+     */
     @OneToMany(mappedBy = "role")
     private Set<User> userSet = new HashSet<>();
 
