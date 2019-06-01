@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -141,6 +142,43 @@ public class UserAndIssuesRepositoryTest {
     @Test
     public void objectNavigationFromUserToIssue() {
 //        johnDoe.getIssue() //doesn't exist
+    }
+
+    /**
+     * issueDescription and postedBy can't be null/empty
+     */
+    @Test(expected = ConstraintViolationException.class)
+    public void whenInvalidIssueIsSaved_thenThrowException() throws ConstraintViolationException {
+        //prep - issueDescription is null and posted by is null
+        Issue invalidIssue = Issue.builder().build();
+
+        //action - saved
+        issueRepository.save(invalidIssue); //throws exception
+
+    }
+    /**
+     * issueDescription and postedBy can't be null/empty, however other 3 user types in issues can be null
+     */
+    @Test
+    public void whenValidIssueIsSaved_thenNoException(){
+        //prep - create a valid issue
+        Issue validIssue = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+
+        //action - save
+        Issue actualIssue = issueRepository.save(validIssue);
+
+        //assert - throws no exception, savedObject is same as saveObject
+        assertEquals(actualIssue, validIssue);
+
+    }
+
+    /**
+     * When issueDescription is null
+     */
+    @Test(expected = ConstraintViolationException.class)
+    public void whenNullIssueDescriptionIsSaved_thenThrowException() throws ConstraintViolationException{
+        Issue validIssue = Issue.builder().issueDescription(null).postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+        issueRepository.save(validIssue); //throws exception
     }
 
 }
