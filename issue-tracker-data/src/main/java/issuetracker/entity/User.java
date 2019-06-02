@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -59,7 +60,7 @@ public class User extends BaseEntity {
     //No cascading delete
     //fetch type lazy
     @ManyToMany(mappedBy = "users") //mappedBy here will join the default two tables into one table which we want
-    private Set<Project> projects;
+    private Set<Project> projects = new HashSet<>();
 
     /**
      * The foreign key is present on User side of the relationship - this means User table becomes the owning side
