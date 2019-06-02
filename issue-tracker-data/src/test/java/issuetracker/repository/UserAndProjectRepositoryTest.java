@@ -137,7 +137,7 @@ public class UserAndProjectRepositoryTest {
 
     //bi-directional check user->project
     @Test
-    public void objectNavigationFromUserToProject(){
+    public void objectNavigationFromUserToProject() {
         User user = userRepository.findById(johnDoe.getId()).orElse(null);
         assertNotNull(user);
         assertNotNull(user.getProjects());
@@ -147,7 +147,7 @@ public class UserAndProjectRepositoryTest {
 
     //bi-directional check project->user
     @Test
-    public void objectNavigationFromProjectToUser(){
+    public void objectNavigationFromProjectToUser() {
         Project project = projectRepository.findById(endgame.getId()).orElse(null);
         assertNotNull(project);
         assertNotNull(project.getUsers());
@@ -157,7 +157,7 @@ public class UserAndProjectRepositoryTest {
 
     //save valid project
     @Test
-    public void saveValidProject(){
+    public void saveValidProject() {
         Project project = Project.builder().projectDescription("This is a new project").build();
         project.getUsers().add(jimmyDoe);
         Project savedProject = projectRepository.save(project);
@@ -168,7 +168,7 @@ public class UserAndProjectRepositoryTest {
 
     //save invalid project - same project description
     @Test(expected = ConstraintViolationException.class)
-    public void whenInvalidSaveProject_thenThrowException(){
+    public void whenInvalidSaveProject_thenThrowException() {
         Project project = Project.builder().projectDescription(null).build();
         project.getUsers().add(jimmyDoe);
         projectRepository.save(project); //throw exception please
@@ -176,7 +176,7 @@ public class UserAndProjectRepositoryTest {
 
     //save invalid project - two projects with same name
     @Test(expected = DataIntegrityViolationException.class)
-    public void whenTwoProjectWithSameNameSaved_thenThrowException(){
+    public void whenTwoProjectWithSameNameSaved_thenThrowException() {
         Project project1 = Project.builder().projectDescription("test").build();
         Project project2 = Project.builder().projectDescription("test").build();
         project1.getUsers().add(johnDoe);
@@ -185,7 +185,45 @@ public class UserAndProjectRepositoryTest {
     }
 
     //relationship - a user can be in multiple projects
+    @Test
+    public void userCanBeInMultipleProject() {
+        Project project1 = Project.builder().projectDescription("test1").build();
+        Project project2 = Project.builder().projectDescription("test2").build();
+        User randyUser = User.builder()
+                .userName("randyDoe").email("randyDoe@gmail.com").firstName("randy").lastName("doe").password("randypass").build();
+        //saving project before saving user will throw an error
+        userRepository.save(randyUser);
+
+        //action - save user with multiple projects
+        project1.getUsers().add(randyUser);
+        project2.getUsers().add(randyUser);
+        projectRepository.saveAll(Arrays.asList(project1, project2));
+
+    }
 
     //relationship - a project can have multiple users
+    @Test
+    public void projectCanHaveMultipleUsers() {
+        Project project1 = Project.builder().projectDescription("test1").build();
+        User randyUser1 = User.builder()
+                .userName("randyDoe1").email("randy1Doe@gmail.com")
+                .firstName("randy").lastName("doe").password("randypass")
+                .build();
+        User randyUser2 = User.builder()
+                .userName("randyDoe2").email("randy2Doe@gmail.com")
+                .firstName("randy").lastName("doe").password("randypass")
+                .build();
+
+        //saving project before saving user will throw an error
+        userRepository.save(randyUser1);
+        userRepository.save(randyUser2);
+
+        //action - save user with multiple projects
+        project1.getUsers().add(randyUser1);
+        project1.getUsers().add(randyUser2);
+        projectRepository.save(project1);
+
+    }
+
 
 }
