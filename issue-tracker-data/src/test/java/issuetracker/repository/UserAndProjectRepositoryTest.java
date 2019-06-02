@@ -17,6 +17,13 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+/**
+ * User can work on multiple projects
+ * A project can have multiple users
+ * Bi-directional
+ * No cascading delete
+ * fetch type lazy
+ */
 public class UserAndProjectRepositoryTest {
 
     //log
@@ -111,4 +118,17 @@ public class UserAndProjectRepositoryTest {
         assertEquals(3, roleRepository.count());
         assertEquals(3, projectRepository.count());
     }
+
+    //bi-directional check user->project
+
+    //bi-directional check project->user
+
+    //save valid project
+
+    //save invalid project - same project description
+
+    //relationship - a user can be in multiple projects
+
+    //relationship - a project can have multiple users
+
 }
