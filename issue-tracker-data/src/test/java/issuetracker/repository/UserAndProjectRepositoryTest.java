@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -107,8 +108,21 @@ public class UserAndProjectRepositoryTest {
         endgame.setUsers(Collections.singleton(johnDoe));
         johnWick3.setUsers(Collections.singleton(jimmyDoe));
 
+        //save projects
         projectRepository.saveAll(Arrays.asList(freePlay, johnWick3, endgame));
         log.info("updated projects with users");
+
+        //updating users with projects for bi-directional relationship
+        johnDoe.getProjects().add(endgame);
+
+        jimmyDoe.getProjects().add(johnWick3);
+
+        janeDoe.getProjects().add(freePlay);
+
+        userRepository.saveAll(Arrays.asList(johnDoe, janeDoe, jimmyDoe));
+        log.info("updated users with projects");
+
+
     }
 
     @Test
@@ -120,8 +134,24 @@ public class UserAndProjectRepositoryTest {
     }
 
     //bi-directional check user->project
+    @Test
+    public void objectNavigationFromUserToProject(){
+        User user = userRepository.findById(johnDoe.getId()).orElse(null);
+        assertNotNull(user);
+        assertNotNull(user.getProjects());
+        assertEquals(johnDoe.getProjects(), user.getProjects());
+        assertEquals(1, user.getProjects().size());
+    }
 
     //bi-directional check project->user
+    @Test
+    public void objectNavigationFromProjectToUser(){
+        Project project = projectRepository.findById(endgame.getId()).orElse(null);
+        assertNotNull(project);
+        assertNotNull(project.getUsers());
+        assertEquals(endgame.getUsers(), project.getUsers());
+        assertEquals(1, project.getUsers().size());
+    }
 
     //save valid project
 
