@@ -15,8 +15,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -225,5 +224,21 @@ public class UserAndProjectRepositoryTest {
 
     }
 
+    @Test
+    public void noCascadeDelete(){
+        //when - delete
+        projectRepository.deleteById(freePlay.getId());
+
+        //freeplay should be deleted
+        Project project = projectRepository.findById(freePlay.getId()).orElse(null);
+
+        //assertion - project should be null
+        assertNull(project);
+        //janeDoe projects should be null
+        User user = userRepository.findById(janeDoe.getId()).orElse(null);
+        assertNotNull(user);
+
+//        assertNull(user.getProjects()); //TODO relationship should be updated though
+    }
 
 }
