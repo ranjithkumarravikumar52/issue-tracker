@@ -104,7 +104,7 @@ public class IssueControllerTest {
 
         mockMvc.perform(post("/issues/new"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/issue/list"));
+                .andExpect(view().name("redirect:/issues/list"));
 
         verify(issueService).save(ArgumentMatchers.any());
     }

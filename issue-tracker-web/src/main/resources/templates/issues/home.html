@@ -47,10 +47,15 @@
                     <tr th:each="issue : ${issues}">
                         <td th:text="${issue.id}">1</td>
                         <td th:text="${issue.issueDescription}">Issue Description</td>
+
+
                         <td th:text="${issue.postedBy.userName}">John1</td>
-                        <td th:text="${issue.openedBy.userName}">John2</td>
-                        <td th:text="${issue.fixedBy.userName}">John3</td>
-                        <td th:text="${issue.closedBy.userName}">John4</td>
+                        <!--user object can be null-->
+                        <td th:text="${issue.openedBy} ? ${issue.openedBy.userName} : '-'">John1</td>
+                        <!--user object can be null-->
+                        <td th:text="${issue.fixedBy} ? ${issue.fixedBy.userName} : '-'">John1</td>
+                        <!--user object can be null-->
+                        <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
                         <td>
                             <div class="btn-group">
                                 <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}" class="btn btn-sm btn-dark">Update</a>
