@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -154,8 +156,33 @@ public class UserAndProjectRepositoryTest {
     }
 
     //save valid project
+    @Test
+    public void saveValidProject(){
+        Project project = Project.builder().projectDescription("This is a new project").build();
+        project.getUsers().add(jimmyDoe);
+        Project savedProject = projectRepository.save(project);
+        assertNotNull(savedProject);
+        assertNotNull(savedProject.getProjectDescription());
+        assertEquals(savedProject, project);
+    }
 
     //save invalid project - same project description
+    @Test(expected = ConstraintViolationException.class)
+    public void whenInvalidSaveProject_thenThrowException(){
+        Project project = Project.builder().projectDescription(null).build();
+        project.getUsers().add(jimmyDoe);
+        projectRepository.save(project); //throw exception please
+    }
+
+    //save invalid project - two projects with same name
+    @Test(expected = DataIntegrityViolationException.class)
+    public void whenTwoProjectWithSameNameSaved_thenThrowException(){
+        Project project1 = Project.builder().projectDescription("test").build();
+        Project project2 = Project.builder().projectDescription("test").build();
+        project1.getUsers().add(johnDoe);
+        project2.getUsers().add(janeDoe);
+        projectRepository.saveAll(Arrays.asList(project1, project2)); //throw exception please
+    }
 
     //relationship - a user can be in multiple projects
 

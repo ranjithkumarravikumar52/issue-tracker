@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,8 @@ import java.util.Set;
 //primary table so we have a project repo
 public class Project extends BaseEntity {
 
-    @Column(name = "project_description")
+    @Column(name = "project_description", unique = true)
+    @NotNull
     private String projectDescription;
 
 
