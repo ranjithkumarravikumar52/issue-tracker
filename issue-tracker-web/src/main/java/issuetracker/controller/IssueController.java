@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @Controller
 @RequestMapping("/issues")
 public class IssueController {
@@ -44,7 +42,7 @@ public class IssueController {
     @PostMapping("/new")
     public String addIssue(@ModelAttribute("issue") Issue issue) {
         issueService.save(issue);
-        return "redirect:/issue/list";
+        return "redirect:/issues/list";
     }
 
     /**
