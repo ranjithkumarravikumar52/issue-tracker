@@ -17,26 +17,21 @@ public class IssueTrackerLoggingAspect {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
-	 * Pointcut declarations for controller, service, DAO
-	 */
-
-
-	/**
-	 * for controller
+	 * Pointcut expression for controller
 	 */
 	@Pointcut("execution(* issuetracker.controller.*.*(..))")
 	private void forControllerPackage() {
 	}
 
 	/**
-	 * for classes in service
+	 * Pointcut expression for classes in service
 	 */
 	@Pointcut("execution(* issuetracker.service.*.*(..))")
 	private void forServicePackage() {
 	}
 
 	/**
-	 * for classes in repository
+	 * Pointcut expression for classes in repository
 	 */
 	@Pointcut("execution(* issuetracker.repository.*.*(..))")
 	private void forDAOPackage() {
@@ -44,7 +39,7 @@ public class IssueTrackerLoggingAspect {
 
 
 	/**
-	 * for classes in controller, service and repository
+	 * Combined Pointcut expression for classes in controller, service and repository
 	 */
 	@Pointcut("forControllerPackage() || forServicePackage() || forDAOPackage()")
 	private void forAppFlow() {
