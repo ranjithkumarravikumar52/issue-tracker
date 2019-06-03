@@ -37,12 +37,12 @@ public class User extends BaseEntity {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 10, message = "min is 3, max is 10")
+    @Size(min = 3, max = 30, message = "min is 3, max is 10")
     private String firstName;
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 10, message = "min is 3, max is 10")
+    @Size(min = 3, max = 30, message = "min is 3, max is 10")
     private String lastName;
 
     /**

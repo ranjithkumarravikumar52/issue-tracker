@@ -1,5 +1,6 @@
 package issuetracker.bootstrap;
 
+import com.github.javafaker.Faker;
 import issuetracker.entity.*;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(DataLoader.class);
+    private static final int FAKE_USER_DATA_COUNT = 50;
 
     private final UserService userService;
     private final IssueService issueService;
@@ -26,6 +28,8 @@ public class DataLoader implements CommandLineRunner {
     private Role tester;
     private User johnDoe;
     private User janeDoe;
+    private Issue blockerIssue;
+    private Issue graphicsIssue;
 
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService, RoleService roleService) {
         this.userService = userService;
@@ -37,48 +41,102 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        //TODO independent role task
-        initRolesData();
-
-
-        //TODO independent user task
-        initUsersData();
-
-
-        //TODO update role task
-        updateRolesWithUser();
-
-
-        //TODO independent issue task
-        initIssuesData(johnDoe, janeDoe);
-
-
-        //TODO independent project task
+        //independent project initialization
+        //init only once
+        //0. no dependencies on this
         initProjectsData();
 
+        //independent role initialization
+        //0. init only once
+        initRolesData();
 
-        //TODO updating projects with user information
-        updateProjectsWithUser();
+        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
+            //independent user initialization
+            //can be looped
+            //1. needed roles for this
+            initUsersData();
 
+            //init only once
+            //needed users done before this
+            //CANNOT be looped, however can be put inside a loop only if issues == null.
+            if (blockerIssue == null && graphicsIssue == null) {
+                initIssuesData();
+            }
 
-        //TODO updating user with project information
-        updateUsersWithProjects();
+            //update role with user data
+            //can be looped
+            //2. needed users and roles done before this
+            updateRolesWithUser();
 
+           /* //updating projects with user information
+            //can be looped
+            //4. needed projects, users and roles before this
+            updateProjectsWithUser();*/
 
-        //check
-        debugUserData();
+            //updating user with project information
+            //can be looped
+            //5. needed projects, users and roles before this
+            updateUsersWithProjects();
+
+            //check - out of the loop
+            debugUserData();
+        }
+
+        //check - out of the loop
+        debugRoleData();
+
+        //check - out of the loop
+//        debugUserData();
+
+        //check - out of the loop
+        debugProjectData();
     }
 
     private void debugUserData() {
-        log.info("Checking user 1 information...\n");
+        log.info("Checking user 1 information and their projects...\n");
         log.info(johnDoe.toString());
-        log.info(johnDoe.getProjects().toString());
+//        johnDoe.getProjects().forEach(project -> log.info(project.getProjectDescription()));
         log.info("Checked user 1 information...\n");
 
-        log.info("Checking user 2 information...\n");
+        log.info("Checking user 2 information and their projects...\n");
         log.info(janeDoe.toString());
-        log.info(janeDoe.getProjects().toString());
+//        johnDoe.getProjects().forEach(project -> log.info(project.getProjectDescription()));
         log.info("Checked user 2 information...\n");
+
+    }
+
+    private void debugRoleData() {
+        log.info("Checking role - developer information...\n");
+        developer.getUserSet().forEach(user -> {
+            log.info(user.getUserName());
+        });
+        log.info("Checked role - developer information...\n");
+
+        log.info("Checking role - tester information...\n");
+        tester.getUserSet().forEach(user -> {
+            log.info(user.getUserName());
+        });
+        log.info("Checked role - tester information...\n");
+    }
+
+    private void debugProjectData() {
+        log.info("Checking project - freeplay information...\n");
+        freePlay.getUsers().forEach(user -> {
+            log.info(user.getUserName());
+        });
+        log.info("Checked project - freeplay information...\n");
+
+        log.info("Checking project - endgame information...\n");
+        endgame.getUsers().forEach(user -> {
+            log.info(user.getUserName());
+        });
+        log.info("Checked project - endgame information...\n");
+
+        log.info("Checking project - john wick information...\n");
+        johnWick3.getUsers().forEach(user -> {
+            log.info(user.getUserName());
+        });
+        log.info("Checked project - john wick information...\n");
     }
 
     private void updateUsersWithProjects() {
@@ -121,14 +179,40 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void initUsersData() {
-        //create 2 phone numbers
-        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
-        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber("6789012345").build();
+        //faker init
+        //TODO set up indian locale here
+        Faker faker_ind = new Faker();
 
-        //create johnDoe and janeDoe user objects
+        //create 2 phone numbers
+        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber(faker_ind.phoneNumber()).build();
+        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber(faker_ind.phoneNumber()).build();
+
+        //prep johnDoe fake data
+        //TODO extract method here
+        String firstName = faker_ind.firstName().toLowerCase();
+        String lastName = faker_ind.lastName().toLowerCase();
+        String userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
+        String password = faker_ind.bothify("????####");
+        String email = userName + "@gmail.com";
+
+
         //field objects
-        johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
-        janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
+        johnDoe = User.builder()
+                .firstName(firstName).lastName(lastName)
+                .userName(userName).password(password).email(email)
+                .build();
+
+        //prep janeDoe fake data
+        firstName = faker_ind.firstName().toLowerCase();
+        lastName = faker_ind.lastName().toLowerCase();
+        userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
+        password = faker_ind.bothify("????####");
+        email = userName + "@gmail.com";
+
+        janeDoe = User.builder()
+                .firstName(firstName).lastName(lastName)
+                .userName(userName).password(password).email(email)
+                .build();
 
         //set the roles child objects for the user
         johnDoe.setRole(developer);
@@ -169,11 +253,11 @@ public class DataLoader implements CommandLineRunner {
         log.info("Saved project objects...\n");
     }
 
-    private void initIssuesData(User johnDoe, User janeDoe) {
+    private void initIssuesData() {
         //issue object
         log.info("Saving issue objects...\n");
-        Issue blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(johnDoe).build();
-        Issue graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(janeDoe).build();
+        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(johnDoe).build();
+        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(janeDoe).build();
         issueService.save(blockerIssue);
         issueService.save(graphicsIssue);
         log.info("Saved issue objects...\n");
