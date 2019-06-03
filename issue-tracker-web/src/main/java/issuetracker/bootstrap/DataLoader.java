@@ -98,7 +98,6 @@ public class DataLoader implements CommandLineRunner {
         //Now updating user with projects should be validated in join table
         //Oh yeah it will fail, cos the relationship needs to be updated from both direction or NOT?
         //If you check the DB join tables, it fills up with accurately
-        //However object navigation will be broken if mapping is not done in either directions
         log.info("Assigning projects with user information...\n");
         freePlay.setUsers(Collections.singleton(janeDoe));
         endgame.setUsers(Collections.singleton(johnDoe));
@@ -109,5 +108,16 @@ public class DataLoader implements CommandLineRunner {
         projectService.save(endgame);
         log.info("Assigned projects with user information...\n");
 
+        //However object navigation will be broken if mapping is not done in either directions
+        janeDoe.getProjects().add(freePlay);
+        janeDoe.getProjects().add(johnWick3);
+        johnDoe.getProjects().add(endgame);
+        johnDoe.getProjects().add(johnWick3);
+        //check
+        log.info("Checking user object information...\n");
+        log.info(johnDoe.toString());
+        log.info(johnDoe.getProjects().toString());
+        log.info(janeDoe.toString());
+        log.info(janeDoe.getProjects().toString());
     }
 }

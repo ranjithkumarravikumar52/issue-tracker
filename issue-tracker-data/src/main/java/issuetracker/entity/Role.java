@@ -42,6 +42,7 @@ public class Role extends BaseEntity {
         this.name = name;
     }
 
+    //TODO we might not need this when our data gets huge
     @Override
     public String toString() {
         String roleName = "Role{" + this.name + "}";
