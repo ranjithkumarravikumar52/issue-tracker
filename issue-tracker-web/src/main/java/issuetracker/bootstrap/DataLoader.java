@@ -70,10 +70,10 @@ public class DataLoader implements CommandLineRunner {
             //2. needed users and roles done before this
             updateRolesWithUser();
 
-           /* //updating projects with user information
+            //updating projects with user information
             //can be looped
             //4. needed projects, users and roles before this
-            updateProjectsWithUser();*/
+            updateProjectsWithUser();
 
             //updating user with project information
             //can be looped
@@ -154,15 +154,23 @@ public class DataLoader implements CommandLineRunner {
         //Oh yeah it will fail, cos the relationship needs to be updated from both direction or NOT?
         //If you check the DB join tables, it fills up with accurately
         log.info("Assigning projects with user information...\n");
-        freePlay.getUsers().add(johnDoe);
-        endgame.getUsers().add(janeDoe);
 
-        johnWick3.getUsers().add(johnDoe);
-        johnWick3.getUsers().add(janeDoe);
+        Project actualFreePlay = projectService.findById(this.freePlay.getId());
+        Project actualJohnWick3 = projectService.findById(this.johnWick3.getId());
+        Project actualEndGame = projectService.findById(this.endgame.getId());
 
-        projectService.save(freePlay);
-        projectService.save(johnWick3);
-        projectService.save(endgame);
+        User johnDoe = userService.findById(this.johnDoe.getId());
+        User janeDoe = userService.findById(this.janeDoe.getId());
+
+        actualFreePlay.getUsers().add(johnDoe);
+        actualEndGame.getUsers().add(janeDoe);
+
+        actualJohnWick3.getUsers().add(johnDoe);
+        actualJohnWick3.getUsers().add(janeDoe);
+
+        projectService.save(actualFreePlay);
+        projectService.save(actualJohnWick3);
+        projectService.save(actualEndGame);
         log.info("Assigned projects with user information...\n");
     }
 
@@ -181,7 +189,6 @@ public class DataLoader implements CommandLineRunner {
 
     private void initUsersData() {
         //faker init
-        //TODO set up indian locale here
         Faker faker = new Faker(new Locale("en-IND"));
 
 
