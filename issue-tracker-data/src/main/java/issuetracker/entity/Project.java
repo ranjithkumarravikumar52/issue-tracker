@@ -27,7 +27,7 @@ public class Project extends BaseEntity {
      * No cascading delete
      * fetch type lazy
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER) //needed this for bi-directional relationship
     @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     //creates a table called project_user with columns project_id and user_id
     //and when the inverse table is also annotated by mappedBy then we get one table
