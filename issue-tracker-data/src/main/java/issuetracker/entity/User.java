@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true) //for displaying and logging
+@ToString(doNotUseGetters = true, exclude = {"projects"}) //for displaying and logging
 //primary table so we have a user repo
 public class User extends BaseEntity {
 
@@ -37,12 +37,12 @@ public class User extends BaseEntity {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 10, message = "min is 3, max is 10")
+    @Size(min = 3, max = 30, message = "min is 3, max is 10")
     private String firstName;
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 10, message = "min is 3, max is 10")
+    @Size(min = 3, max = 30, message = "min is 3, max is 10")
     private String lastName;
 
     /**
@@ -50,7 +50,7 @@ public class User extends BaseEntity {
      * roles has one-many with user
      * the direction is bi-directional
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     //TODO test: check if the relationship is valid
@@ -59,7 +59,7 @@ public class User extends BaseEntity {
     //Bi-directional
     //No cascading delete
     //fetch type lazy
-    @ManyToMany(mappedBy = "users") //mappedBy here will join the default two tables into one table which we want
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER) //mappedBy here will join the default two tables into one table which we want
     private Set<Project> projects = new HashSet<>();
 
     /**

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
+//TODO write a custom toString(), helps with debugging
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
 @NoArgsConstructor
 //primary table so we have a issue repo

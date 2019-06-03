@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,4 +41,21 @@ public class Role extends BaseEntity {
         super(id);
         this.name = name;
     }
+
+    /*//TODO we might not need this when our data gets huge
+    @Override
+    public String toString() {
+        String roleName = "Role{" + this.name + "}";
+        if (userSet == null || userSet.isEmpty()) {
+            return roleName;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(roleName);
+        userSet.forEach(user -> {
+            stringBuilder.append("User{");
+            stringBuilder.append(user.getUserName());
+            stringBuilder.append("}");
+        });
+        return stringBuilder.toString();
+    }*/
 }

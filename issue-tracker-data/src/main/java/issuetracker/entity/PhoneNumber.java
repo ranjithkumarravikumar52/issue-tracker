@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +9,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor //jpa entities need this
+@ToString(doNotUseGetters = true) //for displaying and logging
 //assuming that this table is a secondary/child of user and we don't need to create a repository of this.
 public class PhoneNumber extends BaseEntity {
     /**

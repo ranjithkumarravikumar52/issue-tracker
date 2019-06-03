@@ -1,9 +1,6 @@
 package issuetracker.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(doNotUseGetters = true, exclude = {"users"}) //for displaying and logging
 //primary table so we have a project repo
 public class Project extends BaseEntity {
 
