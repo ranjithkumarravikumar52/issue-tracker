@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -180,21 +182,22 @@ public class DataLoader implements CommandLineRunner {
     private void initUsersData() {
         //faker init
         //TODO set up indian locale here
-        Faker faker_ind = new Faker();
+        Faker faker = new Faker(new Locale("en-IND"));
+
 
         //create 2 phone numbers
-        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber(faker_ind.phoneNumber()).build();
-        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber(faker_ind.phoneNumber()).build();
+        PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber(faker.phoneNumber().phoneNumber()).build();
+        PhoneNumber phoneNumber2 = PhoneNumber.builder().phoneNumber(faker.phoneNumber().phoneNumber()).build();
 
         //prep johnDoe fake data
         //TODO extract method here
-        String firstName = faker_ind.firstName().toLowerCase();
-        String lastName = faker_ind.lastName().toLowerCase();
+        String firstName = faker.name().firstName().toLowerCase();
+        String lastName = faker.name().firstName().toLowerCase();
         if(firstName.length() < 2){
-            firstName = firstName + faker_ind.letterify("?");
+            firstName = firstName + faker.letterify("?");
         }
-        String userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
-        String password = faker_ind.bothify("????####");
+        String userName = lastName.charAt(0) + firstName.substring(0, 3) + faker.numerify("##");
+        String password = faker.bothify("????####");
         String email = userName + "@gmail.com";
 
 
@@ -205,13 +208,13 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         //prep janeDoe fake data
-        firstName = faker_ind.firstName().toLowerCase();
-        lastName = faker_ind.lastName().toLowerCase();
+        firstName = faker.name().firstName().toLowerCase();
+        lastName = faker.name().lastName().toLowerCase();
         if(firstName.length() < 2){
-            firstName = firstName + faker_ind.letterify("?");
+            firstName = firstName + faker.letterify("?");
         }
-        userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
-        password = faker_ind.bothify("????####");
+        userName = lastName.charAt(0) + firstName.substring(0, 3) + faker.numerify("##");
+        password = faker.bothify("????####");
         email = userName + "@gmail.com";
 
         janeDoe = User.builder()
