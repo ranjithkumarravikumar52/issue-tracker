@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(DataLoader.class);
-    private static final int FAKE_USER_DATA_COUNT = 50;
+    private static final int FAKE_USER_DATA_COUNT = 100;
 
     private final UserService userService;
     private final IssueService issueService;
@@ -78,31 +78,30 @@ public class DataLoader implements CommandLineRunner {
             //5. needed projects, users and roles before this
             updateUsersWithProjects();
 
-            //check - out of the loop
-            debugUserData();
+            ;
         }
 
         //check - out of the loop
         debugRoleData();
 
         //check - out of the loop
-//        debugUserData();
+        debugUserData();
 
         //check - out of the loop
         debugProjectData();
     }
 
     private void debugUserData() {
-        log.info("Checking user 1 information and their projects...\n");
-        log.info(johnDoe.toString());
-//        johnDoe.getProjects().forEach(project -> log.info(project.getProjectDescription()));
-        log.info("Checked user 1 information...\n");
-
-        log.info("Checking user 2 information and their projects...\n");
-        log.info(janeDoe.toString());
-//        johnDoe.getProjects().forEach(project -> log.info(project.getProjectDescription()));
-        log.info("Checked user 2 information...\n");
-
+        log.info("Checking user information, their roles and their projects...\n");
+        userService.findAll().forEach(user -> {
+            log.info(Integer.toString(user.getId()));
+            log.info(user.getUserName());
+            log.info(user.getRole().getName());
+            user.getProjects().forEach(project -> {
+                log.info(project.getProjectDescription());
+            });
+        });
+        log.info("Checked user information, their roles and their projects...\n");
     }
 
     private void debugRoleData() {
@@ -191,6 +190,9 @@ public class DataLoader implements CommandLineRunner {
         //TODO extract method here
         String firstName = faker_ind.firstName().toLowerCase();
         String lastName = faker_ind.lastName().toLowerCase();
+        if(firstName.length() < 2){
+            firstName = firstName + faker_ind.letterify("?");
+        }
         String userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
         String password = faker_ind.bothify("????####");
         String email = userName + "@gmail.com";
@@ -205,6 +207,9 @@ public class DataLoader implements CommandLineRunner {
         //prep janeDoe fake data
         firstName = faker_ind.firstName().toLowerCase();
         lastName = faker_ind.lastName().toLowerCase();
+        if(firstName.length() < 2){
+            firstName = firstName + faker_ind.letterify("?");
+        }
         userName = lastName.charAt(0) + firstName.substring(0, 3) + faker_ind.numerify("##");
         password = faker_ind.bothify("????####");
         email = userName + "@gmail.com";

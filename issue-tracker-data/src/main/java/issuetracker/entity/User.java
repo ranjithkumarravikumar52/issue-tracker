@@ -50,7 +50,7 @@ public class User extends BaseEntity {
      * roles has one-many with user
      * the direction is bi-directional
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     //TODO test: check if the relationship is valid
@@ -59,7 +59,7 @@ public class User extends BaseEntity {
     //Bi-directional
     //No cascading delete
     //fetch type lazy
-    @ManyToMany(mappedBy = "users") //mappedBy here will join the default two tables into one table which we want
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER) //mappedBy here will join the default two tables into one table which we want
     private Set<Project> projects = new HashSet<>();
 
     /**
