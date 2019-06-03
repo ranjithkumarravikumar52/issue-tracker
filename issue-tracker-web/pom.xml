@@ -44,6 +44,13 @@
             <artifactId>webjars-locator</artifactId>
             <version>0.30</version>
         </dependency>
+        <!-- to fill up with fake data in our app -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>
