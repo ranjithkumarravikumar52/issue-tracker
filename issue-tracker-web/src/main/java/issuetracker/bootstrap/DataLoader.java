@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Component
@@ -37,9 +36,10 @@ public class DataLoader implements CommandLineRunner {
         Role tester = Role.builder().name("tester").build();
 
         //save roles before we can set the child objects
+        log.info("Saving role objects...\n");
         roleService.save(developer);
         roleService.save(tester);
-        log.info("Saved role objects");
+        log.info("Saved role objects.....\n");
 
         //create 2 phone numbers
         PhoneNumber phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
@@ -64,38 +64,42 @@ public class DataLoader implements CommandLineRunner {
         janeDoe.setPhoneNumber(phoneNumber2);
 
         //save user objects
+        log.info("Saving user objects with their roles and phone number information...\n");
         userService.save(johnDoe);
         userService.save(janeDoe);
-        log.info("Saved user objects...");
+        log.info("Saved user objects...\n");
 
         //save roles before we can set the child objects
+        log.info("Updating role objects with their updated user list...\n");
         roleService.save(developer);
         roleService.save(tester);
-        log.info("Update role objects");
+        log.info("Updated role objects with their updated user list...\n");
 
-        //check if we can navigate from role to user
-//        roleService.findById(1).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
-//        roleService.findById(2).getUserSet().iterator().forEachRemaining(user -> log.info(user.getUserName()));
 
         //issue object
+        log.info("Saving issue objects...\n");
         Issue blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(johnDoe).build();
         Issue graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(janeDoe).build();
         issueService.save(blockerIssue);
         issueService.save(graphicsIssue);
-        log.info("Saved issue objects");
+        log.info("Saved issue objects...\n");
 
 
         //init 3 projects
+        log.info("Saving project objects...\n");
         Project freePlay = Project.builder().projectDescription("Sims Free play").build();
         Project johnWick3 = Project.builder().projectDescription("John Wick 3").build();
         Project endgame = Project.builder().projectDescription("Endgame").build();
         projectService.save(freePlay);
         projectService.save(johnWick3);
         projectService.save(endgame);
-        log.info("Saved project objects");
+        log.info("Saved project objects...\n");
 
-        //now updating user with projects should be validated in join table - Oh yeah it will fail, cos the relationship needs to be updated
-        //from both direction or NOT?
+        //Now updating user with projects should be validated in join table
+        //Oh yeah it will fail, cos the relationship needs to be updated from both direction or NOT?
+        //If you check the DB join tables, it fills up with accurately
+        //However object navigation will be broken if mapping is not done in either directions
+        log.info("Assigning projects with user information...\n");
         freePlay.setUsers(Collections.singleton(janeDoe));
         endgame.setUsers(Collections.singleton(johnDoe));
         johnWick3.getUsers().add(johnDoe);
@@ -103,7 +107,7 @@ public class DataLoader implements CommandLineRunner {
         projectService.save(freePlay);
         projectService.save(johnWick3);
         projectService.save(endgame);
-        log.info("updated projects with users");
+        log.info("Assigned projects with user information...\n");
 
     }
 }

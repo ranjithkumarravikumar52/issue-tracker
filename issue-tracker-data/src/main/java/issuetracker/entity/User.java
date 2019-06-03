@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true) //for displaying and logging
+@ToString(doNotUseGetters = true, exclude = {"projects"}) //for displaying and logging
 //primary table so we have a user repo
 public class User extends BaseEntity {
 
