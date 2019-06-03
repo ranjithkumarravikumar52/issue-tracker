@@ -181,7 +181,6 @@ public class DataLoader implements CommandLineRunner {
 
     private void initUsersData() {
         //faker init
-        //TODO set up indian locale here
         Faker faker = new Faker(new Locale("en-IND"));
 
 
