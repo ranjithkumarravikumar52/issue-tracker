@@ -55,5 +55,18 @@
         </dependency>
 
     </dependencies>
+    <build>
+        <plugins>
+            <!--surefire plugin-->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <!--circle CI issue-->
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
