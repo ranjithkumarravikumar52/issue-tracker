@@ -9,30 +9,33 @@ import java.sql.SQLException;
 
 @Service
 public class SanityCheckServiceImpl implements SanityCheckService {
-	@Override
-	public String sanityDBCheck(DBCheckConfig dbCheckConfig) {
-		Connection myConnection = null;
-		StringBuilder stringBuilder = new StringBuilder();
+    @Override
+    public String sanityDBCheck(DBCheckConfig dbCheckConfig) {
+        Connection myConnection;
+        StringBuilder stringBuilder = new StringBuilder();
 
-		//connection to database
-		try{
-			stringBuilder.append("Connection to database: ").append(dbCheckConfig.getJdbcUrl()).append(System.lineSeparator());
-			Class.forName(dbCheckConfig.getDriver()); //jdbcUrl, user, pass
-			myConnection = DriverManager.getConnection(dbCheckConfig.getJdbcUrl(), dbCheckConfig.getUserName(), dbCheckConfig.getPassword());
-			stringBuilder.append("Connection successful").append(System.lineSeparator());
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			stringBuilder.append(e.getMessage());
-		}finally {
-			if(myConnection != null){
-				try {
-					myConnection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					stringBuilder.append(e.getMessage()).append(System.lineSeparator());
-				}
-			}
-			return stringBuilder.toString();
-		}
-	}
+        //connection to database
+        try {
+            stringBuilder
+                    .append("Connection to database: ")
+                    .append(dbCheckConfig.getJdbcUrl())
+                    .append(System.lineSeparator());
+
+            myConnection = DriverManager
+                    .getConnection(
+                            dbCheckConfig.getJdbcUrl(),
+                            dbCheckConfig.getUserName(),
+                            dbCheckConfig.getPassword()
+                    );
+
+            if(myConnection != null){
+                stringBuilder.append("Connection successful").append(System.lineSeparator());
+            }else {
+                stringBuilder.append("Connection failed").append(System.lineSeparator());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
 }
