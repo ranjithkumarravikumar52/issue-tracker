@@ -19,7 +19,7 @@ import java.util.Set;
 //primary table so we have a role repo
 public class Role extends BaseEntity {
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     /**
