@@ -28,7 +28,6 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <bootstrap.version>4.3.1</bootstrap.version>
     </properties>
 
     <dependencies>
@@ -50,6 +49,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--circle fix-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <!--default deploys which we dont want-->
+                <configuration>
+                    <goals>install</goals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
             </plugin>
         </plugins>
     </build>
