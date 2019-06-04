@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     @Column
     @NotNull(message = "is required")
     @NotEmpty(message = "can't be empty")
-    @Size(min = 3, max = 254, message = "min is 3, max is 10")
+    @Size(min = 3, max = 254, message = "min is 3, max is 254")
     private String password;
 
     @Email(message = "Invalid Email")
@@ -37,12 +37,12 @@ public class User extends BaseEntity {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 30, message = "min is 3, max is 10")
+    @Size(min = 3, max = 50, message = "min is 3, max is 50")
     private String firstName;
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 30, message = "min is 3, max is 10")
+    @Size(min = 3, max = 50, message = "min is 3, max is 50")
     private String lastName;
 
     /**
