@@ -1,4 +1,3 @@
 # issue-tracker
 
-## Issues
-* [Web jars not loaded when spring security is configured](https://www.boraji.com/spring-mvc-5-static-resources-handling-example)
+[![CircleCI](https://circleci.com/gh/ranjithkumarravikumar52/issue-tracker/tree/master.svg?style=svg)](https://circleci.com/gh/ranjithkumarravikumar52/issue-tracker/tree/master)
