@@ -20,6 +20,21 @@
     </dependencies>
     <build>
         <plugins>
+            <!--to build thin jar. circle ci fix-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <!--surefire plugin-->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
