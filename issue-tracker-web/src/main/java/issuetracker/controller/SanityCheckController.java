@@ -2,7 +2,6 @@ package issuetracker.controller;
 
 import issuetracker.config.DBCheckConfig;
 import issuetracker.sanitycheck.SanityCheckService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/sanityCheck")
 public class SanityCheckController {
 
-	@Autowired
-	private SanityCheckService sanityCheckService;
+    private SanityCheckService sanityCheckService;
+    private DBCheckConfig dbCheckConfig;
 
-	@Autowired
-	private DBCheckConfig dbCheckConfig;
+    public SanityCheckController(SanityCheckService sanityCheckService, DBCheckConfig dbCheckConfig) {
+        this.sanityCheckService = sanityCheckService;
+        this.dbCheckConfig = dbCheckConfig;
+    }
 
-	@GetMapping("/dbConnection")
-	public String showDBCheck(Model model){
-		model.addAttribute("sanity", sanityCheckService.sanityDBCheck(dbCheckConfig));
-		return "db-sanity-check";
-	}
+    @GetMapping("/dbConnection")
+    public String showDBCheck(Model model) {
+        model.addAttribute("sanity", sanityCheckService.sanityDBCheck(dbCheckConfig));
+        return "sanitycheck/dbSanityCheck";
+    }
 }

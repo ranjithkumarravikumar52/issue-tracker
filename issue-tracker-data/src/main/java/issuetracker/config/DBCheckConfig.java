@@ -10,16 +10,14 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @ToString
-@PropertySource("classpath:persistence-issue-tracker-mysql.properties")
+@PropertySource("classpath:application.properties")
 @Component
 public class DBCheckConfig {
 
-	@Value("${jdbc.user}")
+	@Value("${spring.datasource.username}")
 	String userName;
-	@Value("${jdbc.password}")
+	@Value("${spring.datasource.password}")
 	String password;
-	@Value("${jdbc.url}")
+	@Value("${spring.datasource.url}")
 	String jdbcUrl;
-	@Value("${jdbc.driver}")
-	String driver;
 }
