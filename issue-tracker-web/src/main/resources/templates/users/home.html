@@ -61,13 +61,19 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:if="${users.totalPages > 0}" class="pagination"
-                 th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"
-                   th:text="${pageNumber}"
-                   th:class="${pageNumber == users.number + 1} ? active">
-                </a>
-            </div>
+            <nav>
+                <ul class="pagination">
+                    <li th:if="${users.totalPages > 0}"
+                        th:each="pageNumber : ${pageNumbers}"
+                        th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:class="page-link">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
             <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
             <a th:href="@{/users/new}" class="btn btn-warning btn-sm">Add New User</a>
         </div>
