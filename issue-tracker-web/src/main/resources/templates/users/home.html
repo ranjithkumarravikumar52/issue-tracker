@@ -45,7 +45,6 @@
                 </thead>
                 <tbody>
                     <tr th:each="user : ${users}">
-
                         <td th:text="${user.id}">1</td>
                         <td th:text="${user.userName}">johnDoe</td>
                         <td th:text="${user.password}">password123</td>
@@ -59,11 +58,22 @@
                                    class="btn btn-sm btn-danger">Delete</a>
                             </div>
                         </td>
-
-
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pagination">
+                    <li th:if="${users.totalPages > 0}"
+                        th:each="pageNumber : ${pageNumbers}"
+                        th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:class="page-link">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
             <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
             <a th:href="@{/users/new}" class="btn btn-warning btn-sm">Add New User</a>
         </div>

@@ -4,11 +4,13 @@ import issuetracker.entity.User;
 import issuetracker.repository.UserRepository;
 import issuetracker.service.UserService;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Profile("springdatajpa")
@@ -22,26 +24,12 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public Set<User> findAll() {
-        Set<User> users = new HashSet<>();
-        /*
-        Iterable<User> allUsers = userRepository.findAll();
-        for (User allUser : allUsers) {
-            users.add(allUser);
-        }
-        */
-        userRepository.findAll().forEach(users::add);
-        return users;
+        return new HashSet<>(userRepository.findAll());
     }
 
     @Override
     public User findById(Integer integer) {
-        Optional<User> userOptional = userRepository.findById(integer);
-        /*if(userOptional.isPresent()){
-            return userOptional.get();
-        }
-        return null;*/
-        return userOptional.orElse(null);
-
+        return userRepository.findById(integer).orElse(null);
     }
 
     @Override
@@ -57,5 +45,39 @@ public class UserServiceSDJPAImpl implements UserService {
     @Override
     public void deleteById(Integer integer) {
         userRepository.deleteById(integer);
+    }
+
+    /**
+     * This method will generate a Pageable object based on controller request
+     *
+     * @param pageable request from the controller
+     * @return returns the Page object, "page" from the repo based on our request
+     */
+    @Override
+    public Page<User> findPaginated(Pageable pageable) {
+        //this can be avoided either by caching or declaring this as static
+        List<User> allUsers = new ArrayList<>(this.findAll());
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+
+        //start item is the first item number in the current page relative to total number of items
+        //for example: if allUsers.size() == 20, pageSize = 7 and currentPage = 2 (0-based)
+        //startItem = 15
+        int startItem = currentPage * pageSize;
+
+        //Our slice of users from the records
+        List<User> pageUsers;
+
+        if(allUsers.size() < startItem){//no items in the current page or we exceeded our max page limit
+            pageUsers = Collections.emptyList();
+        }else{
+            int toIndex = Math.min(startItem + pageSize, allUsers.size()); ////Math.min(15+7, 20) will be 20
+            pageUsers = allUsers.subList(startItem, toIndex); //toIndex is exclusive, however our items are 0-based, so we safe
+        }
+
+        //now that we got our requested page/slice of users from user records
+        //time to return that "slice" in the form of a page object
+        return new PageImpl<>(pageUsers, PageRequest.of(currentPage, pageSize), allUsers.size());
     }
 }
