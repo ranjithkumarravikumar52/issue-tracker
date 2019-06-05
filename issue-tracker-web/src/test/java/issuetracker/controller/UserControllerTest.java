@@ -8,10 +8,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
@@ -62,15 +67,20 @@ public class UserControllerTest {
 
     @Test
     public void listUsers() throws Exception {
-        when(userService.findAll()).thenReturn(userSet);
+        List<User> userList = new ArrayList<>(this.userSet);
+        Page<User> users = new PageImpl<>(userList, PageRequest.of(0, 10), this.userSet.size());
 
-        mockMvc.perform(get("/users/list"))
+        when(userService.findPaginated(PageRequest.of(0, 10))).thenReturn(users);
+
+        mockMvc.perform(get("/users/list/"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("users"))
-                .andExpect(model().attribute("users", hasSize(2)))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(model().attribute("pageNumbers", hasSize(1)))
                 .andExpect(view().name("users/home"));
 
-        verify(userService, times(1)).findAll();
+        verify(userService, times(0)).findAll();
+        verify(userService, times(1)).findPaginated(PageRequest.of(0, 10));
 
     }
 
