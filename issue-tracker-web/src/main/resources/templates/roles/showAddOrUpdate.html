@@ -39,7 +39,9 @@
                             <label for="name">Role*: </label>
                             <input th:field ="*{name}" type="text" id="name" class="form-control"/>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Role</button>
+                        <button type="submit" th:class="${role.name == null} ? 'btn btn-primary' : 'btn btn-info'">
+                            <span th:text="${role.name == null} ? 'Save Role' : 'Update Role'"></span>
+                        </button>
                     </form>
                 </div>
             </div>
