@@ -65,6 +65,18 @@
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pagination">
+                    <li th:if="${issues.totalPages > 0}"
+                        th:each="pageNumber : ${pageNumbers}"
+                        th:class="${pageNumber == issues.number + 1} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{/issues/list(size=${issues.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:class="page-link">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
             <a th:href="@{/issues/new}" class="btn btn-warning btn-sm">Add New Issue</a>
         </div>
