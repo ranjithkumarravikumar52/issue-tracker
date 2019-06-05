@@ -11,11 +11,14 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -71,20 +74,29 @@ public class IssueControllerTest {
 
     @Test
     public void getIssuesList() throws Exception {
+
+
         //prep
-        Set<Issue> issues = new HashSet<>();
-        issues.add(blockerIssue);
-        issues.add(graphicsIssue);
+        List<Issue> issueList = new ArrayList<>();
+        issueList.add(blockerIssue);
+        issueList.add(graphicsIssue);
+
+        Page<Issue> issues = new PageImpl<>(issueList, PageRequest.of(0, 10), issueList.size());
 
         //when
-        when(issueService.findAll()).thenReturn(issues);
+        when(issueService.findPaginated(PageRequest.of(0, 10))).thenReturn(issues);
 
         //assertion
         mockMvc.perform(get("/issues/list"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("issues"))
-                .andExpect(model().attribute("issues", hasSize(2)))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(model().attribute("pageNumbers", hasSize(1)))
                 .andExpect(view().name("issues/home"));
+
+        //verify
+        verify(issueService, times(0)).findAll();
+        verify(issueService, times(1)).findPaginated(PageRequest.of(0, 10));
 
     }
 
