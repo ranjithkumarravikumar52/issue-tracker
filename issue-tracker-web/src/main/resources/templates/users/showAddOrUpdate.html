@@ -76,7 +76,9 @@
 
                         <br>
                         <br>
-                        <button type="submit" class="btn btn-primary">Save User</button>
+                        <button type="submit" th:class="${user.email == null} ? 'btn btn-primary' : 'btn btn-info'">
+                            <span th:text="${user.email == null} ?  'Save User' : 'Update User'"></span>
+                        </button>
                     </form>
                 </div>
             </div>
