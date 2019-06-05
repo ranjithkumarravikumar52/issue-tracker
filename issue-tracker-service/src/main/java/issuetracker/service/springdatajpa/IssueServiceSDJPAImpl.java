@@ -4,10 +4,13 @@ import issuetracker.entity.Issue;
 import issuetracker.repository.IssueRepository;
 import issuetracker.service.IssueService;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Profile("springdatajpa")
@@ -44,5 +47,25 @@ public class IssueServiceSDJPAImpl implements IssueService {
     @Override
     public void deleteById(Integer integer) {
         issueRepository.deleteById(integer);
+    }
+
+    @Override
+    public Page<Issue> findPaginated(Pageable pageable) {
+        List<Issue> allIssues = new ArrayList<>(this.findAll());
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<Issue> pageIssues;
+
+        if(allIssues.size() < startItem){
+            pageIssues = Collections.emptyList();
+        }else{
+            int toIndex = Math.min(startItem + pageSize, allIssues.size());
+            pageIssues = allIssues.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(pageIssues, PageRequest.of(currentPage, pageSize), allIssues.size());
     }
 }
