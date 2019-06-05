@@ -35,11 +35,13 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>id</th>
-                        <th>user_name</th>
+                        <th>user name</th>
                         <th>password</th>
-                        <th>first_name</th>
-                        <th>last_name</th>
+                        <th>first name</th>
+                        <th>last name</th>
                         <th>email</th>
+                        <th>phone number</th>
+                        <th>role</th>
                         <th class="text-center">action</th>
                     </tr>
                 </thead>
@@ -51,6 +53,8 @@
                         <td th:text="${user.firstName}">John</td>
                         <td th:text="${user.lastName}">Doe</td>
                         <td th:text="${user.email}">johnDoe@something.com</td>
+                        <td th:text="${user.phoneNumber == null ? '-' : user.phoneNumber.phoneNumber}">1234567890</td>
+                        <td th:text="${user.role == null ? '-' : user.role.name}">Roller Modeler</td>
                         <td class="text-center">
                             <div class="btn-group">
                                 <a th:href="@{/users/edit/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>

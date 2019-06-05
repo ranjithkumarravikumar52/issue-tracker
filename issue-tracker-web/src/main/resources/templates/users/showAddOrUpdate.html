@@ -74,6 +74,22 @@
                                th:errorclass="fieldError" class="small fieldError">Invalid Email</p>
                         </div>
 
+                        <div class="form-group">
+                            <label for="phoneNumber">PhoneNumber: </label>
+                            <input th:field="*{phoneNumber.phoneNumber}" type="text" id="phoneNumber" class="form-control"/>
+                            <!--display email validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid PhoneNumber</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Role: </label>
+                            <input th:field="*{role.name}" type="text" id="role" class="form-control"/>
+                            <!--display email validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role.name}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid Role</p>
+                        </div>
+
                         <br>
                         <br>
                         <button type="submit" th:class="${user.email == null} ? 'btn btn-primary' : 'btn btn-info'">
