@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
+        <link href="../../static/css/main.css" rel="stylesheet"/>
     </head>
     <body>
         <nav th:replace="fragments/navbar :: navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -65,15 +66,42 @@
                     </tr>
                 </tbody>
             </table>
-            <nav>
-                <ul class="pagination">
-                    <li th:if="${users.totalPages > 0}"
-                        th:each="pageNumber : ${pageNumbers}"
-                        th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">
-                        <a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"
-                           th:text="${pageNumber}"
-                           th:class="page-link">
+            <nav th:if="${users.totalPages > 0}">
+                <ul class="pagination justify-content-center font-weight-bold">
+                    <!--previous logic here-->
+                    <!--disable the previous button if we are at the zero'th page-->
+                    <li class="page-item" th:classappend="${users.number == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/users/list(page=${users.number < 2 ? 1 : users.number})}">
+                            <span>Previous</span>
                         </a>
+                    </li>
+
+                    <!--Checks the number of pages left starting from current page.
+                     Otherwise, all next page links are shown  -->
+                    <li class="page-item"
+                        th:classappend="${i == users.number + 1 ? 'active' : ''}"
+                        th:each="i : ${#numbers.sequence(users.number + 1,
+                    ((users.totalPages > 10 + users.number ) ? (users.number + 10 ) : ( users.totalPages )), 1)}">
+                        <a class="page-link" th:href="@{/users/list(size=${users.size}, page=${i})}">
+                            <span th:text="${i}"></span>
+                        </a>
+                    </li>
+
+                    <!--If more than 10 pages are available. Then the below section will show users that more pages exists in between -->
+                    <li class="page-item disabled" th:if="${users.number + 10 < users.totalPages}">
+                        <a class="page-link" href="#">
+                            <span>...</span>
+                        </a>
+                    </li>
+
+                    <!--next button logic here -->
+                    <!--next button will be disabled when the current page is the last page-->
+                    <li class="page-item" th:classappend="${users.number + 1 == users.totalPages} ? 'disabled'">
+                        <!--the below th ref will give us next page -->
+                        <a class="page-link" th:href="@{/users/list(page = ${users.number + 2})}">
+                            <span>Next</span>
+                        </a>
+                        <!-- DON'T be alarmed cos of the +2, page numbers are zero-based, so we need that +2 for the next page-->
                     </li>
                 </ul>
             </nav>
