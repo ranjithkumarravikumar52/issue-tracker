@@ -69,7 +69,7 @@
             <nav th:if="${users.totalPages > 0}">
                 <ul class="pagination justify-content-center font-weight-bold">
                     <!--previous logic here-->
-                    <!--disable the previous button if the total pages are only 1-->
+                    <!--disable the previous button if we are at the zero'th page-->
                     <li class="page-item" th:classappend="${users.number == 0} ? 'disabled'">
                         <a class="page-link" th:href="@{/users/list(page=${users.number < 2 ? 1 : users.number})}">
                             <span>Previous</span>

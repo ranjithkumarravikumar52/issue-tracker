@@ -58,8 +58,10 @@
                         <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
                         <td>
                             <div class="btn-group">
-                                <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}" class="btn btn-sm btn-dark">Update</a>
-                                <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}" class="btn btn-sm btn-danger">Delete</a>
+                                <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}"
+                                   class="btn btn-sm btn-dark">Update</a>
+                                <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}"
+                                   class="btn btn-sm btn-danger">Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -70,31 +72,32 @@
                 <ul class="pagination justify-content-center font-weight-bold">
 
                     <!--previous button here -->
-                    <li th:class="'page-item'">
-                        <a th:class="'page-link'" href="#">
+                    <li class="page-item" th:classappend="${issues.number == 0 ? 'disabled' : ''}">
+                        <!--page before the current slice-->
+                        <a class="page-link" th:href="@{/issues/list/(page=${issues.number < 2 ? 1 : issues.number})}">
                             <span>Previous</span>
                         </a>
                     </li>
 
                     <!--main logic goes here-->
-                    <li th:each="pageNumber : ${pageNumbers}"
-                        th:class="${pageNumber == issues.number + 1} ? 'page-item active' : 'page-item'">
-                        <a th:href="@{/issues/list(size=${issues.size}, page=${pageNumber})}"
-                           th:text="${pageNumber}"
-                           th:class="'page-link'">
+                    <li class="page-item" th:classappend="${issues.number + 1 == i ? 'active' : ''}"
+                        th:each="i : ${#numbers.sequence(issues.number + 1 ,
+                    ((issues.number + 10 < issues.totalPages) ? (issues.number + 10) : (issues.totalPages)), 1)}">
+                        <a class="page-link" th:href="@{/issues/list/(page=${i})}">
+                            <span th:text="${i}"></span>
                         </a>
                     </li>
 
                     <!--ellipsis here-->
-                    <li class="page-item">
+                    <li class="page-item disabled" th:if="${issues.number + 10 < issues.totalPages}">
                         <a class="page-link" href="#">
                             <span>...</span>
                         </a>
                     </li>
 
                     <!--next here-->
-                    <li class="page-item">
-                        <a class="page-link" href="#">
+                    <li class="page-item" th:classappend="${issues.number + 1 == issues.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/issues/list/(page=${issues.number+2})}">
                             <span>Next</span>
                         </a>
                     </li>
