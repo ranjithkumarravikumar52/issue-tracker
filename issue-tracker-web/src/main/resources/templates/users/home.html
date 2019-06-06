@@ -77,24 +77,38 @@
 
                     <!--Checks the number of pages left starting from current page.
                      Otherwise, all next page links are shown  -->
-                    <li th:each="pageNumber : ${pageNumbers}"
-                        th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">
-                        <a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"
-                           th:text="${pageNumber}"
-                           th:class="page-link">
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(users.number + 1,
+                    ((users.totalPages > 10 + users.number ) ? (users.number + 10 ) : ( users.totalPages )), 1)}">
+                        <a class="page-link" th:href="@{/users/list(size=${users.size}, page=${i})}">
+                            <span th:text="${i}"></span>
                         </a>
                     </li>
 
-                    <!--If more than 10 pages are available, it renders only next 10 page links -->
-                    <li class="page-item disabled">
+                    <!--TODO remove bottom code-->
+                    <!--<li th:each="pageNumber : ${pageNumbers}"-->
+                        <!--th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">-->
+                        <!--<a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"-->
+                           <!--th:text="${pageNumber}"-->
+                           <!--th:class="page-link">-->
+                        <!--</a>-->
+                    <!--</li>-->
+
+                    <!--If more than 10 pages are available. Then the below section will show users that more pages exists in between -->
+                    <li class="page-item disabled" th:if="${users.number + 10 < users.totalPages}">
                         <a class="page-link" href="#">
                             <span>...</span>
                         </a>
                     </li>
 
                     <!--next button logic here -->
-                    <li class="page-item">
-                        <a class="page-link" href="#"><span>Next</span></a>
+                    <!--next button will be disabled when the current page is the last page-->
+                    <li class="page-item" th:classappend="${users.number + 1 == users.totalPages} ? 'disabled'">
+                        <!--the below th ref will give us next page -->
+                        <a class="page-link" th:href="@{/users/list(page = ${users.number + 2})}">
+                            <span>Next</span>
+                        </a>
+                        <!-- DON'T be alarmed cos of the +2, page numbers are zero-based, so we need that +2 for the next page-->
                     </li>
                 </ul>
             </nav>

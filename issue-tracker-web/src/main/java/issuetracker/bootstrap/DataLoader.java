@@ -15,7 +15,7 @@ import java.util.Random;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private static final int FAKE_USER_DATA_COUNT = 45;
+    private static final int FAKE_USER_DATA_COUNT = 50;
 
     private static final String[] LOCALE_LIST = {"de-CH", "en-GB", "en-IND", "en-PAK", "en-US"};
 
