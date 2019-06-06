@@ -69,8 +69,9 @@
             <nav th:if="${users.totalPages > 0}">
                 <ul class="pagination justify-content-center font-weight-bold">
                     <!--previous logic here-->
-                    <li class="page-item">
-                        <a class="page-link" href="#">
+                    <!--disable the previous button if the total pages are only 1-->
+                    <li class="page-item" th:classappend="${users.number == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/users/list(page=${users.number < 2 ? 1 : users.number})}">
                             <span>Previous</span>
                         </a>
                     </li>
@@ -78,21 +79,13 @@
                     <!--Checks the number of pages left starting from current page.
                      Otherwise, all next page links are shown  -->
                     <li class="page-item"
+                        th:classappend="${i == users.number + 1 ? 'active' : ''}"
                         th:each="i : ${#numbers.sequence(users.number + 1,
                     ((users.totalPages > 10 + users.number ) ? (users.number + 10 ) : ( users.totalPages )), 1)}">
                         <a class="page-link" th:href="@{/users/list(size=${users.size}, page=${i})}">
                             <span th:text="${i}"></span>
                         </a>
                     </li>
-
-                    <!--TODO remove bottom code-->
-                    <!--<li th:each="pageNumber : ${pageNumbers}"-->
-                        <!--th:class="${pageNumber == users.number + 1} ? 'page-item active' : 'page-item'">-->
-                        <!--<a th:href="@{/users/list(size=${users.size}, page=${pageNumber})}"-->
-                           <!--th:text="${pageNumber}"-->
-                           <!--th:class="page-link">-->
-                        <!--</a>-->
-                    <!--</li>-->
 
                     <!--If more than 10 pages are available. Then the below section will show users that more pages exists in between -->
                     <li class="page-item disabled" th:if="${users.number + 10 < users.totalPages}">
