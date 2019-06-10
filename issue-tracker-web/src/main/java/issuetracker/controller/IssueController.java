@@ -84,4 +84,10 @@ public class IssueController {
         issueService.deleteById(issueId);
         return "redirect:/issues/list";
     }
+
+    @GetMapping("/{issueId}")
+    public String showInDetailForm(@PathVariable("issueId") int issueId, Model model){
+        model.addAttribute("issue", issueService.findById(issueId));
+        return "issues/inDetail";
+    }
 }
