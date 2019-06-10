@@ -146,4 +146,17 @@ public class UserControllerTest {
         verify(userService, times(1)).deleteById(1);
 
     }
+
+    @Test
+    public void showInDetailForm() throws Exception {
+        when(userService.findById(anyInt())).thenReturn(johnDoe);
+
+        mockMvc.perform(get("/users/"+johnDoe.getId()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attribute("user", hasProperty("id", is(johnDoe.getId()))))
+                .andExpect(view().name("users/inDetail"));
+
+        verify(userService, times(1)).findById(anyInt());
+    }
 }
