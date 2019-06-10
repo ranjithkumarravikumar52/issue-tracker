@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
@@ -35,7 +34,7 @@ public class ProjectControllerTest {
     private Project project1;
 
     @Before
-    public void setup(){
+    public void setup() {
         User johnDoe = User.builder()
                 .id(1)
                 .userName("johnDoe")
@@ -58,7 +57,7 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void listProjects() throws Exception{
+    public void listProjects() throws Exception {
         HashSet<Project> projects = new HashSet<>();
         projects.add(project1);
         when(projectService.findAll()).thenReturn(projects);
@@ -83,7 +82,7 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void addProject() throws Exception{
+    public void addProject() throws Exception {
         when(projectService.save(ArgumentMatchers.any(Project.class))).thenReturn(project1);
 
         mockMvc.perform(post("/projects/new"))
@@ -94,7 +93,7 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void showUpdateForm() throws Exception{
+    public void showUpdateForm() throws Exception {
         when(projectService.findById(anyInt())).thenReturn(project1);
 
         mockMvc.perform(get("/projects/edit/1"))
@@ -108,9 +107,22 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void deleteProject() throws Exception{
+    public void deleteProject() throws Exception {
         mockMvc.perform(get("/projects/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/list"));
+    }
+
+    @Test
+    public void showInDetailForm() throws Exception {
+        when(projectService.findById(anyInt())).thenReturn(project1);
+
+        mockMvc.perform(get("/projects/" + project1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("project"))
+                .andExpect(model().attribute("project", hasProperty("id", is(project1.getId()))))
+                .andExpect(view().name("projects/inDetail"));
+
+        verify(projectService, times(1)).findById(anyInt());
     }
 }

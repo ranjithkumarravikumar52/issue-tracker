@@ -52,6 +52,12 @@ public class ProjectController {
         return "redirect:/projects/list";
     }
 
+    @GetMapping("/{projectId}")
+    public String showInDetailForm(@PathVariable("projectId") int projectId, Model model){
+        model.addAttribute("project", projectService.findById(projectId));
+        return "projects/inDetail";
+    }
+
     //TODO Chain different ids probably using initBinder
 	/*@GetMapping("/projectUserList")
 	public String showProjectUserForm(Model model){
