@@ -137,7 +137,6 @@ public class IssueControllerTest {
      * Mocking void methods is a bit different. In below code we created a mock of the {@link IssueServiceSDJPAImpl}<br>
      * particularly deleteById().
      * And then we verify that method is called exactly once.*/
-
     @Test
     public void deleteIssue() throws Exception {
         IssueServiceSDJPAImpl mock = mock(IssueServiceSDJPAImpl.class);
@@ -149,5 +148,17 @@ public class IssueControllerTest {
         mockMvc.perform(get("/issues/delete/"+blockerIssue.getId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/issues/list"));
+    }
+
+    @Test
+    public void showInDetailForm() throws Exception{
+        when(issueService.findById(anyInt())).thenReturn(blockerIssue);
+
+        mockMvc.perform(get("/issues/"+blockerIssue.getId()))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("issue", hasProperty("id", is(blockerIssue.getId()))))
+                .andExpect(view().name("issues/inDetail"));
+
+        verify(issueService).findById(anyInt());
     }
 }
