@@ -32,7 +32,7 @@ public class UserController {
 
         //if param are empty - setting defaults
         int currentPage = page.orElse(1); //first page
-        int pageSize = size.orElse(4); //10 per page
+        int pageSize = size.orElse(10); //10 per page
 
         Page<User> users = userService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 

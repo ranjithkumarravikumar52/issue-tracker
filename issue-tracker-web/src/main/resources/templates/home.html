@@ -30,55 +30,93 @@
                 </li>
             </ul>
         </nav>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <p class="lead text-center">
-                        Welcome to Issue Tracker. Start using this website, by choosing any of the below option.
-                    </p>
-                </div>
-            </div>
+        <div class="container-fluid">
 
-            <!--list entities-->
-            <div class="row mt-5">
-                <div class="col">
-                    <a th:href="@{/users/list}" class="btn btn-primary">List Users</a>
+            <!--user profile starts here -->
+            <div class="row justify-content-center">
+                <div class="col-2 text-center bg-light" style="min-height: 1000px">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#">
+                                <img title="profile image"
+                                     class="img-circle img-responsive"
+                                     src="../../static/images/hand-drawn-modern-man-avatar.jpg" height="100px" width="100px" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>User name</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>Email id</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <a th:href="@{/issues/list}" class="btn btn-primary">List Issues</a>
-                </div>
-                <div class="col">
-                    <a th:href="@{/projects/list}" class="btn btn-primary">List Projects</a>
-                </div>
-                <div class="col">
-                    <a th:href="@{/roles/list}" class="btn btn-primary">List Roles</a>
-                </div>
-            </div>
 
-            <!--admin buttons here-->
-            <div class="row mt-5">
-                <div class="col">
-                    <a th:href="@{/sanityCheck/dbConnection}" class="btn btn-info">Test DB Connection</a>
+                <!--recent acivity starts here-->
+                <div class="col-8" style="min-height: 1000px">
+                    <p>Recent activity here</p>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <p class="card-text">Issue activity text</p>
+                            <a href="#" class="card-link">Issue Link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <p class="card-text">Project activity text</p>
+                            <a href="#" class="card-link">Project Link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <p class="card-text">User activity text</p>
+                            <a href="#" class="card-link">User Link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <a th:href="@{/oops}" class="btn btn-warning">List Projects by Users(WIP)</a>
-                </div>
-                <div class="col">
-                    <a th:href="@{/oops}" class="btn btn-warning">List Users by Project(WIP)</a>
-                </div>
-            </div>
 
-            <div lang="en" th:replace="fragments/footer :: footer">
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                        crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-                        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-                        crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-                        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-                        crossorigin="anonymous"></script>
+                <!--current project starts here-->
+                <div class="col-2 bg-light text-center" style="min-height: 1000px">
+                    <span>Current projects</span>
+                    <table class="table table-borderless text-center">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p><a href="#">Project 1</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><a href="#">Project 2</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><a href="#">Project 3</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+        <div lang="en" th:replace="fragments/footer :: footer">
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                    crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                    crossorigin="anonymous"></script>
         </div>
     </body>
 </html>

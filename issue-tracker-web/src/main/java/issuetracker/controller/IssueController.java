@@ -31,7 +31,7 @@ public class IssueController {
     @GetMapping("/list")
     public String getIssueList(Model model, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(10);
 
         Page<Issue> issues = issueService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
