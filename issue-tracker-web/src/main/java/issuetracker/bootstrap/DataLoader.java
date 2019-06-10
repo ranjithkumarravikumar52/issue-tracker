@@ -39,10 +39,9 @@ public class DataLoader implements CommandLineRunner {
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
             initIssuesData(user);
-            //TODO uncomment this
-            /*if(i % 3 == 0){
+            if(i % 3 == 0){
                 initIssuesData(user);
-            }*/
+            }
         }
     }
 
