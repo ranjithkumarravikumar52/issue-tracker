@@ -58,6 +58,7 @@
                         <td th:text="${user.role == null ? '-' : user.role.name}">Roller Modeler</td>
                         <td class="text-center">
                             <div class="btn-group">
+                                <a th:href="@{/users/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Show</a>
                                 <a th:href="@{/users/edit/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
                                 <a th:href="@{/users/delete/{userId}(userId = ${user.id})}"
                                    class="btn btn-sm btn-danger">Delete</a>

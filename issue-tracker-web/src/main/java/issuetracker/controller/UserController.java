@@ -79,4 +79,10 @@ public class UserController {
         userService.deleteById(userId);
         return "redirect:/users/list";
     }
+
+    @GetMapping("/{userId}")
+    public String showInDetail(@PathVariable("userId") int userId, Model model){
+        model.addAttribute("user", userService.findById(userId));
+        return "users/inDetail";
+    }
 }
