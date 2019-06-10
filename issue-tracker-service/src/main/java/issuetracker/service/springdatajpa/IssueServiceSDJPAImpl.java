@@ -1,6 +1,7 @@
 package issuetracker.service.springdatajpa;
 
 import issuetracker.entity.Issue;
+import issuetracker.entity.User;
 import issuetracker.repository.IssueRepository;
 import issuetracker.service.IssueService;
 import org.springframework.context.annotation.Profile;
@@ -68,4 +69,25 @@ public class IssueServiceSDJPAImpl implements IssueService {
 
         return new PageImpl<>(pageIssues, PageRequest.of(currentPage, pageSize), allIssues.size());
     }
+
+    @Override
+    public Set<Issue> findAllByPostedBy(User postedByUser) {
+        return issueRepository.findAllByPostedBy(postedByUser);
+    }
+
+    @Override
+    public Set<Issue> findAllByOpenedBy(User openedByUser) {
+        return issueRepository.findAllByOpenedBy(openedByUser);
+    }
+
+    @Override
+    public Set<Issue> findAllByFixedBy(User fixedByUser) {
+        return issueRepository.findAllByFixedBy(fixedByUser);
+    }
+
+    @Override
+    public Set<Issue> findAllByClosedBy(User closedByUser) {
+        return issueRepository.findAllByClosedBy(closedByUser);
+    }
+
 }

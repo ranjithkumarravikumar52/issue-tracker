@@ -1,6 +1,7 @@
 package issuetracker.controller;
 
 import issuetracker.entity.User;
+import issuetracker.service.IssueService;
 import issuetracker.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,11 +21,13 @@ import java.util.stream.IntStream;
 public class UserController {
 
     private final UserService userService;
+    private final IssueService issueService;
     private final String VIEW_SHOW_ADD_USER_FORM = "users/showAddOrUpdate";
     private final String VIEW_LIST_ALL_USERS = "users/home";
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, IssueService issueService) {
         this.userService = userService;
+        this.issueService = issueService;
     }
 
     @GetMapping("/list")
@@ -82,7 +85,9 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public String showInDetail(@PathVariable("userId") int userId, Model model){
-        model.addAttribute("user", userService.findById(userId));
+        User user = userService.findById(userId);
+        model.addAttribute("issuesPosted", issueService.findAllByPostedBy(user));
+        model.addAttribute("user", user);
         return "users/inDetail";
     }
 }
