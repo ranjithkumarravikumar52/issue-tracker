@@ -112,6 +112,9 @@ public class DataLoader implements CommandLineRunner {
                         new Faker().chuckNorris().fact() + " " + new Faker().numerify("###")
                 )
                 .postedBy(userById)
+                .openedBy(userById)
+                .fixedBy(userById)
+                .closedBy(userById)
                 .build();
         issueService.save(issue);
     }

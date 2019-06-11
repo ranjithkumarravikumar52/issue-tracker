@@ -36,7 +36,7 @@
             <!--issue title -->
             <div class="row">
                 <div class="col-8 mx-auto">
-                    <h4>Issue title</h4>
+                    <h4 th:text="${issue.issueDescription}">Issue title</h4>
                 </div>
             </div>
             <!--issue status-->
@@ -44,16 +44,40 @@
                 <div class="col-8 mx-auto">
                     <div class="row">
                         <div class="col-3" style="border: 1px solid red">
-                            <p>Posted by</p>
+                            <p th:if="${issue.postedBy != null}">
+                                <a th:href="@{/users/{userId}(userId = ${issue.postedBy.id})}">
+                                    <span th:text="${issue.postedBy.userName}">
+                                        Issue Posted By
+                                    </span>
+                                </a>
+                            </p>
                         </div>
                         <div class="col-3" style="border: 1px solid blue">
-                            <p>Opened by</p>
+                            <p th:if="${issue.openedBy != null}">
+                                <a th:href="@{/users/{userId}(userId = ${issue.openedBy.id})}">
+                                    <span th:text="${issue.openedBy.userName}">
+                                        Issue opened By
+                                    </span>
+                                </a>
+                            </p>
                         </div>
                         <div class="col-3" style="border: 1px solid brown">
-                            <p>Fixed by</p>
+                            <p th:if="${issue.fixedBy != null}">
+                                <a th:href="@{/users/{userId}(userId = ${issue.fixedBy.id})}">
+                                    <span th:text="${issue.fixedBy.userName}">
+                                        Issue fixedBy By
+                                    </span>
+                                </a>
+                            </p>
                         </div>
                         <div class="col-3" style="border: 1px solid darkmagenta">
-                            <p>Closed by</p>
+                            <p th:if="${issue.closedBy != null}">
+                                <a th:href="@{/users/{userId}(userId = ${issue.closedBy.id})}">
+                                    <span th:text="${issue.closedBy.userName}">
+                                        Issue ClosedBy By
+                                    </span>
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>
