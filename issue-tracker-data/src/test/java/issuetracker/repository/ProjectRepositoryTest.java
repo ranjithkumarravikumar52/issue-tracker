@@ -119,4 +119,22 @@ public class ProjectRepositoryTest {
         assertEquals(0, allIssueByProjectId.size());
     }
 
+    /**
+     * There are three users in project 1 and no users in project 2
+     */
+    @Test
+    public void findAllUsersByProjectIdBy1_Success(){
+        Project project = projectRepository.findById(project1.getId()).orElse(null);
+        assertNotNull(project);
+        List<Object[]> allUsersByProjectId = projectRepository.findAllUsersByProjectId(project.getId());
+        assertNotNull(allUsersByProjectId);
+        assertEquals(3, allUsersByProjectId.size());
+
+        project = projectRepository.findById(project2.getId()).orElse(null);
+        assertNotNull(project);
+        allUsersByProjectId = projectRepository.findAllUsersByProjectId(project.getId());
+        assertNotNull(allUsersByProjectId);
+        assertEquals(0, allUsersByProjectId.size());
+    }
+
 }

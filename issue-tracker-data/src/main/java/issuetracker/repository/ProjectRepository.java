@@ -20,5 +20,15 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
             , nativeQuery = true)
     List<Object[]> findAllIssuesByProjectId(int projectId);
 
+    @Query(value = "SELECT user.*\n" +
+            "from user,\n" +
+            "     project,\n" +
+            "     project_user\n" +
+            "where user.id = project_user.user_id\n" +
+            "  and project.id = project_user.project_id\n" +
+            "  and project.id = ?1"
+            , nativeQuery = true)
+    List<Object[]> findAllUsersByProjectId(int projectId);
+
 
 }
