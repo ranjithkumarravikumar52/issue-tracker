@@ -1,6 +1,7 @@
 package issuetracker.controller;
 
 import issuetracker.entity.User;
+import issuetracker.service.IssueService;
 import issuetracker.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,9 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private IssueService issueService;
 
     @Autowired
     private MockMvc mockMvc;

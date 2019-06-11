@@ -37,7 +37,7 @@
             <!--project title -->
             <div class="row">
                 <div class="col-6 mx-auto">
-                    <h4>Project title</h4>
+                    <h4 th:text="${project.projectDescription}">Project title</h4>
                 </div>
             </div>
             <!--project description-->
@@ -62,8 +62,56 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane container active" id="issues">List of issues for this project</div>
-                        <div class="tab-pane container fade" id="users">List of users in this project</div>
+                        <!--List of all issues for a project-->
+                        <div class="tab-pane active" id="issues">
+                            <table class="table container table-striped table-hover table-sm">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Issue Id</th>
+                                    <th>Issue Description</th>
+                                    <th>Posted By</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="issue : ${issues}">
+                                    <td th:text="${issue.id}">1</td>
+                                    <td th:text="${issue.issueDescription}">Issue Description</td>
+                                    <td th:text="${issue.postedBy.userName}">John1</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
+                                               class="btn btn-sm btn-info">Show</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--List of all users in a project-->
+                        <div class="tab-pane  fade" id="users">
+                            <table class="table container table-striped table-hover table-sm">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>id</th>
+                                    <th>user name</th>
+                                    <th class="text-center">action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.id}">1</td>
+                                    <td th:text="${user.userName}">johnDoe</td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <a th:href="@{/users/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Show</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
