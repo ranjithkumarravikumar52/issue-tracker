@@ -46,8 +46,8 @@
                         <td th:text="${role.name}">Test role</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a th:href="@{/roles/edit/{roleId}(roleId = ${role.id})}" class="btn btn-sm btn-info">Update</a>
-                                <a th:href="@{/roles/delete/{roleId}(roleId = ${role.id})}" class="btn btn-sm btn-danger">Delete</a>
+                                <a th:href="@{/roles/edit/{roleId}(roleId = ${role.id})}" class="btn btn-sm btn-outline-primary font-weight-bold">Update</a>
+                                <a th:href="@{/roles/delete/{roleId}(roleId = ${role.id})}" class="btn btn-sm btn-outline-danger font-weight-bold">Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -55,7 +55,7 @@
             </table>
 
             <div>
-                <a th:href="@{/}" class="btn btn-light float-left">Home</a>
+                <a th:href="@{/}" class="btn btn-outline-dark font-weight-bold float-left">Home</a>
                 <a th:href="@{/roles/new}" class="btn btn-success float-right">Add New Role</a>
             </div>
 

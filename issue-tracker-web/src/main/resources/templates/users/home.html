@@ -58,10 +58,10 @@
                         <td th:text="${user.role == null ? '-' : user.role.name}">Roller Modeler</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a th:href="@{/users/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Show</a>
-                                <a th:href="@{/users/edit/{userId}(userId = ${user.id})}" class="btn btn-sm btn-info">Update</a>
+                                <a th:href="@{/users/{userId}(userId = ${user.id})}" class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
+                                <a th:href="@{/users/edit/{userId}(userId = ${user.id})}" class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
                                 <a th:href="@{/users/delete/{userId}(userId = ${user.id})}"
-                                   class="btn btn-sm btn-danger">Delete</a>
+                                   class="btn btn-sm btn-outline-danger font-weight-bold">Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -108,7 +108,7 @@
             </nav>
 
             <div>
-                <a th:href="@{/}" class="btn btn-light float-left">Home</a>
+                <a th:href="@{/}" class="btn btn-outline-dark font-weight-bold float-left">Home</a>
                 <a th:href="@{/users/new}" class="btn btn-success float-right">Add New User</a>
             </div>
         </div>
