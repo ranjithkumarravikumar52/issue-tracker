@@ -55,6 +55,7 @@ public class ProjectController {
     @GetMapping("/{projectId}")
     public String showInDetailForm(@PathVariable("projectId") int projectId, Model model){
         model.addAttribute("project", projectService.findById(projectId));
+        model.addAttribute("issues", projectService.findAllIssuesByProjectId(projectId));
         return "projects/inDetail";
     }
 

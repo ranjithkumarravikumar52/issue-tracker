@@ -107,7 +107,7 @@ public class ProjectRepositoryTest {
     @Test
     public void findAllIssuesByProjectIdBy1_Success() {
         Project project = projectRepository.findById(project1.getId()).orElse(null);
-        List<Object[]> allIssueByProjectId = projectRepository.findAllIssueByProjectId(project.getId());
+        List<Object[]> allIssueByProjectId = projectRepository.findAllIssuesByProjectId(project.getId());
         assertNotNull(allIssueByProjectId);
         assertEquals(issueRepository.count(), allIssueByProjectId.size());
     }
@@ -115,7 +115,7 @@ public class ProjectRepositoryTest {
     @Test
     public void findAllIssuesByProjectIdBy2_Success() {
         Project project = projectRepository.findById(project2.getId()).orElse(null);
-        List<Object[]> allIssueByProjectId = projectRepository.findAllIssueByProjectId(project.getId());
+        List<Object[]> allIssueByProjectId = projectRepository.findAllIssuesByProjectId(project.getId());
         assertEquals(0, allIssueByProjectId.size());
     }
 
