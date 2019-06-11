@@ -1,6 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="navbar">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark text-center">
-        <ul class="navbar-nav">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark shadow-lg">
+        <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item" th:classappend="${#request.getRequestURI() == '/' ? 'active' : ''}">
                 <a class="nav-link" th:href="@{/}">Home</a>
             </li>
