@@ -53,8 +53,11 @@
                     </tr>
                 </tbody>
             </table>
-            <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
-            <a th:href="@{/roles/new}" class="btn btn-warning btn-sm">Add New Role</a>
+
+            <div>
+                <a th:href="@{/}" class="btn btn-primary btn-sm float-left">Home</a>
+                <a th:href="@{/roles/new}" class="btn btn-warning btn-sm float-right">Add New Role</a>
+            </div>
 
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">

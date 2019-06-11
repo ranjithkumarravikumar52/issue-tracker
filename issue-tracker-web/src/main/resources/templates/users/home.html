@@ -107,8 +107,10 @@
                 </ul>
             </nav>
 
-            <a th:href="@{/}" class="btn btn-primary btn-sm">Home</a>
-            <a th:href="@{/users/new}" class="btn btn-warning btn-sm">Add New User</a>
+            <div>
+                <a th:href="@{/}" class="btn btn-primary btn-sm float-left">Home</a>
+                <a th:href="@{/users/new}" class="btn btn-warning btn-sm float-right">Add New User</a>
+            </div>
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
