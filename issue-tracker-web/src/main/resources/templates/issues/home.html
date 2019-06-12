@@ -31,7 +31,7 @@
             </ul>
         </nav>
         <div class="container">
-            <table class="table table-striped table-hover table-sm shadow">
+            <table class="table table-responsive-sm table-striped table-hover table-sm shadow">
                 <thead class="thead-dark">
                     <tr>
                         <th>Issue Id</th>
@@ -40,15 +40,13 @@
                         <th>Opened By</th>
                         <th>Fixed By</th>
                         <th>Closed By</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="issue : ${issues}">
                         <td th:text="${issue.id}">1</td>
-                        <td th:text="${issue.issueDescription}">Issue Description</td>
-
-
+                        <td th:text="${issue.issueDescription}" style="word-wrap: break-word; min-width: 160px;max-width: 200px;">Issue Description</td>
                         <td th:text="${issue.postedBy.userName}">John1</td>
                         <!--user object can be null-->
                         <td th:text="${issue.openedBy} ? ${issue.openedBy.userName} : '-'">John1</td>
@@ -56,14 +54,14 @@
                         <td th:text="${issue.fixedBy} ? ${issue.fixedBy.userName} : '-'">John1</td>
                         <!--user object can be null-->
                         <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
                                    class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
                                 <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}"
                                    class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
                                 <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}"
-                                   class="btn btn-sm btn-outline-danger font-weight-bold">Delete</a>
+                                   class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
                             </div>
                         </td>
                     </tr>

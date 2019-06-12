@@ -49,7 +49,7 @@
                             <div class="btn-group">
                                 <a th:href="@{/projects/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
                                 <a th:href="@{/projects/edit/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
-                                <a th:href="@{/projects/delete/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-danger font-weight-bold">Delete</a>
+                                <a th:href="@{/projects/delete/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
                             </div>
                         </td>
                     </tr>
