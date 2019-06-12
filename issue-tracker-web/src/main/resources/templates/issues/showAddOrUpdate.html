@@ -32,43 +32,75 @@
             </ul>
         </nav>
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <form th:action="@{/issues/new}" th:object="${issue}" method="POST">
-                        <input type="hidden" th:field="*{id}"/>
+            <form th:action="@{/issues/new}" th:object="${issue}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
 
-                        <div class="form-group">
-                            <label for="issueDescription">Issue description*: </label>
+                <!--issue description-->
+                <div class="form-row">
+                    <div class="col">
+                        <label for="issueDescription">Issue description*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info"></i></span>
+                            </div>
                             <input type="text" class="textarea form-control"
                                    id="issueDescription" th:field="*{issueDescription}"/>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="postedBy">Posted by Id:*: </label>
+                <!--posted and opened-->
+                <div class="form-row">
+                    <!--posted-->
+                    <div class="col">
+                        <label for="postedBy">Posted by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
                             <input type="number" class="form-control" id="postedBy" th:field="*{postedBy.id}"/>
                         </div>
-
-                        <div class="form-group">
-                            <label for="openedBy">Opened by Id:*: </label>
+                    </div>
+                    <!--opened-->
+                    <div class="col">
+                        <label for="openedBy">Opened by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
                             <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="fixedBy">Fixed by Id:*: </label>
+                <!--fixed and closed-->
+                <div class="form-row">
+                    <!--fixed-->
+                    <div class="col">
+                        <label for="fixedBy">Fixed by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
                             <input type="number" class="form-control" id="fixedBy" th:field="*{fixedBy.id}"/>
                         </div>
-
-                        <div class="form-group">
-                            <label for="closedBy">Closed by Id:*: </label>
+                    </div>
+                    <!--closed-->
+                    <div class="col">
+                        <label for="closedBy">Closed by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
                             <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
                         </div>
-
-                        <button type="submit" th:class="${issue.issueDescription == null} ? 'btn btn-primary' : 'btn btn-info'">
-                            <span th:text="${issue.issueDescription == null} ? 'Save Issue' : 'Update Issue'"></span>
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <button type="submit" th:class="${issue.issueDescription == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="float-right">
+                    <span th:text="${issue.issueDescription == null} ? 'Save Issue' : 'Update Issue'"></span>
+                </button>
+            </form>
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
