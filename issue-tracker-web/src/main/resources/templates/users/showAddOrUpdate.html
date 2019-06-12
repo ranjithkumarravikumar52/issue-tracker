@@ -32,73 +32,117 @@
             </ul>
         </nav>
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <form th:action="@{/users/new}" th:object="${user}" method="POST">
-                        <input type="hidden" th:field="*{id}"/>
-                        <div class="form-group">
-                            <label for="userName">Username*: </label>
-                            <input th:field="*{userName}" type="text" id="userName" class="form-control"/>
-                            <!--display username validation errors if exists-->
-                            <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
-                               th:errorclass="fieldError" class="small fieldError">Invalid User Name</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password*: </label>
-                            <input th:field="*{password}" type="text" id="password" class="form-control"/>
-                            <!--display password validation errors if exists-->
-                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                               th:errorclass="fieldError" class="small fieldError">Invalid Password</p>
-                        </div>
+            <form th:action="@{/users/new}" th:object="${user}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
 
-                        <div class="form-group">
-                            <label for="firstName">First Name*: </label>
-                            <input th:field="*{firstName}" type="text" id="firstName" class="form-control"/>
-                            <!--display firstName validation errors if exists-->
-                            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                               th:errorclass="fieldError" class="small fieldError">Invalid FirstName</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastName">Last Name*: </label>
+                <!--last name and first name-->
+                <div class="form-row">
+                    <div class="col">
+                        <!--last name-->
+                        <label for="lastName">Last Name*: </label>
+                        <div class="input-group mb-3">
                             <input th:field="*{lastName}" type="text" id="lastName" class="form-control"/>
                             <!--display lastName validation errors if exists-->
                             <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                th:errorclass="fieldError" class="small fieldError">Invalid LastName</p>
                         </div>
+                    </div>
+                    <!--first name-->
+                    <div class="col">
+                        <label for="firstName">First Name*: </label>
+                        <div class="input-group mb-3">
+                            <input th:field="*{firstName}" type="text" id="firstName" class="form-control"/>
+                            <!--display firstName validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid FirstName</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="email">Email*: </label>
+                <!--user name and password-->
+                <div class="form-row">
+                    <!--user name-->
+                    <div class="col">
+                        <label class="control-label" for="userName">Username*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                            </div>
+                            <input class="form-control" th:field="*{userName}" type="text" id="userName"/>
+                            <!--display username validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid User Name</p>
+                        </div>
+                    </div>
+                    <!--password -->
+                    <div class="col">
+                        <label for="password">Password*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-key"></i></span>
+                            </div>
+                            <input th:field="*{password}" type="text" id="password" class="form-control"/>
+                            <!--display password validation errors if exists-->
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                               th:errorclass="fieldError" class="small fieldError">Invalid Password</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--email and phone number-->
+                <div class="form-row">
+                    <!--email-->
+                    <div class="col">
+                        <label for="email">Email*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            </div>
                             <input th:field="*{email}" type="email" id="email" class="form-control"/>
                             <!--display email validation errors if exists-->
                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                th:errorclass="fieldError" class="small fieldError">Invalid Email</p>
                         </div>
-
-                        <div class="form-group">
-                            <label for="phoneNumber">PhoneNumber: </label>
+                    </div>
+                    <!--phone number-->
+                    <div class="col">
+                        <!--phone number-->
+                        <label for="phoneNumber">PhoneNumber: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                            </div>
                             <input th:field="*{phoneNumber.phoneNumber}" type="text" id="phoneNumber" class="form-control"/>
                             <!--display email validation errors if exists-->
                             <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
                                th:errorclass="fieldError" class="small fieldError">Invalid PhoneNumber</p>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="role">Role: </label>
+                <!--roles-->
+                <div class="form-row">
+                    <div class="col">
+                        <!--roles-->
+                        <label for="role">Role: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user-cog"></i></span>
+                            </div>
                             <input th:field="*{role.name}" type="text" id="role" class="form-control"/>
                             <!--display email validation errors if exists-->
                             <p th:if="${#fields.hasErrors('role')}" th:errors="*{role.name}"
                                th:errorclass="fieldError" class="small fieldError">Invalid Role</p>
                         </div>
-
-                        <br>
-                        <br>
-                        <button type="submit" th:class="${user.email == null} ? 'btn btn-primary' : 'btn btn-info'">
-                            <span th:text="${user.email == null} ?  'Save User' : 'Update User'"></span>
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <!--submit button-->
+                <button type="submit" th:class="${user.email == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="float-right">
+                    <span th:text="${user.email == null} ?  'Save User' : 'Update User'"></span>
+                </button>
+
+            </form>
         </div>
         <div lang="en" th:replace="fragments/footer :: footer">
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
