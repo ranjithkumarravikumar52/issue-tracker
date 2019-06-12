@@ -32,20 +32,26 @@
             </ul>
         </nav>
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <form th:action="@{/roles/new}" th:object="${role}" method="POST">
-                        <input type = "hidden" th:field ="*{id}"/>
-                        <div class="form-group">
-                            <label for="name">Role*: </label>
+            <form th:action="@{/roles/new}" th:object="${role}" method="POST">
+                <input type = "hidden" th:field ="*{id}"/>
+
+                <!--role name-->
+                <div class="form-row">
+                    <div class="col">
+                        <label for="name">Role*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info"></i></span>
+                            </div>
                             <input th:field ="*{name}" type="text" id="name" class="form-control"/>
                         </div>
-                        <button type="submit" th:class="${role.name == null} ? 'btn btn-primary' : 'btn btn-info'">
-                            <span th:text="${role.name == null} ? 'Save Role' : 'Update Role'"></span>
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <button type="submit" th:class="${role.name == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="'float-right'">
+                    <span th:text="${role.name == null} ? 'Save Role' : 'Update Role'"></span>
+                </button>
+            </form>
         </div>
     </body>
     <div lang="en" th:replace="fragments/footer :: footer">
