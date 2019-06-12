@@ -53,7 +53,7 @@ public class ProjectControllerTest {
                 .lastName("doe")
                 .build();
 
-        project1 = Project.builder().id(1).projectDescription("Project 1 Description").build();
+        project1 = Project.builder().id(1).title("Project 1 title").projectDescription("Project 1 Description").build();
     }
 
     @Test

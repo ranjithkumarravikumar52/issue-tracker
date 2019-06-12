@@ -51,8 +51,8 @@ public class ProjectRepositoryTest {
         roleRepository.saveAll(Arrays.asList(developer, tester, admin));
 
         //save projects
-        project1 = Project.builder().projectDescription("mobile app").build();
-        project2 = Project.builder().projectDescription("web app").build();
+        project1 = Project.builder().title("mobile app").projectDescription("An android mobile application").build();
+        project2 = Project.builder().title("machine learning demo").projectDescription("Demo project to practice introduction to machine learning course").build();
         projectRepository.saveAll(Arrays.asList(project1, project2));
 
         //prep - get two users

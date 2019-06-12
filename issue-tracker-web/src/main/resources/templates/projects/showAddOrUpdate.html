@@ -37,6 +37,20 @@
                     <input type="hidden" th:field="*{id}" class="form-control"/>
                 </div>
 
+                <!--project title-->
+                <div class="form-row">
+                    <div class="col">
+                        <label for="projectTitle">Project Title*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info"></i></span>
+                            </div>
+                            <textarea th:field="*{title}" type="text" id="projectTitle"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
                 <!--project description-->
                 <div class="form-row">
                     <div class="col">

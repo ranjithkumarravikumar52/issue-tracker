@@ -37,7 +37,8 @@ public class UserRepositoryPaginationTest {
     public void setup() {
 
         //when project is created
-        Project freePlay = Project.builder().projectDescription("Sims Free play").build();
+        Project freePlay = Project.builder().title("Sims Free Play").projectDescription("A mobile app game by EA games").build();;
+
         projectRepository.save(freePlay);
 
         //create dev role objects
