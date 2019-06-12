@@ -49,7 +49,7 @@
                 </div>
 
                 <button type="submit" th:class="${role.name == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="'float-right'">
-                    <span th:text="${role.name == null} ? 'Save Role' : 'Update Role'"></span>
+                    <span><i class="fa fa-save"></i>&nbsp;</span><span th:text="${role.name == null} ? 'Save Role' : 'Update Role'"></span>
                 </button>
             </form>
         </div>

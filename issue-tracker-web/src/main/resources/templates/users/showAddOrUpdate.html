@@ -139,7 +139,7 @@
 
                 <!--submit button-->
                 <button type="submit" th:class="${user.email == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="float-right">
-                    <span th:text="${user.email == null} ?  'Save User' : 'Update User'"></span>
+                    <span><i class="fa fa-save"></i>&nbsp;</span><span th:text="${user.email == null} ?  'Save User' : 'Update User'"></span>
                 </button>
 
             </form>
