@@ -19,7 +19,7 @@
                 <a class="nav-link" th:href="@{/roles/list}">Roles</a>
             </li>
             <li class="nav-item" th:classappend="${#request.getRequestURI().startsWith('/sanityCheck') ? 'active' : ''}">
-                <a class="nav-link" th:href="@{/sanityCheck/dbConnection}">Test DB Connection</a>
+                <a class="nav-link" th:href="@{/sanityCheck/dbConnection}"><span><i class="fa fa-cogs fa-fw"></i></span> Test DB Connection</a>
             </li>
         </ul>
     </nav>
