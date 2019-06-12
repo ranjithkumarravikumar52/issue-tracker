@@ -33,10 +33,10 @@ public class UserAndProjectHugeDataITTest {
     public void test() {
 
         //when project is created
-        Project freePlay = Project.builder().projectDescription("Sims Free play").build();
-        Project endGame = Project.builder().projectDescription("End Game").build();
-        projectRepository.save(freePlay);
-        projectRepository.save(endGame);
+        Project project1 = Project.builder().title("mobile app").projectDescription("An android mobile application").build();
+        Project project2 = Project.builder().title("nlp assignment").projectDescription("Social media sentiment analysis").build();
+        projectRepository.save(project1);
+        projectRepository.save(project2);
 
         //create dev role objects
         Role developer = Role.builder().name("developer").build();
@@ -69,41 +69,41 @@ public class UserAndProjectHugeDataITTest {
             userRepository.save(janeDoe);
 
             //setting up project -> user relationship
-            freePlay.getUsers().add(johnDoe);
-            endGame.getUsers().add(janeDoe);
+            project1.getUsers().add(johnDoe);
+            project2.getUsers().add(janeDoe);
 
-            projectRepository.save(freePlay);
-            projectRepository.save(endGame);
+            projectRepository.save(project1);
+            projectRepository.save(project2);
 
             //setting up user -> project relationship
-            johnDoe.getProjects().add(freePlay);
-            janeDoe.getProjects().add(endGame);
+            johnDoe.getProjects().add(project1);
+            janeDoe.getProjects().add(project2);
 
             userRepository.save(johnDoe);
             userRepository.save(janeDoe);
 
             //assertion
-            assertNotNull(freePlay.getUsers());
-            assertNotNull(endGame.getUsers());
+            assertNotNull(project1.getUsers());
+            assertNotNull(project2.getUsers());
 
             assertNotNull(johnDoe.getProjects());
             assertNotNull(janeDoe.getProjects());
 
             //check
-            assertTrue(freePlay.getUsers().contains(johnDoe));
-            assertTrue(endGame.getUsers().contains(janeDoe));
+            assertTrue(project1.getUsers().contains(johnDoe));
+            assertTrue(project2.getUsers().contains(janeDoe));
 
-            assertTrue(johnDoe.getProjects().contains(freePlay));
-            assertTrue(janeDoe.getProjects().contains(endGame));
+            assertTrue(johnDoe.getProjects().contains(project1));
+            assertTrue(janeDoe.getProjects().contains(project2));
         }
 
-        Project actualProject = projectRepository.findById(freePlay.getId()).orElse(null);
+        Project actualProject = projectRepository.findById(project1.getId()).orElse(null);
         assertNotNull(actualProject);
         assertNotNull(actualProject.getUsers());
         actualProject.getUsers().forEach(user -> System.out.println("User id : "+user.getId()));
         System.out.println();
 
-        actualProject = projectRepository.findById(endGame.getId()).orElse(null);
+        actualProject = projectRepository.findById(project2.getId()).orElse(null);
         assertNotNull(actualProject);
         assertNotNull(actualProject.getUsers());
         actualProject.getUsers().forEach(user -> System.out.println("User id : "+user.getId()));

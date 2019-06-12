@@ -15,6 +15,10 @@ import java.util.Set;
 //primary table so we have a project repo
 public class Project extends BaseEntity {
 
+    @Column(unique = true)
+    @NotNull
+    private String title;
+
     @Column(name = "project_description", unique = true)
     @NotNull
     private String projectDescription;
@@ -39,8 +43,9 @@ public class Project extends BaseEntity {
 
     //avoid using other entities inside the builder
     @Builder
-    public Project(int id, String projectDescription) {
+    public Project(int id, String projectDescription, String title) {
         super(id);
         this.projectDescription = projectDescription;
+        this.title = title;
     }
 }

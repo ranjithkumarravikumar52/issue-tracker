@@ -100,9 +100,9 @@ public class UserAndProjectRepositoryTest {
         issueRepository.saveAll(Arrays.asList(blockerIssue, graphicsIssue));
 
         //init 3 projects
-        freePlay = Project.builder().projectDescription("Sims Free play").build();
-        johnWick3 = Project.builder().projectDescription("John Wick 3").build();
-        endgame = Project.builder().projectDescription("Endgame").build();
+        freePlay = Project.builder().title("Sims Free Play").projectDescription("A mobile app game by EA games").build();
+        johnWick3 = Project.builder().title("John Wick 3").projectDescription("New sequel of john wick movie series").build();
+        endgame = Project.builder().title("Endgame").projectDescription("AVENGERS, ASSEMBLE!!!").build();
 
         //now updating user with projects should be validated in join table
         freePlay.setUsers(Collections.singleton(janeDoe));
@@ -157,7 +157,7 @@ public class UserAndProjectRepositoryTest {
     //save valid project
     @Test
     public void saveValidProject() {
-        Project project = Project.builder().projectDescription("This is a new project").build();
+        Project project = Project.builder().title("title 1").projectDescription("description 1").build();
         project.getUsers().add(jimmyDoe);
         Project savedProject = projectRepository.save(project);
         assertNotNull(savedProject);
@@ -173,11 +173,11 @@ public class UserAndProjectRepositoryTest {
         projectRepository.save(project); //throw exception please
     }
 
-    //save invalid project - two projects with same name
+    //save invalid project - two projects with same title
     @Test(expected = DataIntegrityViolationException.class)
     public void whenTwoProjectWithSameNameSaved_thenThrowException() {
-        Project project1 = Project.builder().projectDescription("test").build();
-        Project project2 = Project.builder().projectDescription("test").build();
+        Project project1 = Project.builder().title("title 1").projectDescription("description 1").build();
+        Project project2 = Project.builder().title("title 1").projectDescription("description 2").build();
         project1.getUsers().add(johnDoe);
         project2.getUsers().add(janeDoe);
         projectRepository.saveAll(Arrays.asList(project1, project2)); //throw exception please
@@ -186,8 +186,8 @@ public class UserAndProjectRepositoryTest {
     //relationship - a user can be in multiple projects
     @Test
     public void userCanBeInMultipleProject() {
-        Project project1 = Project.builder().projectDescription("test1").build();
-        Project project2 = Project.builder().projectDescription("test2").build();
+        Project project1 = Project.builder().title("title 1").projectDescription("description 1").build();
+        Project project2 = Project.builder().title("title 2").projectDescription("description 2").build();
         User randyUser = User.builder()
                 .userName("randyDoe").email("randyDoe@gmail.com").firstName("randy").lastName("doe").password("randypass").build();
         //saving project before saving user will throw an error
@@ -203,7 +203,7 @@ public class UserAndProjectRepositoryTest {
     //relationship - a project can have multiple users
     @Test
     public void projectCanHaveMultipleUsers() {
-        Project project1 = Project.builder().projectDescription("test1").build();
+        Project project1 = Project.builder().title("title 1").projectDescription("description 1").build();
         User randyUser1 = User.builder()
                 .userName("randyDoe1").email("randy1Doe@gmail.com")
                 .firstName("randy").lastName("doe").password("randypass")

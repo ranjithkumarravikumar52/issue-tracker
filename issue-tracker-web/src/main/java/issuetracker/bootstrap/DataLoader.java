@@ -47,9 +47,9 @@ public class DataLoader implements CommandLineRunner {
 
     private void initProjectsData() {
         //init 3 projects
-        Project mobileApp = Project.builder().projectDescription("mobile app").build();
-        Project machineLearningDemo = Project.builder().projectDescription("machine learning demo").build();
-        Project nlpProject = Project.builder().projectDescription("nlp project").build();
+        Project mobileApp = Project.builder().title("mobile app").projectDescription("An android mobile application").build();
+        Project machineLearningDemo = Project.builder().title("machine learning demo").projectDescription("Demo project to practice introduction to machine learning course").build();
+        Project nlpProject = Project.builder().title("nlp assignment").projectDescription("Social media sentiment analysis").build();
 
         projectService.save(mobileApp);
         projectService.save(machineLearningDemo);
