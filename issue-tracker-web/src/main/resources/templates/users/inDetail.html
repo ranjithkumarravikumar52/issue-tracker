@@ -58,9 +58,9 @@
                             <p th:text="${user.email}">johnDoe@gmail.com</p>
 
                             <!--add profile image-->
-                            <form method="post" enctype="multipart/form-data" action="#">
+                            <form method="post" enctype="multipart/form-data" action="#" th:action="@{/users/image/{userId}(userId = ${user.id})}">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <input type="file" name="imagefile" class="custom-file-input" id="customFile">
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary float-right">Submit</button>

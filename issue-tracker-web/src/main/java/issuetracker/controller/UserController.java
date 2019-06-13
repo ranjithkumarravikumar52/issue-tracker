@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -89,5 +90,11 @@ public class UserController {
         model.addAttribute("issuesPosted", issueService.findAllByPostedBy(user));
         model.addAttribute("user", user);
         return "users/inDetail";
+    }
+
+    @PostMapping("/image/{userId}")
+    public String storeImage(@PathVariable("userId") int userId, @RequestParam("imagefile") MultipartFile file){
+        userService.saveImageFile(userId, file);
+        return "redirect:/users/"+userId;
     }
 }
