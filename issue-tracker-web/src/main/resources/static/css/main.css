@@ -6,3 +6,12 @@
 .card{
     margin-bottom: 15px;
 }
+
+/*debug*/
+.row{
+    border: 1px solid red;
+}
+
+.col{
+    border : 1px solid blue;
+}

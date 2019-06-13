@@ -35,23 +35,37 @@
 
             <div class="row justify-content-center">
 
-                <!--user profile starts here-->
                 <div class="col-4 text-center bg-light" style="min-height: 1000px">
+                    <!--user profile starts here-->
                     <div class="row">
                         <div class="col">
+                            <!--get image from db-->
                             <a href="#">
                                 <img title="profile image"
                                      class="img-circle img-responsive"
-                                     src="../../static/images/hand-drawn-modern-man-avatar.jpg" height="100px"
-                                     width="100px"/>
+                                     th:src="@{'/users/image/'+${user.id}}"
+                                     src="../../static/images/hand-drawn-modern-man-avatar.jpg" height="200"
+                                     width="200"/>
                             </a>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col">
+
+                            <!--first name, user name and email-->
                             <p th:text="${user.firstName}" th:class="font-weight-bold">john</p>
                             <p th:text="${user.userName}">johnDoeUserName</p>
                             <p th:text="${user.email}">johnDoe@gmail.com</p>
+
+                            <!--add profile image-->
+                            <form method="post" enctype="multipart/form-data" action="#" th:action="@{/users/image/{userId}(userId = ${user.id})}">
+                                <div class="custom-file">
+                                    <input type="file" name="imagefile" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -135,7 +149,6 @@
             </div>
         </div>
 
-
         <div lang="en" th:replace="fragments/footer :: footer">
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -147,5 +160,13 @@
                     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
                     crossorigin="anonymous"></script>
         </div>
+
+        <script>
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        </script>
     </body>
 </html>

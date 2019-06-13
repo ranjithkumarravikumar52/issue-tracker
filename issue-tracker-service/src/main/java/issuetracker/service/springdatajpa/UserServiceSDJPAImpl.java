@@ -3,20 +3,27 @@ package issuetracker.service.springdatajpa;
 import issuetracker.entity.User;
 import issuetracker.repository.UserRepository;
 import issuetracker.service.UserService;
+import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
 @Profile("springdatajpa")
 public class UserServiceSDJPAImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private static final Logger log = getLogger(UserServiceSDJPAImpl.class);
 
     public UserServiceSDJPAImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -69,9 +76,9 @@ public class UserServiceSDJPAImpl implements UserService {
         //Our slice of users from the records
         List<User> pageUsers;
 
-        if(allUsers.size() < startItem){//no items in the current page or we exceeded our max page limit
+        if (allUsers.size() < startItem) {//no items in the current page or we exceeded our max page limit
             pageUsers = Collections.emptyList();
-        }else{
+        } else {
             int toIndex = Math.min(startItem + pageSize, allUsers.size()); ////Math.min(15+7, 20) will be 20
             pageUsers = allUsers.subList(startItem, toIndex); //toIndex is exclusive, however our items are 0-based, so we safe
         }
@@ -79,5 +86,27 @@ public class UserServiceSDJPAImpl implements UserService {
         //now that we got our requested page/slice of users from user records
         //time to return that "slice" in the form of a page object
         return new PageImpl<>(pageUsers, PageRequest.of(currentPage, pageSize), allUsers.size());
+    }
+
+    @Override
+    public void saveImageFile(int userId, MultipartFile file) {
+        try {
+            User userById = this.findById(userId);
+            Byte[] byteObjects = new Byte[file.getBytes().length];
+
+            int i = 0;
+
+            for(byte b:file.getBytes()){
+                byteObjects[i++] = b;
+            }
+
+            userById.setImage(byteObjects);
+            userRepository.save(userById);
+
+        } catch (IOException e) {
+            //TODO exception handling please?
+            log.error("Saving file to db failed: " + e);
+            e.printStackTrace();
+        }
     }
 }

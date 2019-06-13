@@ -45,6 +45,10 @@ public class User extends BaseEntity {
     @Size(min = 2, max = 50, message = "min is 3, max is 50")
     private String lastName;
 
+    @Lob
+    @Column //not needed, for explicit hint on what default annotation applies here
+    private Byte[] image; //Byte wrapper is preferred to byte primitive type by hibernate team. cos primitive can't be null
+
     /**
      * user has many-one with roles
      * roles has one-many with user
@@ -69,23 +73,16 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private PhoneNumber phoneNumber;
 
-    public User(String userName, String password, String email, String firstName, String lastName) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     //avoid using other entities inside the builder
     @Builder
-    public User(int id, String userName, String password, String email, String firstName, String lastName) {
+    public User(int id, String userName, String password, String email, String firstName, String lastName, Byte[] image) {
         super(id);
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.image = image;
     }
 
 
