@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -75,9 +76,9 @@ public class UserServiceSDJPAImpl implements UserService {
         //Our slice of users from the records
         List<User> pageUsers;
 
-        if(allUsers.size() < startItem){//no items in the current page or we exceeded our max page limit
+        if (allUsers.size() < startItem) {//no items in the current page or we exceeded our max page limit
             pageUsers = Collections.emptyList();
-        }else{
+        } else {
             int toIndex = Math.min(startItem + pageSize, allUsers.size()); ////Math.min(15+7, 20) will be 20
             pageUsers = allUsers.subList(startItem, toIndex); //toIndex is exclusive, however our items are 0-based, so we safe
         }
@@ -89,6 +90,23 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public void saveImageFile(int userId, MultipartFile file) {
-        log.info("Image saved!");
+        try {
+            User userById = this.findById(userId);
+            Byte[] byteObjects = new Byte[file.getBytes().length];
+
+            int i = 0;
+
+            for(byte b:file.getBytes()){
+                byteObjects[i++] = b;
+            }
+
+            userById.setImage(byteObjects);
+            userRepository.save(userById);
+
+        } catch (IOException e) {
+            //TODO exception handling please?
+            log.error("Saving file to db failed: " + e);
+            e.printStackTrace();
+        }
     }
 }
