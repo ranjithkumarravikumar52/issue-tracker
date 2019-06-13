@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -173,6 +175,34 @@ public class UserControllerTest {
                 .andExpect(view().name("redirect:/users/1"));
 
         verify(userService, times(1)).saveImageFile(anyInt(), any());
+    }
+
+    @Test
+    public void renderImageFromDB() throws Exception{
+        //given
+        String s = "fake image text";
+        Byte[] byteBoxed = new Byte[s.getBytes().length];
+
+        int i = 0;
+        for(byte b: s.getBytes()){
+            byteBoxed[i++] = b;
+        }
+
+        User jimmyDoe = User.builder()
+                .id(3)
+                .image(byteBoxed)
+                .build();
+
+
+        when(userService.findById(anyInt())).thenReturn(jimmyDoe);
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(get("/users/image/3"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        byte[] responseBytes = response.getContentAsByteArray();
+        assertEquals(s.getBytes().length, responseBytes.length);
     }
 
 }

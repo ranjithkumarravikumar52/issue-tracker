@@ -3,6 +3,7 @@ package issuetracker.controller;
 import issuetracker.entity.User;
 import issuetracker.service.IssueService;
 import issuetracker.service.UserService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -96,5 +101,23 @@ public class UserController {
     public String storeImage(@PathVariable("userId") int userId, @RequestParam("imagefile") MultipartFile file){
         userService.saveImageFile(userId, file);
         return "redirect:/users/"+userId;
+    }
+
+    @GetMapping("/image/{userId}")
+    public void renderImageFromDB(@PathVariable int userId, HttpServletResponse response) throws IOException {
+        User user = userService.findById(userId);
+
+        if (user.getImage() != null) {
+            byte[] byteArray = new byte[user.getImage().length];
+            int i = 0;
+
+            for (Byte wrappedByte : user.getImage()){
+                byteArray[i++] = wrappedByte; //auto unboxing
+            }
+
+            response.setContentType("image/jpeg");
+            InputStream is = new ByteArrayInputStream(byteArray);
+            IOUtils.copy(is, response.getOutputStream());
+        }
     }
 }

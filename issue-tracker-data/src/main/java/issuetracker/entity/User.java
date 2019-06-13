@@ -73,23 +73,16 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private PhoneNumber phoneNumber;
 
-    public User(String userName, String password, String email, String firstName, String lastName) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     //avoid using other entities inside the builder
     @Builder
-    public User(int id, String userName, String password, String email, String firstName, String lastName) {
+    public User(int id, String userName, String password, String email, String firstName, String lastName, Byte[] image) {
         super(id);
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.image = image;
     }
 
 
