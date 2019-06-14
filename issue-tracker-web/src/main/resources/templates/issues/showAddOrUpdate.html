@@ -41,7 +41,7 @@
                 <div class="form-row">
                     <!--issue title-->
                     <div class="col-10">
-                        <label for="title">Issue description*: </label>
+                        <label for="title">Issue title*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-info"></i></span>
@@ -72,12 +72,13 @@
                 <div class="form-row">
                     <!--opened-->
                     <div class="col">
-                        <label for="issueDescription">Opened by Id:*: </label>
+                        <label for="issueDescription">Issue Description:*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-info"></i></span>
                             </div>
-                            <input type="number" class="form-control" id="issueDescription" th:field="*{issueDescription}"/>
+                            <input type="text" class="form-control" id="issueDescription"
+                                   th:field="*{issueDescription}"/>
                         </div>
                     </div>
                 </div>
@@ -85,23 +86,36 @@
                 <div class="form-row">
                     <!--opened-->
                     <div class="col">
-                        <label for="openedBy">Opened by Id:*: </label>
+                        <label for="userOpened">Opened by Id:*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
+                            <select class="form-control" th:field="*{openedBy}"  id="userOpened" required>
+                                <option value="" selected hidden>Select</option>
+                                <option th:each="user : ${users}" th:value="${user.id}"
+                                        th:text="${user.userName} + '<' + ${user.lastName} +', '+ ${user.firstName} + '>'"></option>
+                            </select>
                         </div>
                     </div>
 
+                    <div class="form-group blu-margin">
+
+                    </div>
+
                     <!--closed-->
-                    <div class="col">
+                    <div class="col" th:if="${issue.openedBy != null}">
                         <label for="closedBy">Closed by Id:*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
+                            <select class="form-control" th:field="*{closedBy}"  id="closedBy">
+                                <!--TODO will be changed once spring security is configured by using principal.user-->
+                                <option th:value="${issue.closedBy}" selected hidden>Select</option>
+                                <option th:each="user : ${users}" th:value="${user.id}"
+                                        th:text="${user.userName} + '<' + ${user.lastName} +', '+ ${user.firstName} + '>'"></option>
+                            </select>
                         </div>
                     </div>
                 </div>
