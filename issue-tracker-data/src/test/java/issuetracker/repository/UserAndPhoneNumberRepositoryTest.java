@@ -13,7 +13,8 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * <p>RunWith(SpringRunner.class) is used to provide a bridge between Spring Boot test features and JUnit. Whenever we are using any Spring Boot testing features in out JUnit tests, this annotation will be required.</p>
+ * <p>RunWith(SpringRunner.class) is used to provide a bridge between Spring Boot test features and JUnit. Whenever
+ * we are using any Spring Boot testing features in out JUnit tests, this annotation will be required.</p>
  * <p>DataJpaTest provides some standard setup needed for testing the persistence layer:</p>
  * <ul>
  * <li>Configuring H2, an in-memory database</li>
@@ -39,20 +40,24 @@ public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTes
     @Test
     public void objectNavigationFromUserToPhone() {
         //action - find johnDoe
-        User user1 = userRepository.findById(johnDoe.getId()).orElse(null);
+        User user1 = userRepository.findById(johnDoe.getId())
+                .orElse(null);
 
         //assertion - check phone number 1
         assertNotNull(user1);
         assertNotNull(user1.getPhoneNumber());
-        assertEquals(phoneNumber1.getPhoneNumber(), user1.getPhoneNumber().getPhoneNumber());
+        assertEquals(phoneNumber1.getPhoneNumber(), user1.getPhoneNumber()
+                .getPhoneNumber());
 
         //action - find jane doe
-        User user2 = userRepository.findById(janeDoe.getId()).orElse(null);
+        User user2 = userRepository.findById(janeDoe.getId())
+                .orElse(null);
 
         //assertion - check phone number 2
         assertNotNull(user2);
         assertNotNull(user2.getPhoneNumber());
-        assertEquals(phoneNumber2.getPhoneNumber(), user2.getPhoneNumber().getPhoneNumber());
+        assertEquals(phoneNumber2.getPhoneNumber(), user2.getPhoneNumber()
+                .getPhoneNumber());
     }
 
     @Test
@@ -70,7 +75,8 @@ public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTes
         userRepository.delete(johnDoe);
 
         //assertion - user should be deleted
-        User user = userRepository.findById(johnDoe.getId()).orElse(null);
+        User user = userRepository.findById(johnDoe.getId())
+                .orElse(null);
         assertNull(user);
 
         //assertion - phone number 1 should be deleted
@@ -83,7 +89,8 @@ public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTes
     @Test
     public void whenDeletePhoneNumber_thenUserShouldNotBeDeleted() {
         //when - user is called
-        User user = userRepository.findById(janeDoe.getId()).orElse(null);
+        User user = userRepository.findById(janeDoe.getId())
+                .orElse(null);
 
         //action -  set their phone number to null
         assertNotNull(user);
@@ -93,7 +100,8 @@ public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTes
         userRepository.save(janeDoe);
 
         //assertion - user should be not null
-        User actualUser = userRepository.findById(janeDoe.getId()).orElse(null);
+        User actualUser = userRepository.findById(janeDoe.getId())
+                .orElse(null);
         assertNotNull(actualUser);
 
         //assertion - phone number should be null
@@ -107,7 +115,9 @@ public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTes
     @Test(expected = DataIntegrityViolationException.class)
     public void twoUsersShouldNotHaveSamePhoneNumbers() throws DataIntegrityViolationException {
         //prep - create a new phone number
-        PhoneNumber phoneNumber3 = PhoneNumber.builder().phoneNumber("12345678901").build();
+        PhoneNumber phoneNumber3 = PhoneNumber.builder()
+                .phoneNumber("12345678901")
+                .build();
 
         //action
         johnDoe.setPhoneNumber(phoneNumber3);
