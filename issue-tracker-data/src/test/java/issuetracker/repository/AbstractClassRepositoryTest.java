@@ -91,28 +91,25 @@ public abstract class AbstractClassRepositoryTest {
     private List<Issue> getIssues() {
         blockerIssue =
                 Issue.builder()
-                        .issueDescription("blocker issue")
-                        .postedBy(janeDoe)
+                        .title("blocker issue")
+                        .issueDescription("blocker issue on day before release")
                         .openedBy(johnDoe)
-                        .fixedBy(johnDoe)
-                        .closedBy(janeDoe)
+                        .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
                         .build();
         graphicsIssue =
                 Issue.builder()
-                        .issueDescription("graphics issue")
-                        .postedBy(jimmyDoe)
+                        .title("graphics issue")
+                        .issueDescription("Rendering problem for home page logo")
                         .openedBy(johnDoe)
-                        .fixedBy(jimmyDoe)
-                        .closedBy(janeDoe)
+                        .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
                         .build();
         textIssue =
                 Issue.builder()
-                        .issueDescription("text issue")
-                        .postedBy(johnDoe)
+                        .title("text issue")
+                        .issueDescription("About page has typo errors")
                         .openedBy(johnDoe)
-                        .fixedBy(jimmyDoe)
                         .closedBy(janeDoe)
                         .issueStatus(IssueStatus.OPEN)
                         .build();

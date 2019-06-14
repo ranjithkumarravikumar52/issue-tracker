@@ -75,18 +75,8 @@ public class IssueServiceSDJPAImpl implements IssueService {
     }
 
     @Override
-    public Set<Issue> findAllByPostedBy(User postedByUser) {
-        return issueRepository.findAllByPostedBy(postedByUser);
-    }
-
-    @Override
     public Set<Issue> findAllByOpenedBy(User openedByUser) {
         return issueRepository.findAllByOpenedBy(openedByUser);
-    }
-
-    @Override
-    public Set<Issue> findAllByFixedBy(User fixedByUser) {
-        return issueRepository.findAllByFixedBy(fixedByUser);
     }
 
     @Override

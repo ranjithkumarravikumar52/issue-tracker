@@ -15,7 +15,7 @@ import java.util.Random;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private static final int FAKE_USER_DATA_COUNT = 50;
+    private static final int FAKE_USER_DATA_COUNT = 10;
 
     private static final String[] LOCALE_LIST = {"de-CH", "en-GB", "en-IND", "en-PAK", "en-US"};
 
@@ -25,7 +25,8 @@ public class DataLoader implements CommandLineRunner {
     private final RoleService roleService;
 
 
-    public DataLoader(UserService userService, IssueService issueService, ProjectService projectService, RoleService roleService) {
+    public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
+                      RoleService roleService) {
         this.userService = userService;
         this.issueService = issueService;
         this.projectService = projectService;
@@ -38,8 +39,13 @@ public class DataLoader implements CommandLineRunner {
         initRolesData();
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
-            initIssuesData(user);
-            if(i % 3 == 0){
+            if (i % 2 == 0) {
+                initIssuesData(user);
+            }
+            if (i % 3 == 0) {
+                initIssuesData(user);
+            }
+            if (i % 5 == 0) {
                 initIssuesData(user);
             }
         }
@@ -47,9 +53,18 @@ public class DataLoader implements CommandLineRunner {
 
     private void initProjectsData() {
         //init 3 projects
-        Project mobileApp = Project.builder().title("mobile app").projectDescription("An android mobile application").build();
-        Project machineLearningDemo = Project.builder().title("machine learning demo").projectDescription("Demo project to practice introduction to machine learning course").build();
-        Project nlpProject = Project.builder().title("nlp assignment").projectDescription("Social media sentiment analysis").build();
+        Project mobileApp = Project.builder()
+                .title("mobile app")
+                .projectDescription("An android mobile application")
+                .build();
+        Project machineLearningDemo = Project.builder()
+                .title("machine learning demo")
+                .projectDescription("Demo project to practice introduction to machine learning course")
+                .build();
+        Project nlpProject = Project.builder()
+                .title("nlp assignment")
+                .projectDescription("Social media sentiment analysis")
+                .build();
 
         projectService.save(mobileApp);
         projectService.save(machineLearningDemo);
@@ -59,11 +74,21 @@ public class DataLoader implements CommandLineRunner {
 
     private void initRolesData() {
         //init 5 roles
-        Role developer = Role.builder().name("developer").build();
-        Role tester = Role.builder().name("tester").build();
-        Role admin = Role.builder().name("admin").build();
-        Role sales = Role.builder().name("sales").build();
-        Role humanResources = Role.builder().name("human resources").build();
+        Role developer = Role.builder()
+                .name("developer")
+                .build();
+        Role tester = Role.builder()
+                .name("tester")
+                .build();
+        Role admin = Role.builder()
+                .name("admin")
+                .build();
+        Role sales = Role.builder()
+                .name("sales")
+                .build();
+        Role humanResources = Role.builder()
+                .name("human resources")
+                .build();
 
         roleService.save(developer);
         roleService.save(tester);
@@ -106,22 +131,39 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void initIssuesData(User user) {
-        User userById = userService.findById(user.getId());
+        int i = user.getId();
+        User userById = userService.findById(i);
         Issue issue = Issue.builder()
+                .title(new Faker().weather()
+                        .description() + " " + new Faker().address()
+                        .cityName() + " " + new Faker().numerify("####"))
                 .issueDescription(
-                        new Faker().chuckNorris().fact() + " " + new Faker().numerify("###")
+                        new Faker().gameOfThrones()
+                                .quote() + " - "
+                                + new Faker().gameOfThrones()
+                                .dragon()
+                                + new Faker().numerify("####")
                 )
-                .postedBy(userById)
                 .openedBy(userById)
-                .fixedBy(userById)
                 .closedBy(userById)
+                .issueStatus(IssueStatus.CLOSED)
                 .build();
+
+        //even issue are opened issues
+        if (i % 2 == 0) {
+            issue.setClosedBy(null);
+            issue.setIssueStatus(IssueStatus.OPEN);
+        }
         issueService.save(issue);
     }
 
     private User getUser(Faker faker) {
-        String firstName = faker.name().firstName().toLowerCase();
-        String lastName = faker.name().firstName().toLowerCase();
+        String firstName = faker.name()
+                .firstName()
+                .toLowerCase();
+        String lastName = faker.name()
+                .firstName()
+                .toLowerCase();
 
         if (firstName.length() <= 2) {
             firstName = firstName + faker.letterify("?");
@@ -132,17 +174,24 @@ public class DataLoader implements CommandLineRunner {
         String email = userName + "@gmail.com";
 
         return User.builder()
-                .firstName(firstName).lastName(lastName)
-                .userName(userName).password(password).email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .userName(userName)
+                .password(password)
+                .email(email)
                 .build();
     }
 
     private PhoneNumber getPhoneNumber(Faker faker) {
-        return PhoneNumber.builder().phoneNumber(faker.phoneNumber().phoneNumber()).build();
+        return PhoneNumber.builder()
+                .phoneNumber(faker.phoneNumber()
+                        .phoneNumber())
+                .build();
     }
 
     private void updateRoleWithUser(User johnDoe, Role role) {
-        role.getUserSet().add(johnDoe);
+        role.getUserSet()
+                .add(johnDoe);
         roleService.save(role);
     }
 
@@ -155,14 +204,16 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void updateUserWithProject(User johnDoe, Project projectById) {
-        johnDoe.getProjects().add(projectById);
+        johnDoe.getProjects()
+                .add(projectById);
         userService.save(johnDoe);
     }
 
     private Project updateProjectWithUser(User johnDoe) {
         int randomId = 1 + new Random().nextInt(3); //id is 1 based, hence added 1
         Project projectById = projectService.findById(randomId);
-        projectById.getUsers().add(johnDoe);
+        projectById.getUsers()
+                .add(johnDoe);
         projectService.save(projectById);
         return projectById;
     }

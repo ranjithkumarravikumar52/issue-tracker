@@ -37,68 +37,22 @@
             <form th:action="@{/issues/new}" th:object="${issue}" method="POST">
                 <input type="hidden" th:field="*{id}"/>
 
-                <!--issue description-->
+
                 <div class="form-row">
-                    <div class="col">
-                        <label for="issueDescription">Issue description*: </label>
+                    <!--issue title-->
+                    <div class="col-10">
+                        <label for="title">Issue title*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-info"></i></span>
                             </div>
                             <input type="text" class="textarea form-control"
-                                   id="issueDescription" th:field="*{issueDescription}"/>
+                                   id="title" th:field="*{title}"/>
                         </div>
                     </div>
-                </div>
 
-                <!--posted and opened-->
-                <div class="form-row">
-                    <!--posted-->
-                    <div class="col">
-                        <label for="postedBy">Posted by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="postedBy" th:field="*{postedBy.id}"/>
-                        </div>
-                    </div>
-                    <!--opened-->
-                    <div class="col">
-                        <label for="openedBy">Opened by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!--fixed and closed-->
-                <div class="form-row">
-                    <!--fixed-->
-                    <div class="col">
-                        <label for="fixedBy">Fixed by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="fixedBy" th:field="*{fixedBy.id}"/>
-                        </div>
-                    </div>
-                    <!--closed-->
-                    <div class="col">
-                        <label for="closedBy">Closed by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
-                        </div>
-                    </div>
                     <!--issue status from enum-->
-                    <div class="col">
+                    <div class="col-2">
                         <label for="issueStatus">Issue Status:* </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -109,6 +63,58 @@
                                         th:value="${status.name()}"
                                         th:text="${status.name()}"
                                 >val</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!--issue description-->
+                <div class="form-row">
+                    <!--opened-->
+                    <div class="col">
+                        <label for="issueDescription">Issue Description:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="issueDescription"
+                                   th:field="*{issueDescription}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!--opened-->
+                    <div class="col">
+                        <label for="userOpened">Opened by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <select class="form-control" th:field="*{openedBy}"  id="userOpened" required>
+                                <option value="" selected hidden>Select</option>
+                                <option th:each="user : ${users}" th:value="${user.id}"
+                                        th:text="${user.userName} + '<' + ${user.lastName} +', '+ ${user.firstName} + '>'"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group blu-margin">
+
+                    </div>
+
+                    <!--closed-->
+                    <div class="col" th:if="${issue.openedBy != null}">
+                        <label for="closedBy">Closed by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <select class="form-control" th:field="*{closedBy}"  id="closedBy">
+                                <!--TODO will be changed once spring security is configured by using principal.user-->
+                                <option th:value="${issue.closedBy}" selected hidden>Select</option>
+                                <option th:each="user : ${users}" th:value="${user.id}"
+                                        th:text="${user.userName} + '<' + ${user.lastName} +', '+ ${user.firstName} + '>'"></option>
                             </select>
                         </div>
                     </div>

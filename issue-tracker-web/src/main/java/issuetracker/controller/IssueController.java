@@ -2,6 +2,7 @@ package issuetracker.controller;
 
 import issuetracker.entity.Issue;
 import issuetracker.service.IssueService;
+import issuetracker.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,10 @@ public class IssueController {
     private static final String VIEW_LIST_ALL_ISSUES = "issues/home";
 
     private final IssueService issueService;
-    public IssueController(IssueService issueService) {
+    private final UserService userService;
+    public IssueController(IssueService issueService, UserService userService) {
         this.issueService = issueService;
+        this.userService = userService;
     }
 
     /**
@@ -54,6 +57,7 @@ public class IssueController {
     @GetMapping("/new")
     public String showAddForm(Model model) {
         model.addAttribute("issue", new Issue());
+        model.addAttribute("users", userService.findAll());
         return VIEW_SHOW_ADD_OR_UPDATE_ISSUE_FORM;
     }
 
@@ -73,6 +77,7 @@ public class IssueController {
     public String showUpdateForm(@PathVariable("issueId") int issueId, Model model) {
         Issue issue = issueService.findById(issueId);
         model.addAttribute(issue);
+        model.addAttribute("users", userService.findAll());
         return VIEW_SHOW_ADD_OR_UPDATE_ISSUE_FORM;
     }
 

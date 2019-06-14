@@ -11,8 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -44,21 +43,12 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
         //assertion - actualIssue is not null
         assertNotNull(actualIssue);
 
-        //assertion - posted
-        assertNotNull(actualIssue.getPostedBy());
-        assertEquals(blockerIssue.getPostedBy(), actualIssue.getPostedBy());
-
         //assertion - opened
         assertNotNull(actualIssue.getOpenedBy());
         assertEquals(blockerIssue.getOpenedBy(), actualIssue.getOpenedBy());
 
-        //assertion - fixed
-        assertNotNull(actualIssue.getFixedBy());
-        assertEquals(blockerIssue.getFixedBy(), actualIssue.getFixedBy());
-
-        //assertion - fixed
-        assertNotNull(actualIssue.getClosedBy());
-        assertEquals(blockerIssue.getClosedBy(), actualIssue.getClosedBy());
+        //assertion - closed
+        assertNull(actualIssue.getClosedBy());
 
     }
 
@@ -91,10 +81,9 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
     public void whenValidIssueIsSaved_thenNoException() {
         //prep - create a valid issue
         Issue validIssue = Issue.builder()
+                .title("Title 1")
                 .issueDescription("Text issue")
-                .postedBy(janeDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
@@ -114,9 +103,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
     public void whenNullIssueDescriptionIsSaved_thenThrowException() throws ConstraintViolationException {
         Issue validIssue = Issue.builder()
                 .issueDescription(null)
-                .postedBy(janeDoe)
                 .openedBy(null)
-                .fixedBy(null)
                 .closedBy(null)
                 .build();
         issueRepository.save(validIssue); //throws exception
@@ -129,24 +116,49 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
     public void whenTwoIssuesWithSameDescriptionSaved_thenThrowException() {
         //prep - create a valid issue
         Issue validIssue1 = Issue.builder()
+                .title("title 1")
                 .issueDescription("Text issue")
-                .postedBy(janeDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
         Issue validIssue2 = Issue.builder()
+                .title("title 2")
                 .issueDescription("Text issue")
-                .postedBy(johnDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
 
         //action - saveAll
-        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please - DataIntegrityViolationException
+        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please -
+        // DataIntegrityViolationException
+
+    }
+    /**
+     * Two issues can't have same issue title
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void whenTwoIssuesWithSameTitleSaved_thenThrowException() {
+        //prep - create a valid issue
+        Issue validIssue1 = Issue.builder()
+                .title("title 1")
+                .issueDescription("Text issue 1")
+                .openedBy(johnDoe)
+                .closedBy(null)
+                .issueStatus(IssueStatus.OPEN)
+                .build();
+        Issue validIssue2 = Issue.builder()
+                .title("title 1")
+                .issueDescription("Text issue 2")
+                .openedBy(johnDoe)
+                .closedBy(null)
+                .issueStatus(IssueStatus.OPEN)
+                .build();
+
+        //action - saveAll
+        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please -
+        // DataIntegrityViolationException
 
     }
 

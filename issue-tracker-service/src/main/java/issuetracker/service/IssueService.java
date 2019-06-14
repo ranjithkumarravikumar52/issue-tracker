@@ -9,8 +9,6 @@ import java.util.Set;
 
 public interface IssueService extends CrudService<Issue, Integer>{
     Page<Issue> findPaginated(Pageable pageable);
-    Set<Issue> findAllByPostedBy(User postedByUser);
     Set<Issue> findAllByOpenedBy(User openedByUser);
-    Set<Issue> findAllByFixedBy(User fixedByUser);
     Set<Issue> findAllByClosedBy(User closedByUser);
 }

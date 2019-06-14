@@ -92,7 +92,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public String showInDetail(@PathVariable("userId") int userId, Model model){
         User user = userService.findById(userId);
-        model.addAttribute("issuesPosted", issueService.findAllByPostedBy(user));
+        model.addAttribute("issuesOpened", issueService.findAllByOpenedBy(user));
         model.addAttribute("user", user);
         return "users/inDetail";
     }
