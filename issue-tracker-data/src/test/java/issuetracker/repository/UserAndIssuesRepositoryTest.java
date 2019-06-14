@@ -44,19 +44,11 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
         //assertion - actualIssue is not null
         assertNotNull(actualIssue);
 
-        //assertion - posted
-        assertNotNull(actualIssue.getPostedBy());
-        assertEquals(blockerIssue.getPostedBy(), actualIssue.getPostedBy());
-
         //assertion - opened
         assertNotNull(actualIssue.getOpenedBy());
         assertEquals(blockerIssue.getOpenedBy(), actualIssue.getOpenedBy());
 
-        //assertion - fixed
-        assertNotNull(actualIssue.getFixedBy());
-        assertEquals(blockerIssue.getFixedBy(), actualIssue.getFixedBy());
-
-        //assertion - fixed
+        //assertion - closed
         assertNotNull(actualIssue.getClosedBy());
         assertEquals(blockerIssue.getClosedBy(), actualIssue.getClosedBy());
 
@@ -92,9 +84,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
         //prep - create a valid issue
         Issue validIssue = Issue.builder()
                 .issueDescription("Text issue")
-                .postedBy(janeDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
@@ -114,9 +104,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
     public void whenNullIssueDescriptionIsSaved_thenThrowException() throws ConstraintViolationException {
         Issue validIssue = Issue.builder()
                 .issueDescription(null)
-                .postedBy(janeDoe)
                 .openedBy(null)
-                .fixedBy(null)
                 .closedBy(null)
                 .build();
         issueRepository.save(validIssue); //throws exception
@@ -130,23 +118,20 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
         //prep - create a valid issue
         Issue validIssue1 = Issue.builder()
                 .issueDescription("Text issue")
-                .postedBy(janeDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
         Issue validIssue2 = Issue.builder()
                 .issueDescription("Text issue")
-                .postedBy(johnDoe)
-                .openedBy(null)
-                .fixedBy(null)
+                .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
                 .build();
 
         //action - saveAll
-        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please - DataIntegrityViolationException
+        issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please -
+        // DataIntegrityViolationException
 
     }
 

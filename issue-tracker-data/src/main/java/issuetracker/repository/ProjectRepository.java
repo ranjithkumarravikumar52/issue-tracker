@@ -16,7 +16,7 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
             "      where user.id = project_user.user_id\n" +
             "        and project.id = project_user.project_id\n" +
             "        and project.id = ?1) e\n" +
-            "WHERE i.posted_by_id = e.id"
+            "WHERE i.opened_by_id = e.id"
             , nativeQuery = true)
     List<Object[]> findAllIssuesByProjectId(int projectId);
 

@@ -92,27 +92,21 @@ public abstract class AbstractClassRepositoryTest {
         blockerIssue =
                 Issue.builder()
                         .issueDescription("blocker issue")
-                        .postedBy(janeDoe)
                         .openedBy(johnDoe)
-                        .fixedBy(johnDoe)
-                        .closedBy(janeDoe)
+                        .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
                         .build();
         graphicsIssue =
                 Issue.builder()
                         .issueDescription("graphics issue")
-                        .postedBy(jimmyDoe)
                         .openedBy(johnDoe)
-                        .fixedBy(jimmyDoe)
-                        .closedBy(janeDoe)
+                        .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
                         .build();
         textIssue =
                 Issue.builder()
                         .issueDescription("text issue")
-                        .postedBy(johnDoe)
                         .openedBy(johnDoe)
-                        .fixedBy(jimmyDoe)
                         .closedBy(janeDoe)
                         .issueStatus(IssueStatus.OPEN)
                         .build();
