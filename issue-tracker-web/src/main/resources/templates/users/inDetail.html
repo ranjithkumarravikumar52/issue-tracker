@@ -131,7 +131,7 @@
                                             <tr th:each="issue : ${issuesOpened}">
                                                 <td th:text="${issue.id}">1</td>
                                                 <td th:text="${issue.title}">Issue Title</td>
-                                                <td th:text="${issue.issueStatus}">OPEN/CLOSED</td>
+                                                <td th:text="${issue.issueStatus}" th:class="${issue.issueStatus.equals(issue.issueStatus.OPEN) ? 'text-success' : 'text-danger'}">OPEN/CLOSED</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
