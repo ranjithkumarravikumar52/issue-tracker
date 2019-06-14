@@ -1,6 +1,7 @@
 package issuetracker.service.springdatajpa;
 
 import issuetracker.entity.Issue;
+import issuetracker.entity.IssueStatus;
 import issuetracker.entity.User;
 import issuetracker.repository.IssueRepository;
 import issuetracker.service.IssueService;
@@ -37,6 +38,9 @@ public class IssueServiceSDJPAImpl implements IssueService {
 
     @Override
     public Issue save(Issue object) {
+        if(object.getIssueStatus() == null){
+            object.setIssueStatus(IssueStatus.OPEN);
+        }
         return issueRepository.save(object);
     }
 

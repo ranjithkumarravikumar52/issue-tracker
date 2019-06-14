@@ -1,9 +1,6 @@
 package issuetracker.repository;
 
-import issuetracker.entity.Issue;
-import issuetracker.entity.PhoneNumber;
-import issuetracker.entity.Role;
-import issuetracker.entity.User;
+import issuetracker.entity.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -95,8 +92,8 @@ public class UserAndIssuesRepositoryTest {
         roleRepository.saveAll(Arrays.asList(developer, tester, admin));
 
         //create 2 issues with john and jane defaults to posted by in each of them
-        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(janeDoe).openedBy(johnDoe).fixedBy(johnDoe).closedBy(janeDoe).build();
-        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(jimmyDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).build();
+        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(janeDoe).openedBy(johnDoe).fixedBy(johnDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
+        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(jimmyDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
         issueRepository.saveAll(Arrays.asList(blockerIssue, graphicsIssue));
     }
 
@@ -163,7 +160,7 @@ public class UserAndIssuesRepositoryTest {
     @Test
     public void whenValidIssueIsSaved_thenNoException(){
         //prep - create a valid issue
-        Issue validIssue = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+        Issue validIssue = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).issueStatus(IssueStatus.OPEN).build();
 
         //action - save
         Issue actualIssue = issueRepository.save(validIssue);
@@ -188,8 +185,8 @@ public class UserAndIssuesRepositoryTest {
     @Test(expected = DataIntegrityViolationException.class)
     public void whenTwoIssuesWithSameDescriptionSaved_thenThrowException(){
         //prep - create a valid issue
-        Issue validIssue1 = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).build();
-        Issue validIssue2 = Issue.builder().issueDescription("Text issue").postedBy(johnDoe).openedBy(null).fixedBy(null).closedBy(null).build();
+        Issue validIssue1 = Issue.builder().issueDescription("Text issue").postedBy(janeDoe).openedBy(null).fixedBy(null).closedBy(null).issueStatus(IssueStatus.OPEN).build();
+        Issue validIssue2 = Issue.builder().issueDescription("Text issue").postedBy(johnDoe).openedBy(null).fixedBy(null).closedBy(null).issueStatus(IssueStatus.OPEN).build();
 
         //action - saveAll
         issueRepository.saveAll(Arrays.asList(validIssue1, validIssue2)); //throw exception please - DataIntegrityViolationException

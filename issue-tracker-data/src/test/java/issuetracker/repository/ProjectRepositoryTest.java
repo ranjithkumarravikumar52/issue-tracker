@@ -98,9 +98,9 @@ public class ProjectRepositoryTest {
         roleRepository.saveAll(Arrays.asList(developer, tester, admin));
 
         //create 2 issues with john and jane defaults to posted by in each of them
-        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(janeDoe).openedBy(johnDoe).fixedBy(johnDoe).closedBy(janeDoe).build();
-        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(jimmyDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).build();
-        textIssue = Issue.builder().issueDescription("text issue").postedBy(johnDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).build();
+        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(janeDoe).openedBy(johnDoe).fixedBy(johnDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
+        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(jimmyDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
+        textIssue = Issue.builder().issueDescription("text issue").postedBy(johnDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
         issueRepository.saveAll(Arrays.asList(blockerIssue, graphicsIssue, textIssue));
     }
 

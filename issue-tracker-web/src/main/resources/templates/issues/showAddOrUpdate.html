@@ -3,9 +3,11 @@
         <title>Listing users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Prototype</title>
-        <link rel="stylesheet" href="https://stackth:field.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link href="../../static/css/main.css" rel="stylesheet"/>
     </head>
     <body>
@@ -95,10 +97,25 @@
                             <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
                         </div>
                     </div>
+                    <!--issue status from enum-->
+                    <div class="col">
+                        <label for="issueStatus">Issue Status:* </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-lock-open"></i></span>
+                            </div>
+                            <select class="form-control" th:field="*{issueStatus}" id="issueStatus">
+                                <option th:each="status : ${T(issuetracker.entity.IssueStatus).values()}"
+                                        th:value="${status.name()}"
+                                        th:text="${status.name()}"
+                                >val</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit" th:class="${issue.issueDescription == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="float-right">
-                    <span><i class="fa fa-save"></i>&nbsp;</span><span th:text="${issue.issueDescription == null} ? 'Save Issue' : 'Update Issue'"></span>
+                <button type="submit" class="btn btn-secondary float-right" th:class="${issue.issueDescription == null} ? 'btn btn-success' : 'btn btn-info'" th:classappend="float-right">
+                    <span><i class="fa fa-save"></i>&nbsp;</span><span th:text="${issue.issueDescription == null} ? 'Save Issue' : 'Update Issue'">Save/Update</span>
                 </button>
             </form>
         </div>
