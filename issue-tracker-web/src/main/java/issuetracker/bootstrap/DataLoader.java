@@ -134,9 +134,15 @@ public class DataLoader implements CommandLineRunner {
         int i = user.getId();
         User userById = userService.findById(i);
         Issue issue = Issue.builder()
+                .title(new Faker().weather()
+                        .description() + " " + new Faker().address()
+                        .cityName() + " " + new Faker().numerify("####"))
                 .issueDescription(
-                        new Faker().chuckNorris()
-                                .fact() + " " + new Faker().numerify("###")
+                        new Faker().gameOfThrones()
+                                .quote() + " - "
+                                + new Faker().gameOfThrones()
+                                .dragon()
+                                + new Faker().numerify("####")
                 )
                 .openedBy(userById)
                 .closedBy(userById)

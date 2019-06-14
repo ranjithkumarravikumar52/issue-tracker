@@ -122,7 +122,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Issue Id</th>
-                                                <th>Issue Description</th>
+                                                <th>Issue Title</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -130,7 +130,7 @@
                                         <tbody>
                                             <tr th:each="issue : ${issuesOpened}">
                                                 <td th:text="${issue.id}">1</td>
-                                                <td th:text="${issue.issueDescription}">Issue Description</td>
+                                                <td th:text="${issue.title}">Issue Title</td>
                                                 <td th:text="${issue.issueStatus}">OPEN/CLOSED</td>
                                                 <td>
                                                     <div class="btn-group">

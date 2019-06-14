@@ -36,7 +36,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Issue Id</th>
-                        <th>Issue Description</th>
+                        <th>Issue Title</th>
                         <th>Opened By</th>
                         <th>Closed By</th>
                         <th>Status</th>
@@ -46,8 +46,8 @@
                 <tbody>
                     <tr th:each="issue : ${issues}">
                         <td th:text="${issue.id}">1</td>
-                        <td th:text="${issue.issueDescription}" style="word-wrap: break-word;
-                        min-width: 160px;max-width: 250px;">Issue Description</td>
+                        <td th:text="${issue.title}" style="word-wrap: break-word;
+                        min-width: 160px;max-width: 250px;">Issue Title</td>
                         <td th:text="${issue.openedBy.userName}">John1</td>
                         <!--user object can be null-->
                         <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>

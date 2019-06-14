@@ -15,6 +15,10 @@ public class Issue extends BaseEntity {
 
     @Column(unique = true)
     @NotNull
+    private String title;
+
+    @Column(unique = true)
+    @NotNull
     private String issueDescription;
 
     @ManyToOne
@@ -29,7 +33,9 @@ public class Issue extends BaseEntity {
     private IssueStatus issueStatus;
 
     @Builder //adding postedBy cos this field is not null
-    public Issue(@NotNull String issueDescription, @NotNull User openedBy, User closedBy, IssueStatus issueStatus) {
+    public Issue(@NotNull String title, @NotNull String issueDescription, @NotNull User openedBy, User closedBy,
+                 IssueStatus issueStatus) {
+        this.title = title;
         this.issueDescription = issueDescription;
         this.openedBy = openedBy;
         this.closedBy = closedBy;

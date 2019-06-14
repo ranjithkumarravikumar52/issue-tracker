@@ -39,15 +39,15 @@
 
 
                 <div class="form-row">
-                    <!--issue description-->
+                    <!--issue title-->
                     <div class="col-10">
-                        <label for="issueDescription">Issue description*: </label>
+                        <label for="title">Issue description*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-info"></i></span>
                             </div>
                             <input type="text" class="textarea form-control"
-                                   id="issueDescription" th:field="*{issueDescription}"/>
+                                   id="title" th:field="*{title}"/>
                         </div>
                     </div>
 
@@ -68,6 +68,19 @@
                     </div>
                 </div>
 
+                <!--issue description-->
+                <div class="form-row">
+                    <!--opened-->
+                    <div class="col">
+                        <label for="issueDescription">Opened by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info"></i></span>
+                            </div>
+                            <input type="number" class="form-control" id="issueDescription" th:field="*{issueDescription}"/>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-row">
                     <!--opened-->

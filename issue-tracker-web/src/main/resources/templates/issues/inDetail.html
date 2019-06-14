@@ -36,7 +36,7 @@
             <!--issue title -->
             <div class="row">
                 <div class="col-8 mx-auto">
-                    <h4 th:text="${issue.issueDescription}">Issue title</h4>
+                    <h4 th:text="${issue.title}">Issue title</h4>
                     <p th:text="${issue.issueStatus}">OPEN/CLOSED</p>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                             <p th:if="${issue.closedBy != null}">
                                 <a th:href="@{/users/{userId}(userId = ${issue.closedBy.id})}">
                                     <span th:text="${issue.closedBy.userName}">
-                                        Issue ClosedBy By
+                                        Issue ClosedBy
                                     </span>
                                 </a>
                             </p>
@@ -69,7 +69,9 @@
             <!--issue description-->
             <div class="row">
                 <div class="col-8 mx-auto">
-                    <p>Issue Description - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    <p th:text="${issue.issueDescription}">Issue Description - Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit, sed
+                        do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
                         reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint

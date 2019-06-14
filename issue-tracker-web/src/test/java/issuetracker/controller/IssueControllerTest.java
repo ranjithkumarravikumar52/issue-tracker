@@ -56,13 +56,15 @@ public class IssueControllerTest {
                 .build();
 
         blockerIssue = Issue.builder()
-                .issueDescription("blocker issue")
+                .title("blocker issue")
+                .issueDescription("A day before release and we got this now?")
                 .openedBy(johnDoe)
                 .closedBy(johnDoe)
                 .build();
 
         graphicsIssue = Issue.builder()
-                .issueDescription("graphics issue")
+                .title("graphics issue ")
+                .issueDescription("Bad rendering for home page")
                 .openedBy(johnDoe)
                 .closedBy(johnDoe)
                 .build();
