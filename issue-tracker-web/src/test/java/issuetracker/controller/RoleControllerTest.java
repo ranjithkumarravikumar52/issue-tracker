@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +35,7 @@ public class RoleControllerTest {
     private Role developerRole;
 
     @Before
-    public void setup(){
+    public void setup() {
         User johnDoe = User.builder()
                 .id(1)
                 .userName("johnDoe")
@@ -55,7 +54,10 @@ public class RoleControllerTest {
                 .lastName("doe")
                 .build();
 
-        developerRole = Role.builder().id(1).name("Developer").build();
+        developerRole = Role.builder()
+                .id(1)
+                .name("Developer")
+                .build();
     }
 
     @Test
@@ -85,10 +87,11 @@ public class RoleControllerTest {
     }
 
     @Test
-    public void addRole() throws Exception{
+    public void addRole() throws Exception {
         when(roleService.save(any(Role.class))).thenReturn(developerRole);
 
-        mockMvc.perform(post("/roles/new").param("id", "1").param("name", "Developer"))
+        mockMvc.perform(post("/roles/new").param("id", "1")
+                .param("name", "Developer"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/roles/list"));
 
@@ -111,23 +114,11 @@ public class RoleControllerTest {
     }
 
     @Test
-    public void deleteRole() throws Exception{
+    public void deleteRole() throws Exception {
         mockMvc.perform(get("/roles/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/roles/list"));
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

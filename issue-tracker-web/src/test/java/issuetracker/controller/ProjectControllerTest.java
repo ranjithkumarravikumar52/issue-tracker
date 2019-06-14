@@ -53,7 +53,11 @@ public class ProjectControllerTest {
                 .lastName("doe")
                 .build();
 
-        project1 = Project.builder().id(1).title("Project 1 title").projectDescription("Project 1 Description").build();
+        project1 = Project.builder()
+                .id(1)
+                .title("Project 1 title")
+                .projectDescription("Project 1 Description")
+                .build();
     }
 
     @Test
@@ -100,7 +104,8 @@ public class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("project"))
                 .andExpect(model().attribute("project", hasProperty("id", is(1))))
-                .andExpect(model().attribute("project", hasProperty("projectDescription", equalTo("Project 1 Description"))))
+                .andExpect(model().attribute("project", hasProperty("projectDescription", equalTo("Project 1 " +
+                        "Description"))))
                 .andExpect(view().name("projects/showAddOrUpdate"));
 
         verify(projectService, times(1)).findById(anyInt());

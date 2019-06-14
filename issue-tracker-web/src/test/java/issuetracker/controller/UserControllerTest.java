@@ -157,7 +157,7 @@ public class UserControllerTest {
     public void showInDetailForm() throws Exception {
         when(userService.findById(anyInt())).thenReturn(johnDoe);
 
-        mockMvc.perform(get("/users/"+johnDoe.getId()))
+        mockMvc.perform(get("/users/" + johnDoe.getId()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("user"))
                 .andExpect(model().attribute("user", hasProperty("id", is(johnDoe.getId()))))
@@ -167,8 +167,9 @@ public class UserControllerTest {
     }
 
     @Test
-    public void handleImagePost() throws Exception{
-        MockMultipartFile imageFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "User profile pic".getBytes());
+    public void handleImagePost() throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", ("User profile " +
+                "pic").getBytes());
 
         mockMvc.perform(multipart("/users/image/1").file(imageFile))
                 .andExpect(status().is3xxRedirection())
@@ -178,13 +179,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void renderImageFromDB() throws Exception{
+    public void renderImageFromDB() throws Exception {
         //given
         String s = "fake image text";
         Byte[] byteBoxed = new Byte[s.getBytes().length];
 
         int i = 0;
-        for(byte b: s.getBytes()){
+        for (byte b : s.getBytes()) {
             byteBoxed[i++] = b;
         }
 
@@ -199,7 +200,8 @@ public class UserControllerTest {
         //when
         MockHttpServletResponse response = mockMvc.perform(get("/users/image/3"))
                 .andExpect(status().isOk())
-                .andReturn().getResponse();
+                .andReturn()
+                .getResponse();
 
         byte[] responseBytes = response.getContentAsByteArray();
         assertEquals(s.getBytes().length, responseBytes.length);
