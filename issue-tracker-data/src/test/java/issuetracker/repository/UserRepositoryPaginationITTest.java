@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryPaginationTest {
+public class UserRepositoryPaginationITTest {
 
     private static final int USERS_COUNT = 20;
     @Autowired

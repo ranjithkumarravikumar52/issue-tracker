@@ -2,16 +2,13 @@ package issuetracker.repository;
 
 import issuetracker.entity.Role;
 import issuetracker.entity.User;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -32,38 +29,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserAndRoleRepositoryIntegrationTest {
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-
-    private User johnDoe;
-    private User janeDoe;
-    private Role developer;
-    private Role tester;
-
-    @Before
-    public void setup(){
-        //prep - save dev and tester roles
-        developer = Role.builder().name("developer").build();
-        tester = Role.builder().name("tester").build();
-        roleRepository.saveAll(Arrays.asList(developer, tester));
-
-        //prep - save john and jane users
-        johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
-        janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
-        johnDoe.setRole(developer);
-        janeDoe.setRole(tester);
-        userRepository.saveAll(Arrays.asList(johnDoe, janeDoe));
-
-        //updating role->user direction
-        developer.getUserSet().add(johnDoe);
-        tester.getUserSet().add(janeDoe);
-        roleRepository.saveAll(Arrays.asList(developer, tester));
-
-    }
+public class UserAndRoleRepositoryIntegrationTest extends AbstractClassRepositoryTest {
 
     /**
      * Test for navigation from user object to role object
@@ -144,7 +110,7 @@ public class UserAndRoleRepositoryIntegrationTest {
         userRepository.findAll().forEach(userList::add); //shouldn't throw an exception
 
         //assert - only two records should exist
-        assertEquals(2, userList.size());
+        assertEquals(3, userList.size());
     }
 
     /**

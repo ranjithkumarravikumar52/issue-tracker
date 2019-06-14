@@ -1,10 +1,9 @@
 package issuetracker.repository;
 
-import issuetracker.entity.*;
-import org.junit.Before;
+import issuetracker.entity.Issue;
+import issuetracker.entity.IssueStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,79 +29,7 @@ import static org.junit.Assert.assertNotNull;
  *  //validation
  *  two issues can't have same exact description
  */
-public class UserAndIssuesRepositoryTest {
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private IssueRepository issueRepository;
-
-    //fields
-    private Role developer;
-    private Role tester;
-    private User johnDoe;
-    private User janeDoe;
-    private User jimmyDoe;
-    private PhoneNumber phoneNumber1;
-    private PhoneNumber phoneNumber2;
-    private Issue blockerIssue;
-    private Issue graphicsIssue;
-    private Role admin;
-    private PhoneNumber phoneNumber3;
-
-    @Before
-    public void setUp() throws Exception {
-        developer = Role.builder().name("developer").build();
-        tester = Role.builder().name("tester").build();
-        admin = Role.builder().name("admin").build();
-
-        roleRepository.saveAll(Arrays.asList(developer, tester, admin));
-
-        //prep - get two users
-        johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
-        janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
-        jimmyDoe = User.builder().userName("jimmyDoe").password("jimmypass").email("jimmyDoee@gmail.com").firstName("jimmy").lastName("doe").build();
-
-        //prep - set role relationship with each user
-        johnDoe.setRole(developer);
-        janeDoe.setRole(tester);
-        jimmyDoe.setRole(admin);
-
-        //prep - get 2 phone numbers
-        phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
-        phoneNumber2 = PhoneNumber.builder().phoneNumber("6789012345").build();
-        phoneNumber3 = PhoneNumber.builder().phoneNumber("7891234560").build();
-
-        //prep - set phone relationship with each user
-        johnDoe.setPhoneNumber(phoneNumber1);
-        janeDoe.setPhoneNumber(phoneNumber2);
-        jimmyDoe.setPhoneNumber(phoneNumber3);
-
-        //save user
-        userRepository.saveAll(Arrays.asList(johnDoe, janeDoe, jimmyDoe));
-
-        //bi-directional relationship with user and role
-        developer.getUserSet().add(johnDoe);
-        tester.getUserSet().add(janeDoe);
-        admin.getUserSet().add(jimmyDoe);
-
-        //update for the bi-directional relationship
-        roleRepository.saveAll(Arrays.asList(developer, tester, admin));
-
-        //create 2 issues with john and jane defaults to posted by in each of them
-        blockerIssue = Issue.builder().issueDescription("blocker issue").postedBy(janeDoe).openedBy(johnDoe).fixedBy(johnDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
-        graphicsIssue = Issue.builder().issueDescription("graphics issue").postedBy(jimmyDoe).openedBy(johnDoe).fixedBy(jimmyDoe).closedBy(janeDoe).issueStatus(IssueStatus.OPEN).build();
-        issueRepository.saveAll(Arrays.asList(blockerIssue, graphicsIssue));
-    }
-
-    @Test
-    public void sanityCheck() {
-        assertEquals(3, userRepository.count());
-        assertEquals(3, roleRepository.count());
-        assertEquals(2, issueRepository.count());
-    }
+public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest{
 
     /**
      * object navigation - uni direction, issues -> user but 4 (posted, opened, fixed, closed) different ways
