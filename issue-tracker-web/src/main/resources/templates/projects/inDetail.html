@@ -69,7 +69,8 @@
                                 <tr>
                                     <th>Issue Id</th>
                                     <th>Issue Description</th>
-                                    <th>Posted By</th>
+                                    <th>Opened By</th>
+                                    <th>Closed By</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -78,7 +79,8 @@
                                 <tr th:each="issue : ${issues}">
                                     <td th:text="${issue.id}">1</td>
                                     <td th:text="${issue.issueDescription}">Issue Description</td>
-                                    <td th:text="${issue.postedBy.userName}">John1</td>
+                                    <td th:text="${issue.openedBy.userName}">John1</td>
+                                    <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
                                     <td th:text="${issue.issueStatus}">OPEN/CLOSED</td>
                                     <td>
                                         <div class="btn-group">

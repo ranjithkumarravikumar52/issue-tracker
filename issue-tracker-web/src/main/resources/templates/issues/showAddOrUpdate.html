@@ -37,9 +37,10 @@
             <form th:action="@{/issues/new}" th:object="${issue}" method="POST">
                 <input type="hidden" th:field="*{id}"/>
 
-                <!--issue description-->
+
                 <div class="form-row">
-                    <div class="col">
+                    <!--issue description-->
+                    <div class="col-10">
                         <label for="issueDescription">Issue description*: </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -49,56 +50,9 @@
                                    id="issueDescription" th:field="*{issueDescription}"/>
                         </div>
                     </div>
-                </div>
 
-                <!--posted and opened-->
-                <div class="form-row">
-                    <!--posted-->
-                    <div class="col">
-                        <label for="postedBy">Posted by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="postedBy" th:field="*{postedBy.id}"/>
-                        </div>
-                    </div>
-                    <!--opened-->
-                    <div class="col">
-                        <label for="openedBy">Opened by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!--fixed and closed-->
-                <div class="form-row">
-                    <!--fixed-->
-                    <div class="col">
-                        <label for="fixedBy">Fixed by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="fixedBy" th:field="*{fixedBy.id}"/>
-                        </div>
-                    </div>
-                    <!--closed-->
-                    <div class="col">
-                        <label for="closedBy">Closed by Id:*: </label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
-                        </div>
-                    </div>
                     <!--issue status from enum-->
-                    <div class="col">
+                    <div class="col-2">
                         <label for="issueStatus">Issue Status:* </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -110,6 +64,31 @@
                                         th:text="${status.name()}"
                                 >val</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <!--opened-->
+                    <div class="col">
+                        <label for="openedBy">Opened by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="number" class="form-control" id="openedBy" th:field="*{openedBy.id}"/>
+                        </div>
+                    </div>
+
+                    <!--closed-->
+                    <div class="col">
+                        <label for="closedBy">Closed by Id:*: </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="number" class="form-control" id="closedBy" th:field="*{closedBy.id}"/>
                         </div>
                     </div>
                 </div>

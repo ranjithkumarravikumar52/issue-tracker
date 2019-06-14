@@ -128,7 +128,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="issue : ${issuesPosted}">
+                                            <tr th:each="issue : ${issuesOpened}">
                                                 <td th:text="${issue.id}">1</td>
                                                 <td th:text="${issue.issueDescription}">Issue Description</td>
                                                 <td th:text="${issue.issueStatus}">OPEN/CLOSED</td>

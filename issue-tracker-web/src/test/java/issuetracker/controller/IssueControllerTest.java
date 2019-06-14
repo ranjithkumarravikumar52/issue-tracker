@@ -57,17 +57,13 @@ public class IssueControllerTest {
 
         blockerIssue = Issue.builder()
                 .issueDescription("blocker issue")
-                .postedBy(johnDoe)
                 .openedBy(johnDoe)
-                .fixedBy(johnDoe)
                 .closedBy(johnDoe)
                 .build();
 
         graphicsIssue = Issue.builder()
                 .issueDescription("graphics issue")
-                .postedBy(janeDoe)
                 .openedBy(johnDoe)
-                .fixedBy(janeDoe)
                 .closedBy(johnDoe)
                 .build();
     }

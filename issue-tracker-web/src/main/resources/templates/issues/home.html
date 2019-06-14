@@ -1,8 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragments/header :: header}">
-        <title>Listing users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Prototype</title>
+        <title>Prototype - listing issues</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
@@ -38,9 +37,7 @@
                     <tr>
                         <th>Issue Id</th>
                         <th>Issue Description</th>
-                        <th>Posted By</th>
                         <th>Opened By</th>
-                        <th>Fixed By</th>
                         <th>Closed By</th>
                         <th>Status</th>
                         <th class="text-center">Action</th>
@@ -49,12 +46,9 @@
                 <tbody>
                     <tr th:each="issue : ${issues}">
                         <td th:text="${issue.id}">1</td>
-                        <td th:text="${issue.issueDescription}" style="word-wrap: break-word; min-width: 160px;max-width: 200px;">Issue Description</td>
-                        <td th:text="${issue.postedBy.userName}">John1</td>
-                        <!--user object can be null-->
-                        <td th:text="${issue.openedBy} ? ${issue.openedBy.userName} : '-'">John1</td>
-                        <!--user object can be null-->
-                        <td th:text="${issue.fixedBy} ? ${issue.fixedBy.userName} : '-'">John1</td>
+                        <td th:text="${issue.issueDescription}" style="word-wrap: break-word;
+                        min-width: 160px;max-width: 250px;">Issue Description</td>
+                        <td th:text="${issue.openedBy.userName}">John1</td>
                         <!--user object can be null-->
                         <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
                         <!--issue status-->

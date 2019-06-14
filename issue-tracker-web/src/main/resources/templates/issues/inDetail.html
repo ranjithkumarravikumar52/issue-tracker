@@ -44,29 +44,11 @@
             <div class="row">
                 <div class="col-8 mx-auto">
                     <div class="row">
-                        <div class="col-3" style="border: 1px solid red">
-                            <p th:if="${issue.postedBy != null}">
-                                <a th:href="@{/users/{userId}(userId = ${issue.postedBy.id})}">
-                                    <span th:text="${issue.postedBy.userName}">
-                                        Issue Posted By
-                                    </span>
-                                </a>
-                            </p>
-                        </div>
                         <div class="col-3" style="border: 1px solid blue">
                             <p th:if="${issue.openedBy != null}">
                                 <a th:href="@{/users/{userId}(userId = ${issue.openedBy.id})}">
                                     <span th:text="${issue.openedBy.userName}">
                                         Issue opened By
-                                    </span>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="col-3" style="border: 1px solid brown">
-                            <p th:if="${issue.fixedBy != null}">
-                                <a th:href="@{/users/{userId}(userId = ${issue.fixedBy.id})}">
-                                    <span th:text="${issue.fixedBy.userName}">
-                                        Issue fixedBy By
                                     </span>
                                 </a>
                             </p>
