@@ -19,13 +19,14 @@ import java.util.Locale;
 import static org.junit.Assert.*;
 
 /**
- * This class is to understand how pagination based off the spring data commons. Not needed this tests necessarily for testing our repo class.
+ * This class is to understand how pagination based off the spring data commons. Not needed this tests necessarily
+ * for testing our repo class.
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryPaginationTest {
+public class UserRepositoryPaginationITTest {
 
-    private static final int USERS_COUNT = 20;
+    private static final int USERS_COUNT = 20; //please dont change this number
     @Autowired
     private ProjectRepository projectRepository;
     @Autowired
@@ -37,12 +38,17 @@ public class UserRepositoryPaginationTest {
     public void setup() {
 
         //when project is created
-        Project freePlay = Project.builder().title("Sims Free Play").projectDescription("A mobile app game by EA games").build();;
+        Project freePlay = Project.builder()
+                .title("Sims Free Play")
+                .projectDescription("A mobile app game by EA games")
+                .build();
 
         projectRepository.save(freePlay);
 
         //create dev role objects
-        Role developer = Role.builder().name("developer").build();
+        Role developer = Role.builder()
+                .name("developer")
+                .build();
         roleRepository.save(developer);
 
         //create few users for our test data
@@ -101,7 +107,8 @@ public class UserRepositoryPaginationTest {
         assertTrue(!userPage.isEmpty());
 
         //check current page size
-        assertEquals(7, userPage.getContent().size());
+        assertEquals(7, userPage.getContent()
+                .size());
     }
 
     @Test
@@ -128,17 +135,25 @@ public class UserRepositoryPaginationTest {
         assertTrue(!userPage.isEmpty());
 
         //individual page check - current page should contain max pageSize elements
-        assertEquals(6, userPage.getContent().size());
+        assertEquals(6, userPage.getContent()
+                .size());
     }
 
     private PhoneNumber getPhoneNumber(Faker faker) {
-        return PhoneNumber.builder().phoneNumber(faker.phoneNumber().phoneNumber()).build();
+        return PhoneNumber.builder()
+                .phoneNumber(faker.phoneNumber()
+                        .phoneNumber())
+                .build();
     }
 
     private User getUser(Faker faker) {
         //prep johnDoe fake data
-        String firstName = faker.name().firstName().toLowerCase();
-        String lastName = faker.name().firstName().toLowerCase();
+        String firstName = faker.name()
+                .firstName()
+                .toLowerCase();
+        String lastName = faker.name()
+                .firstName()
+                .toLowerCase();
         if (firstName.length() < 2) {
             firstName = firstName + faker.letterify("?");
         }
@@ -149,8 +164,11 @@ public class UserRepositoryPaginationTest {
 
         //field objects
         return User.builder()
-                .firstName(firstName).lastName(lastName)
-                .userName(userName).password(password).email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .userName(userName)
+                .password(password)
+                .email(email)
                 .build();
     }
 

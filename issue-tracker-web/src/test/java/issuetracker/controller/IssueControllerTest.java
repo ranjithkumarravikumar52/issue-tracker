@@ -125,7 +125,7 @@ public class IssueControllerTest {
     public void showUpdateForm() throws Exception {
         when(issueService.findById(anyInt())).thenReturn(blockerIssue);
 
-        mockMvc.perform(get("/issues/edit/"+blockerIssue.getId()))
+        mockMvc.perform(get("/issues/edit/" + blockerIssue.getId()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("issue", hasProperty("id", is(blockerIssue.getId()))))
                 .andExpect(view().name("issues/showAddOrUpdate"));
@@ -140,21 +140,22 @@ public class IssueControllerTest {
     @Test
     public void deleteIssue() throws Exception {
         IssueServiceSDJPAImpl mock = mock(IssueServiceSDJPAImpl.class);
-        doNothing().when(mock).deleteById(blockerIssue.getId());
+        doNothing().when(mock)
+                .deleteById(blockerIssue.getId());
 
         mock.deleteById(blockerIssue.getId());
         verify(mock, times(1)).deleteById(blockerIssue.getId());
 
-        mockMvc.perform(get("/issues/delete/"+blockerIssue.getId()))
+        mockMvc.perform(get("/issues/delete/" + blockerIssue.getId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/issues/list"));
     }
 
     @Test
-    public void showInDetailForm() throws Exception{
+    public void showInDetailForm() throws Exception {
         when(issueService.findById(anyInt())).thenReturn(blockerIssue);
 
-        mockMvc.perform(get("/issues/"+blockerIssue.getId()))
+        mockMvc.perform(get("/issues/" + blockerIssue.getId()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("issue", hasProperty("id", is(blockerIssue.getId()))))
                 .andExpect(view().name("issues/inDetail"));

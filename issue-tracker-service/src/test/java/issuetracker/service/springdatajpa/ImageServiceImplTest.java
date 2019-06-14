@@ -22,10 +22,10 @@ public class ImageServiceImplTest {
     @Mock
     UserRepository userRepository;
 
-    UserService userService;
+    private UserService userService;
 
     @Before
-    public void setup(){
+    public void setup() {
         MockitoAnnotations.initMocks(this);
         userService = new UserServiceSDJPAImpl(userRepository);
     }
@@ -55,7 +55,7 @@ public class ImageServiceImplTest {
         //when
         userService.saveImageFile(id, multipartFile);
 
-        //then
+        //then - check the file stored and file rendered from db are same
         verify(userRepository, times(1)).save(argumentCaptor.capture());
         User savedUser = argumentCaptor.getValue();
         assertEquals(multipartFile.getBytes().length, savedUser.getImage().length);

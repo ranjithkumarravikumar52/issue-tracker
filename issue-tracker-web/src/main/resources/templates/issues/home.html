@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     </head>
     <body class="bg-light">
         <nav th:replace="fragments/navbar :: navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -40,6 +42,7 @@
                         <th>Opened By</th>
                         <th>Fixed By</th>
                         <th>Closed By</th>
+                        <th>Status</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -54,6 +57,9 @@
                         <td th:text="${issue.fixedBy} ? ${issue.fixedBy.userName} : '-'">John1</td>
                         <!--user object can be null-->
                         <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
+                        <!--issue status-->
+                        <!--TODO add font-awesome icons open-lock / lock-->
+                        <td th:text="${issue.issueStatus}">OPEN/CLOSED</td>
                         <td class="text-center">
                             <div class="btn-group">
                                 <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"

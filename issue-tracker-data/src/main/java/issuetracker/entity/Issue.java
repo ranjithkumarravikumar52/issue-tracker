@@ -2,15 +2,12 @@ package issuetracker.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @Setter
-//TODO write a custom toString(), helps with debugging
 @ToString(exclude = {"postedBy", "openedBy", "fixedBy", "closedBy"})
 @NoArgsConstructor
 //primary table so we have a issue repo
@@ -33,17 +30,17 @@ public class Issue extends BaseEntity {
     @ManyToOne
     private User closedBy;
 
-    public Issue(String issueDescription, User postedBy) {
-        this.issueDescription = issueDescription;
-        this.postedBy = postedBy;
-    }
+    @Enumerated(value = EnumType.STRING)
+    @NotNull
+    private IssueStatus issueStatus;
 
     @Builder //adding postedBy cos this field is not null
-    public Issue(@NotNull String issueDescription, @NotNull User postedBy, User openedBy, User fixedBy, User closedBy) {
+    public Issue(@NotNull String issueDescription, @NotNull User postedBy, User openedBy, User fixedBy, User closedBy, IssueStatus issueStatus) {
         this.issueDescription = issueDescription;
         this.postedBy = postedBy;
         this.openedBy = openedBy;
         this.fixedBy = fixedBy;
         this.closedBy = closedBy;
+        this.issueStatus = issueStatus;
     }
 }

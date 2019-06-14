@@ -1,12 +1,9 @@
 package issuetracker.repository;
 
 import issuetracker.entity.PhoneNumber;
-import issuetracker.entity.Role;
 import issuetracker.entity.User;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,7 +13,8 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * <p>RunWith(SpringRunner.class) is used to provide a bridge between Spring Boot test features and JUnit. Whenever we are using any Spring Boot testing features in out JUnit tests, this annotation will be required.</p>
+ * <p>RunWith(SpringRunner.class) is used to provide a bridge between Spring Boot test features and JUnit. Whenever
+ * we are using any Spring Boot testing features in out JUnit tests, this annotation will be required.</p>
  * <p>DataJpaTest provides some standard setup needed for testing the persistence layer:</p>
  * <ul>
  * <li>Configuring H2, an in-memory database</li>
@@ -34,62 +32,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserAndPhoneNumberRepositoryTest {
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    private Role developer;
-    private Role tester;
-    private User johnDoe;
-    private User janeDoe;
-    private PhoneNumber phoneNumber1;
-    private PhoneNumber phoneNumber2;
-
-    @Before
-    public void setUp() {
-        //prep - get 2 roles
-        developer = Role.builder().name("developer").build();
-        tester = Role.builder().name("tester").build();
-        roleRepository.saveAll(Arrays.asList(developer, tester));
-
-        //prep - get two users
-        johnDoe = User.builder().userName("johnDoe").password("pass123").email("johnDoe@gmail.com").firstName("john").lastName("doe").build();
-        janeDoe = User.builder().userName("janeDoe").password("pass456").email("janeDoe@gmail.com").firstName("jane").lastName("doe").build();
-
-        //prep - set role relationship with each user
-        johnDoe.setRole(developer);
-        janeDoe.setRole(tester);
-
-        //prep - get 2 phone numbers
-        phoneNumber1 = PhoneNumber.builder().phoneNumber("1234567890").build();
-        phoneNumber2 = PhoneNumber.builder().phoneNumber("6789012345").build();
-
-        //prep - set phone relationship with each user
-        johnDoe.setPhoneNumber(phoneNumber1);
-        janeDoe.setPhoneNumber(phoneNumber2);
-
-        //save user
-        userRepository.saveAll(Arrays.asList(johnDoe, janeDoe));
-
-        //bi-directional relationship with user and role
-        developer.getUserSet().add(johnDoe);
-        tester.getUserSet().add(janeDoe);
-
-        //update for the bi-directional relationship
-        roleRepository.saveAll(Arrays.asList(developer, tester));
-
-    }
-
-    /**
-     * Checking how many records exists in user and role based on our prep
-     */
-    @Test
-    public void sanityPrepCheck() {
-        assertEquals(2, userRepository.count());
-        assertEquals(2, roleRepository.count());
-    }
+public class UserAndPhoneNumberRepositoryTest extends AbstractClassRepositoryTest {
 
     /**
      * Tests to check object navigation from user -> phone
@@ -97,20 +40,24 @@ public class UserAndPhoneNumberRepositoryTest {
     @Test
     public void objectNavigationFromUserToPhone() {
         //action - find johnDoe
-        User user1 = userRepository.findById(johnDoe.getId()).orElse(null);
+        User user1 = userRepository.findById(johnDoe.getId())
+                .orElse(null);
 
         //assertion - check phone number 1
         assertNotNull(user1);
         assertNotNull(user1.getPhoneNumber());
-        assertEquals(phoneNumber1.getPhoneNumber(), user1.getPhoneNumber().getPhoneNumber());
+        assertEquals(phoneNumber1.getPhoneNumber(), user1.getPhoneNumber()
+                .getPhoneNumber());
 
         //action - find jane doe
-        User user2 = userRepository.findById(janeDoe.getId()).orElse(null);
+        User user2 = userRepository.findById(janeDoe.getId())
+                .orElse(null);
 
         //assertion - check phone number 2
         assertNotNull(user2);
         assertNotNull(user2.getPhoneNumber());
-        assertEquals(phoneNumber2.getPhoneNumber(), user2.getPhoneNumber().getPhoneNumber());
+        assertEquals(phoneNumber2.getPhoneNumber(), user2.getPhoneNumber()
+                .getPhoneNumber());
     }
 
     @Test
@@ -128,7 +75,8 @@ public class UserAndPhoneNumberRepositoryTest {
         userRepository.delete(johnDoe);
 
         //assertion - user should be deleted
-        User user = userRepository.findById(johnDoe.getId()).orElse(null);
+        User user = userRepository.findById(johnDoe.getId())
+                .orElse(null);
         assertNull(user);
 
         //assertion - phone number 1 should be deleted
@@ -141,7 +89,8 @@ public class UserAndPhoneNumberRepositoryTest {
     @Test
     public void whenDeletePhoneNumber_thenUserShouldNotBeDeleted() {
         //when - user is called
-        User user = userRepository.findById(janeDoe.getId()).orElse(null);
+        User user = userRepository.findById(janeDoe.getId())
+                .orElse(null);
 
         //action -  set their phone number to null
         assertNotNull(user);
@@ -151,7 +100,8 @@ public class UserAndPhoneNumberRepositoryTest {
         userRepository.save(janeDoe);
 
         //assertion - user should be not null
-        User actualUser = userRepository.findById(janeDoe.getId()).orElse(null);
+        User actualUser = userRepository.findById(janeDoe.getId())
+                .orElse(null);
         assertNotNull(actualUser);
 
         //assertion - phone number should be null
@@ -165,7 +115,9 @@ public class UserAndPhoneNumberRepositoryTest {
     @Test(expected = DataIntegrityViolationException.class)
     public void twoUsersShouldNotHaveSamePhoneNumbers() throws DataIntegrityViolationException {
         //prep - create a new phone number
-        PhoneNumber phoneNumber3 = PhoneNumber.builder().phoneNumber("12345678901").build();
+        PhoneNumber phoneNumber3 = PhoneNumber.builder()
+                .phoneNumber("12345678901")
+                .build();
 
         //action
         johnDoe.setPhoneNumber(phoneNumber3);
