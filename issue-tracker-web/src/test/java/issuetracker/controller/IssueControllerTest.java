@@ -3,6 +3,7 @@ package issuetracker.controller;
 import issuetracker.entity.Issue;
 import issuetracker.entity.User;
 import issuetracker.service.IssueService;
+import issuetracker.service.UserService;
 import issuetracker.service.springdatajpa.IssueServiceSDJPAImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,8 @@ public class IssueControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private IssueService issueService;
+    @MockBean
+    private UserService userService;
 
     private Issue blockerIssue;
     private Issue graphicsIssue;
