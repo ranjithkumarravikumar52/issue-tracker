@@ -26,7 +26,7 @@ public class IssueServiceSDJPAImpl implements IssueService {
 
     @Override
     public Set<Issue> findAll() {
-        Set<Issue> issues = new HashSet<>();
+        Set<Issue> issues = new LinkedHashSet<>();
         issueRepository.findAll().forEach(issues :: add);
         return issues;
     }

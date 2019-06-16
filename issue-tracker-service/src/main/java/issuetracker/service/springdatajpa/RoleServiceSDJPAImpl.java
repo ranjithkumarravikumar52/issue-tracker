@@ -6,7 +6,7 @@ import issuetracker.service.RoleService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Service
@@ -21,7 +21,7 @@ public class RoleServiceSDJPAImpl implements RoleService {
 
     @Override
     public Set<Role> findAll() {
-        Set<Role> roles = new HashSet<>();
+        Set<Role> roles = new LinkedHashSet<>();
         roleRepository.findAll().forEach(roles:: add);
         return roles;
     }

@@ -54,7 +54,7 @@
                         <!--issue status-->
                         <!--TODO add font-awesome icons open-lock / lock-->
                         <td th:text="${issue.issueStatus}"
-                            th:class="${issue.issueStatus.equals(issue.issueStatus.OPEN) ? 'text-success' : 'text-danger'}">OPEN
+                            th:class="${T(issuetracker.entity.IssueStatus).OPEN == issue.issueStatus? 'text-success' : 'text-danger'}">OPEN
                             /CLOSED</td>
                         <td class="text-center">
                             <div class="btn-group">
