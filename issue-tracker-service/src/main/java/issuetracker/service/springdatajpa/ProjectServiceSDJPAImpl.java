@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class ProjectServiceSDJPAImpl implements ProjectService {
 
     @Override
     public Set<Project> findAll() {
-        Set<Project> projects = new HashSet<>();
+        Set<Project> projects = new LinkedHashSet<>();
         projectRepository.findAll().forEach(projects :: add);
         return projects;
     }

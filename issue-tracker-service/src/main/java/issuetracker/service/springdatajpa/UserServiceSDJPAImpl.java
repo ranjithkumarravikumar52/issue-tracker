@@ -31,7 +31,7 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public Set<User> findAll() {
-        return new HashSet<>(userRepository.findAll());
+        return new LinkedHashSet<>(userRepository.findAll());
     }
 
     @Override
