@@ -129,10 +129,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user-cog"></i></span>
                             </div>
-                            <input th:field="*{role.name}" type="text" id="role" class="form-control"/>
-                            <!--display email validation errors if exists-->
-                            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role.name}"
-                               th:errorclass="fieldError" class="small fieldError">Invalid Role</p>
+                            <!--<input th:field="*{role.id}" type="text" id="role" class="form-control"/>-->
+                            <select class="form-control" th:field="*{role.id}" id="role">
+                                <option th:each="role : ${roles}"
+                                        th:value="${role.id}"
+                                        th:text="${role.name}"
+                                >val</option>
+                            </select>
                         </div>
                     </div>
                 </div>
