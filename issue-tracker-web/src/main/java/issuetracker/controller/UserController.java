@@ -2,6 +2,7 @@ package issuetracker.controller;
 
 import issuetracker.entity.User;
 import issuetracker.service.IssueService;
+import issuetracker.service.RoleService;
 import issuetracker.service.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,14 @@ public class UserController {
 
     private final UserService userService;
     private final IssueService issueService;
+    private final RoleService roleService;
     private final String VIEW_SHOW_ADD_USER_FORM = "users/showAddOrUpdate";
     private final String VIEW_LIST_ALL_USERS = "users/home";
 
-    public UserController(UserService userService, IssueService issueService) {
+    public UserController(UserService userService, IssueService issueService, RoleService roleService) {
         this.userService = userService;
         this.issueService = issueService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/list")
@@ -63,6 +66,7 @@ public class UserController {
     public String showAddForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.findAll());
         return VIEW_SHOW_ADD_USER_FORM;
     }
 
@@ -80,6 +84,7 @@ public class UserController {
     public String showUpdateForm(@PathVariable("userId") int userId, Model model) {
         User user = userService.findById(userId);
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.findAll());
         return VIEW_SHOW_ADD_USER_FORM;
     }
 
