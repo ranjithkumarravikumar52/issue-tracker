@@ -6,16 +6,20 @@ import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
 import issuetracker.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 import java.util.Random;
 
 @Component
+@Profile({"dev", "prod"})
 public class DataLoader implements CommandLineRunner {
 
-    private static final int FAKE_USER_DATA_COUNT = 33;
+    @Value("#{new Integer('${dataloader.value}')}")
+    private Integer FAKE_USER_DATA_COUNT;
 
     private static final String[] LOCALE_LIST = {"de-CH", "en-GB", "en-IND", "en-PAK", "en-US"};
 

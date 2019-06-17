@@ -4,7 +4,6 @@ import issuetracker.entity.User;
 import issuetracker.repository.UserRepository;
 import issuetracker.service.UserService;
 import org.slf4j.Logger;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +17,6 @@ import java.util.*;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
-@Profile("springdatajpa")
 public class UserServiceSDJPAImpl implements UserService {
 
     private final UserRepository userRepository;

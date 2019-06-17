@@ -5,7 +5,6 @@ import issuetracker.entity.IssueStatus;
 import issuetracker.entity.User;
 import issuetracker.repository.IssueRepository;
 import issuetracker.service.IssueService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-@Profile("springdatajpa")
 public class IssueServiceSDJPAImpl implements IssueService {
 
 	private final IssueRepository issueRepository;
