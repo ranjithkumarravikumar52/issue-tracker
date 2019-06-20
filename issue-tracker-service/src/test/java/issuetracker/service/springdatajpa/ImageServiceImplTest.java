@@ -9,6 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
@@ -22,12 +23,16 @@ public class ImageServiceImplTest {
     @Mock
     UserRepository userRepository;
 
+    @Mock
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //class under test
     private UserService userService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        userService = new UserServiceSDJPAImpl(userRepository);
+        userService = new UserServiceSDJPAImpl(userRepository, bCryptPasswordEncoder);
     }
 
     @Test

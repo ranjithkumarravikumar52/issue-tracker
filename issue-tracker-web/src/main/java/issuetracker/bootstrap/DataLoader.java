@@ -6,16 +6,20 @@ import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
 import issuetracker.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 import java.util.Random;
 
 @Component
+@Profile({"dev", "prod"})
 public class DataLoader implements CommandLineRunner {
 
-    private static final int FAKE_USER_DATA_COUNT = 33;
+    @Value("#{new Integer('${dataloader.value}')}")
+    private Integer FAKE_USER_DATA_COUNT;
 
     private static final String[] LOCALE_LIST = {"de-CH", "en-GB", "en-IND", "en-PAK", "en-US"};
 
@@ -23,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
     private final IssueService issueService;
     private final ProjectService projectService;
     private final RoleService roleService;
+    private Role admin;
 
 
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
@@ -37,6 +42,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) {
         initProjectsData();
         initRolesData();
+        oneTestUserData();
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
             if (i % 2 == 0) {
@@ -80,7 +86,7 @@ public class DataLoader implements CommandLineRunner {
         Role tester = Role.builder()
                 .name("tester")
                 .build();
-        Role admin = Role.builder()
+        admin = Role.builder()
                 .name("admin")
                 .build();
         Role sales = Role.builder()
@@ -96,6 +102,14 @@ public class DataLoader implements CommandLineRunner {
         roleService.save(sales);
         roleService.save(humanResources);
 
+    }
+
+    private void oneTestUserData(){
+        User user = User.builder().userName("rk1234").password("password").email("ranjith@gmail.com").firstName(
+                "ranjith").lastName("kumar").image(null).build();
+        user.setPhoneNumber(PhoneNumber.builder().phoneNumber("1234567890").build());
+        user.setRole(admin);
+        userService.save(user);
     }
 
     private User initUsersData() {

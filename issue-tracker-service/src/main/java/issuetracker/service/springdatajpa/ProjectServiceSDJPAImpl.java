@@ -7,7 +7,6 @@ import issuetracker.repository.ProjectRepository;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.UserService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Profile("springdatajpa")
 public class ProjectServiceSDJPAImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;

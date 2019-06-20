@@ -3,14 +3,12 @@ package issuetracker.service.springdatajpa;
 import issuetracker.entity.Role;
 import issuetracker.repository.RoleRepository;
 import issuetracker.service.RoleService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Service
-@Profile("springdatajpa")
 public class RoleServiceSDJPAImpl implements RoleService {
 
 	private final RoleRepository roleRepository;

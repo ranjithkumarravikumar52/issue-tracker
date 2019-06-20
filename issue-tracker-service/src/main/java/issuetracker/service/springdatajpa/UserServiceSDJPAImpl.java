@@ -4,11 +4,11 @@ import issuetracker.entity.User;
 import issuetracker.repository.UserRepository;
 import issuetracker.service.UserService;
 import org.slf4j.Logger;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,15 +18,17 @@ import java.util.*;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
-@Profile("springdatajpa")
 public class UserServiceSDJPAImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private static final Logger log = getLogger(UserServiceSDJPAImpl.class);
 
-    public UserServiceSDJPAImpl(UserRepository userRepository) {
+    public UserServiceSDJPAImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -41,6 +43,10 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public User save(User object) {
+        if(object.getActive() != 1){
+            object.setPassword(bCryptPasswordEncoder.encode(object.getPassword())); //bcrypt password
+            object.setActive(1); //for jdbc authentication
+        }
         return userRepository.save(object);
     }
 
