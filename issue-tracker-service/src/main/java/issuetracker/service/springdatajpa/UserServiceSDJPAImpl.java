@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +22,13 @@ public class UserServiceSDJPAImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private static final Logger log = getLogger(UserServiceSDJPAImpl.class);
 
-    public UserServiceSDJPAImpl(UserRepository userRepository) {
+    public UserServiceSDJPAImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -39,6 +43,7 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public User save(User object) {
+        object.setPassword(bCryptPasswordEncoder.encode(object.getPassword())); //bcrypt password
         return userRepository.save(object);
     }
 
