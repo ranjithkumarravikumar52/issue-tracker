@@ -20,11 +20,11 @@
 		<input type="password" th:placeholder="Password" placeholder="Password"
 		       id="password" name="password" class="form-control"/><br/>
 		
-		<div align="center" th:if="${#request.getParameter('error') == true}">
-			<p class="text-danger">Email or Password invalid, please verify</p>
-		</div>
 		<button class="btn btn-lg btn-success btn-block" name="Submit" value="Login" type="Submit"
 		        th:text="Login">Login</button>
+		<div align="center" th:if="${param.error}">
+			<p class="text-danger">Email or Password invalid, please verify</p>
+		</div>
 	</form>
 </div>
 
