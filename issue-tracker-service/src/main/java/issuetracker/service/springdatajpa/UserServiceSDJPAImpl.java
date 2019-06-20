@@ -43,7 +43,10 @@ public class UserServiceSDJPAImpl implements UserService {
 
     @Override
     public User save(User object) {
-        object.setPassword(bCryptPasswordEncoder.encode(object.getPassword())); //bcrypt password
+        if(object.getActive() != 1){
+            object.setPassword(bCryptPasswordEncoder.encode(object.getPassword())); //bcrypt password
+            object.setActive(1); //for jdbc authentication
+        }
         return userRepository.save(object);
     }
 

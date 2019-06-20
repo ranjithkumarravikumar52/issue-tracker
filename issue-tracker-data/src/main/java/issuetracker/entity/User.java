@@ -49,6 +49,9 @@ public class User extends BaseEntity {
     @Column //not needed, for explicit hint on what default annotation applies here
     private Byte[] image; //Byte wrapper is preferred to byte primitive type by hibernate team. cos primitive can't be null
 
+    @Column(name = "active")
+    private int active; //for jdbc authentication
+
     /**
      * user has many-one with roles
      * roles has one-many with user
