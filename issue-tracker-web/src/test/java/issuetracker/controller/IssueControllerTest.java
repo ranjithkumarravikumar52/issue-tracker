@@ -2,8 +2,6 @@ package issuetracker.controller;
 
 import issuetracker.entity.Issue;
 import issuetracker.entity.User;
-import issuetracker.service.IssueService;
-import issuetracker.service.UserService;
 import issuetracker.service.springdatajpa.IssueServiceSDJPAImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -29,13 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(IssueController.class)
-public class IssueControllerTest {
+public class IssueControllerTest extends AbstractSecuredUserControllerTest{
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private IssueService issueService;
-    @MockBean
-    private UserService userService;
 
     private Issue blockerIssue;
     private Issue graphicsIssue;

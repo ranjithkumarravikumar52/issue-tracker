@@ -2,13 +2,11 @@ package issuetracker.controller;
 
 import issuetracker.entity.Role;
 import issuetracker.entity.User;
-import issuetracker.service.RoleService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,10 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(RoleController.class)
-public class RoleControllerTest {
-
-    @MockBean
-    private RoleService roleService;
+public class RoleControllerTest extends AbstractSecuredUserControllerTest{
 
     @Autowired
     private MockMvc mockMvc;
