@@ -40,23 +40,24 @@
                             <a href="#">
                                 <img title="profile image"
                                      class="img-circle img-responsive"
-                                     src="../../static/images/hand-drawn-modern-man-avatar.jpg" height="100px" width="100px" />
+                                     src="../../static/images/hand-drawn-modern-man-avatar.jpg" height="100px" width="100px"
+                                th:src="@{/images/hand-drawn-modern-man-avatar.jpg}"/>
                             </a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p>User name</p>
+                            <p th:text="${user.userName}">User name</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p>Email id</p>
+                            <p th:text="${user.email}">Email id</p>
                         </div>
                     </div>
                 </div>
 
-                <!--recent acivity starts here-->
+                <!--recent activity starts here-->
                 <div class="col-8" style="min-height: 1000px">
                     <p>Recent activity here</p>
                     <div class="card bg-light">

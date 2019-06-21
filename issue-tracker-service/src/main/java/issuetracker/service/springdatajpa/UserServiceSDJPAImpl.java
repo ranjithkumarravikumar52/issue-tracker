@@ -115,4 +115,9 @@ public class UserServiceSDJPAImpl implements UserService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }
