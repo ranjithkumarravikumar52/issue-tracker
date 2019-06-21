@@ -1,9 +1,6 @@
 package issuetracker.controller;
 
-import issuetracker.service.IssueService;
-import issuetracker.service.ProjectService;
-import issuetracker.service.RoleService;
-import issuetracker.service.UserService;
+import issuetracker.service.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 
@@ -26,4 +23,7 @@ public class AbstractSecuredUserControllerTest {
 
     @MockBean
     protected ProjectService projectService;
+
+    @MockBean
+    protected AuthenticationFacadeService authenticationFacadeService;
 }
