@@ -9,4 +9,5 @@ public interface UserService extends CrudService<User, Integer>{
     Page<User> findPaginated(Pageable pageable); //TODO once all entities implement this method, refactor this method to crudservice if needed
 
     void saveImageFile(int userId, MultipartFile file);
+    User findUserByEmail(String email);
 }
