@@ -52,10 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.
                 authorizeRequests()
-//                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-//                .antMatchers("/registration").permitAll() //not needed for our use case
-                .antMatchers("/admin/**").hasAuthority("admin").anyRequest() //url restriction based on ROLES
+                .antMatchers("/login").permitAll() //any user can user access the login page
+                .antMatchers("/sanityCheck/**", "/roles/**").hasAuthority("admin").anyRequest()//url restriction based on ROLES
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/") //take me to home page
