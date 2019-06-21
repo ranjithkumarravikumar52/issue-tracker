@@ -88,20 +88,9 @@
                     <span>Current projects</span>
                     <table class="table table-borderless text-center">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <p><a href="#">Project 1</a></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p><a href="#">Project 2</a></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p><a href="#">Project 3</a></p>
-                                </td>
+                            <tr th:each="project : ${user.projects}">
+                                <td><a href="#" th:href="@{/projects/{projectId}(projectId = ${project.id})}"
+                                       th:text="${project.title}">Place holder information for project title</a></td>
                             </tr>
                         </tbody>
                     </table>
