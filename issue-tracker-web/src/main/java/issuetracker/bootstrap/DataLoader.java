@@ -11,8 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 @Component
 @Profile({"dev", "prod"})
@@ -32,6 +34,10 @@ public class DataLoader implements CommandLineRunner {
     private Role tester;
     private Role sales;
     private Role humanResources;
+
+    private Project mobileApp;
+    private Project machineLearningDemo;
+    private Project nlpProject;
 
 
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
@@ -63,15 +69,15 @@ public class DataLoader implements CommandLineRunner {
 
     private void initProjectsData() {
         //init 3 projects
-        Project mobileApp = Project.builder()
+        mobileApp = Project.builder()
                 .title("mobile app")
                 .projectDescription("An android mobile application")
                 .build();
-        Project machineLearningDemo = Project.builder()
+        machineLearningDemo = Project.builder()
                 .title("machine learning demo")
                 .projectDescription("Demo project to practice introduction to machine learning course")
                 .build();
-        Project nlpProject = Project.builder()
+        nlpProject = Project.builder()
                 .title("nlp assignment")
                 .projectDescription("Social media sentiment analysis")
                 .build();
@@ -113,7 +119,22 @@ public class DataLoader implements CommandLineRunner {
         User user = User.builder().userName("rk1234").password("password").email("ranjith@gmail.com").firstName(
                 "ranjith").lastName("kumar").image(null).build();
         user.setRole(admin);
+
+        //update user with projects
+        Set<Project> projectSet = new HashSet<>();
+        projectSet.add(mobileApp);
+        projectSet.add(machineLearningDemo);
+        projectSet.add(nlpProject);
+        user.setProjects(projectSet);
         userService.save(user);
+
+        //update project with users
+        mobileApp.getUsers().add(user);
+        machineLearningDemo.getUsers().add(user);
+        nlpProject.getUsers().add(user);
+        projectService.save(mobileApp);
+        projectService.save(machineLearningDemo);
+        projectService.save(nlpProject);
 
         //saving dev user
         user = User.builder().userName("dev123").password("password").email("dev@gmail.com").firstName(
