@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/login").permitAll() //any user can user access the login page
-                //url restriction based on ROLES
+                //url restriction based on authorities
                 .antMatchers("/sanityCheck/**", "/roles/**", "/users/list").hasAuthority("admin").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
