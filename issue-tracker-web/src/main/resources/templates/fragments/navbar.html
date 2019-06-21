@@ -21,6 +21,10 @@
             <li class="nav-item" th:classappend="${#request.getRequestURI().startsWith('/sanityCheck') ? 'active' : ''}">
                 <a class="nav-link" th:href="@{/sanityCheck/dbConnection}"><span><i class="fa fa-cogs fa-fw"></i></span> Test DB Connection</a>
             </li>
+            <!--logout-->
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}"><span><i class="fa fa-sign-out-alt fa-fw"></i></span>&nbsp;Logout</a>
+            </li>
         </ul>
     </nav>
 </div>
