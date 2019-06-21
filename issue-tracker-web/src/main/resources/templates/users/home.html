@@ -37,7 +37,6 @@
                     <tr>
                         <th>id</th>
                         <th>user name</th>
-                        <th>password</th>
                         <th>first name</th>
                         <th>last name</th>
                         <th>email</th>
@@ -50,7 +49,6 @@
                     <tr th:each="user : ${users}">
                         <td th:text="${user.id}">1</td>
                         <td th:text="${user.userName}">johnDoe</td>
-                        <td th:text="${user.password}">password123</td>
                         <td th:text="${user.firstName}">John</td>
                         <td th:text="${user.lastName}">Doe</td>
                         <td th:text="${user.email}">johnDoe@something.com</td>
