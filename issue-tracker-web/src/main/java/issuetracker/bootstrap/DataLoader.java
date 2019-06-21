@@ -28,6 +28,10 @@ public class DataLoader implements CommandLineRunner {
     private final ProjectService projectService;
     private final RoleService roleService;
     private Role admin;
+    private Role developer;
+    private Role tester;
+    private Role sales;
+    private Role humanResources;
 
 
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
@@ -42,7 +46,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) {
         initProjectsData();
         initRolesData();
-        oneTestUserData();
+        createTestUserWithRoles();
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
             if (i % 2 == 0) {
@@ -80,19 +84,19 @@ public class DataLoader implements CommandLineRunner {
 
     private void initRolesData() {
         //init 5 roles
-        Role developer = Role.builder()
+        developer = Role.builder()
                 .name("developer")
                 .build();
-        Role tester = Role.builder()
+        tester = Role.builder()
                 .name("tester")
                 .build();
         admin = Role.builder()
                 .name("admin")
                 .build();
-        Role sales = Role.builder()
+        sales = Role.builder()
                 .name("sales")
                 .build();
-        Role humanResources = Role.builder()
+        humanResources = Role.builder()
                 .name("human resources")
                 .build();
 
@@ -104,11 +108,35 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
-    private void oneTestUserData(){
+    private void createTestUserWithRoles(){
+        //saving admin user
         User user = User.builder().userName("rk1234").password("password").email("ranjith@gmail.com").firstName(
                 "ranjith").lastName("kumar").image(null).build();
-        user.setPhoneNumber(PhoneNumber.builder().phoneNumber("1234567890").build());
         user.setRole(admin);
+        userService.save(user);
+
+        //saving dev user
+        user = User.builder().userName("dev123").password("password").email("dev@gmail.com").firstName(
+                "john").lastName("dev").image(null).build();
+        user.setRole(developer);
+        userService.save(user);
+
+        //saving tester user
+        user = User.builder().userName("test12").password("password").email("tester@gmail.com").firstName(
+                "john").lastName("tester").image(null).build();
+        user.setRole(tester);
+        userService.save(user);
+
+        //saving sales user
+        user = User.builder().userName("sales1").password("password").email("sales@gmail.com").firstName(
+                "john").lastName("sales").image(null).build();
+        user.setRole(sales);
+        userService.save(user);
+
+        //saving hr user
+        user = User.builder().userName("hr1234").password("password").email("hr@gmail.com").firstName(
+                "john").lastName("hr").image(null).build();
+        user.setRole(humanResources);
         userService.save(user);
     }
 
