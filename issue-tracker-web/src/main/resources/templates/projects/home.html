@@ -44,16 +44,20 @@
 
                 <tbody>
                     <tr th:each="project : ${projects}">
-                        <td th:text="${project.id}">1</td>
-                        <td th:text="${project.title}">Place holder information for project title</td>
-                        <td th:text="${project.projectDescription}">Place holder information for project description</td>
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <a th:href="@{/projects/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
-                                <a th:href="@{/projects/edit/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
-                                <a th:href="@{/projects/delete/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
-                            </div>
-                        </td>
+                        <!--project data should be displayed, if the current logged in user
+                        is assigned to above project-->
+                        <div th:each="user : ${project.users}" th:if="${user.email == #authentication.name}">
+                            <td th:text="${project.id}">1</td>
+                            <td th:text="${project.title}">Place holder information for project title</td>
+                            <td th:text="${project.projectDescription}">Place holder information for project description</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a th:href="@{/projects/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
+                                    <a th:href="@{/projects/edit/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
+                                    <a th:href="@{/projects/delete/{projectId}(projectId = ${project.id})}" class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
+                                </div>
+                            </td>
+                        </div>
                     </tr>
                 </tbody>
 

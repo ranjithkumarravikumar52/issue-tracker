@@ -200,12 +200,14 @@ public class DataLoader implements CommandLineRunner {
         projectService.save(nlpProject);
 
         //update dev user with one project
-        devUser.getProjects().add(nlpProject);
+        devUser.getProjects()
+                .add(nlpProject);
         userService.save(devUser);
 
 
         Project project = projectService.findById(nlpProject.getId());
-        project.getUsers().add(devUser);
+        project.getUsers()
+                .add(devUser);
         projectService.save(project);
 
 
