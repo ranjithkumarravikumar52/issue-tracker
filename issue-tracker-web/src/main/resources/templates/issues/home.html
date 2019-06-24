@@ -40,6 +40,7 @@
                         <th>Opened By</th>
                         <th>Closed By</th>
                         <th>Status</th>
+                        <th>Project</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -56,6 +57,7 @@
                         <td th:text="${issue.issueStatus}"
                             th:class="${T(issuetracker.entity.IssueStatus).OPEN == issue.issueStatus? 'text-success' : 'text-danger'}">OPEN
                             /CLOSED</td>
+                        <td th:text="${issue.project} ? ${issue.project.title} : '-'">Project Title</td>
                         <td class="text-center">
                             <div class="btn-group">
                                 <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
