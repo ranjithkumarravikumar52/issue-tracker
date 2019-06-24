@@ -1,6 +1,8 @@
 package issuetracker.controller;
 
 import issuetracker.entity.Issue;
+import issuetracker.entity.IssueStatus;
+import issuetracker.entity.Project;
 import issuetracker.entity.User;
 import issuetracker.service.springdatajpa.IssueServiceSDJPAImpl;
 import org.junit.Before;
@@ -56,6 +58,8 @@ public class IssueControllerTest extends AbstractSecuredUserControllerTest{
                 .issueDescription("A day before release and we got this now?")
                 .openedBy(johnDoe)
                 .closedBy(johnDoe)
+                .issueStatus(IssueStatus.OPEN)
+                .project(Project.builder().title("title 1").projectDescription("description 1").build())
                 .build();
 
         graphicsIssue = Issue.builder()
@@ -63,6 +67,8 @@ public class IssueControllerTest extends AbstractSecuredUserControllerTest{
                 .issueDescription("Bad rendering for home page")
                 .openedBy(johnDoe)
                 .closedBy(johnDoe)
+                .issueStatus(IssueStatus.OPEN)
+                .project(Project.builder().title("title 2").projectDescription("description 2").build())
                 .build();
     }
 
