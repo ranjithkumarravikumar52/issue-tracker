@@ -14,8 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"projects"}) //for displaying and logging
-//primary table so we have a user repo
+@ToString(doNotUseGetters = true, exclude = {"projects"})
 public class User extends BaseEntity {
 
     @Column
@@ -45,12 +44,18 @@ public class User extends BaseEntity {
     @Size(min = 2, max = 50, message = "min is 3, max is 50")
     private String lastName;
 
+    /**
+     * Byte wrapper is preferred to byte primitive type by hibernate team. cos primitive can't be null
+     */
     @Lob
-    @Column //not needed, for explicit hint on what default annotation applies here
-    private Byte[] image; //Byte wrapper is preferred to byte primitive type by hibernate team. cos primitive can't be null
+    @Column
+    private Byte[] image;
 
+    /**
+     * For jdbc authentication
+     */
     @Column(name = "active")
-    private int active; //for jdbc authentication
+    private int active;
 
     /**
      * user has many-one with roles
@@ -60,25 +65,28 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    //TODO test: check if the relationship is valid
-    //User can work on multiple projects
-    //A project can have multiple users
-    //Bi-directional
-    //No cascading delete
-    //fetch type lazy
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER) //mappedBy here will join the default two tables into one table which we want
+    /**
+     * User can work on multiple projects
+     * A project can have multiple users
+     * Bi-directional
+     * No cascading delete
+     * fetch type lazy
+     * <p>
+     * mappedBy here will join the default two tables into one table which we want
+     */
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<Project> projects = new HashSet<>();
 
     /**
      * The foreign key is present on User side of the relationship - this means User table becomes the owning side
-     *  So the owning side of the relationship will always have CascadeType.ALL
+     * So the owning side of the relationship will always have CascadeType.ALL
      */
     @OneToOne(cascade = CascadeType.ALL)
     private PhoneNumber phoneNumber;
 
-    //avoid using other entities inside the builder
     @Builder
-    public User(int id, String userName, String password, String email, String firstName, String lastName, Byte[] image) {
+    public User(int id, String userName, String password, String email, String firstName, String lastName,
+                Byte[] image) {
         super(id);
         this.userName = userName;
         this.password = password;

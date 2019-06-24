@@ -5,12 +5,14 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This class is considered as a primary table so we have a issue repo
+ */
 @Entity
 @Getter
 @Setter
 @ToString(exclude = {"openedBy", "closedBy"})
 @NoArgsConstructor
-//primary table so we have a issue repo
 public class Issue extends BaseEntity {
 
     @Column(unique = true)
