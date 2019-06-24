@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"users"}) //for displaying and logging
+@ToString(doNotUseGetters = true, exclude = {"users", "issues"}) //for displaying and logging
 //primary table so we have a project repo
 public class Project extends BaseEntity {
 
@@ -37,9 +37,12 @@ public class Project extends BaseEntity {
     //and when the inverse table is also annotated by mappedBy then we get one table
     private Set<User> users = new HashSet<>();
 
-    public Project(String projectDescription) {
-        this.projectDescription = projectDescription;
-    }
+    /**
+     * A project can have multiple issues. An issue can have only one project assigned
+     */
+    @OneToMany(mappedBy = "project")
+    private Set<Issue> issues = new HashSet<>();
+
 
     //avoid using other entities inside the builder
     @Builder

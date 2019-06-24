@@ -32,13 +32,18 @@ public class Issue extends BaseEntity {
     @NotNull
     private IssueStatus issueStatus;
 
-    @Builder //adding postedBy cos this field is not null
+    @ManyToOne
+    @NotNull
+    private Project project;
+
+    @Builder
     public Issue(@NotNull String title, @NotNull String issueDescription, @NotNull User openedBy, User closedBy,
-                 IssueStatus issueStatus) {
+                 IssueStatus issueStatus, @NotNull Project project) {
         this.title = title;
         this.issueDescription = issueDescription;
         this.openedBy = openedBy;
         this.closedBy = closedBy;
         this.issueStatus = issueStatus;
+        this.project = project;
     }
 }

@@ -40,32 +40,40 @@
                         <th>Opened By</th>
                         <th>Closed By</th>
                         <th>Status</th>
+                        <th>Project</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <tr th:each="issue : ${issues}">
-                        <td th:text="${issue.id}">1</td>
-                        <td th:text="${issue.title}" style="word-wrap: break-word;
+	                    <div th:each="user : ${issue.project.users}" th:if="${user.email == #authentication.name}">
+		                    <!--display data to current logged in user,
+	                    if the issue's assigned project is user's current project-->
+		                    <td th:text="${issue.id}">1</td>
+		                    <td th:text="${issue.title}" style="word-wrap: break-word;
                         min-width: 160px;max-width: 250px;">Issue Title</td>
-                        <td th:text="${issue.openedBy.userName}">John1</td>
-                        <!--user object can be null-->
-                        <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
-                        <!--issue status-->
-                        <!--TODO add font-awesome icons open-lock / lock-->
-                        <td th:text="${issue.issueStatus}"
-                            th:class="${T(issuetracker.entity.IssueStatus).OPEN == issue.issueStatus? 'text-success' : 'text-danger'}">OPEN
-                            /CLOSED</td>
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
-                                   class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
-                                <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}"
-                                   class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
-                                <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}"
-                                   class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
-                            </div>
-                        </td>
+		                    <td th:text="${issue.openedBy.userName}">John1</td>
+		                    <!--user object can be null-->
+		                    <td th:text="${issue.closedBy} ? ${issue.closedBy.userName} : '-'">John1</td>
+		                    <!--issue status-->
+		                    <!--TODO add font-awesome icons open-lock / lock-->
+		                    <td th:text="${issue.issueStatus}"
+		                        th:class="${T(issuetracker.entity.IssueStatus).OPEN == issue.issueStatus? 'text-success' : 'text-danger'}">OPEN
+			                    /CLOSED</td>
+		                    <td th:text="${issue.project} ? ${issue.project.title} : '-'">Project Title</td>
+		                    <td class="text-center">
+			                    <div class="btn-group">
+				                    <a th:href="@{/issues/{issueId}(issueId = ${issue.id})}"
+				                       class="btn btn-sm btn-outline-primary font-weight-bold">View</a>
+				                    <a th:href="@{/issues/edit/{issueId}(issueId = ${issue.id})}"
+				                       class="btn btn-sm btn-outline-info font-weight-bold">Update</a>
+				                    <a th:href="@{/issues/delete/{issueId}(issueId = ${issue.id})}"
+				                       class="btn btn-sm btn-outline-danger font-weight-bold"><span><i class="fa fa-trash-alt fa-fw"></i></span> Delete</a>
+			                    </div>
+		                    </td>
+	                    </div>
+                     
                     </tr>
                 </tbody>
             </table>
