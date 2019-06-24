@@ -96,6 +96,7 @@ public abstract class AbstractClassRepositoryTest {
                         .openedBy(johnDoe)
                         .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
+                        .project(project1)
                         .build();
         graphicsIssue =
                 Issue.builder()
@@ -104,6 +105,7 @@ public abstract class AbstractClassRepositoryTest {
                         .openedBy(johnDoe)
                         .closedBy(null)
                         .issueStatus(IssueStatus.OPEN)
+                        .project(project1)
                         .build();
         textIssue =
                 Issue.builder()
@@ -112,6 +114,7 @@ public abstract class AbstractClassRepositoryTest {
                         .openedBy(johnDoe)
                         .closedBy(janeDoe)
                         .issueStatus(IssueStatus.OPEN)
+                        .project(project2)
                         .build();
         return new ArrayList<>(Arrays.asList(blockerIssue, graphicsIssue, textIssue));
     }

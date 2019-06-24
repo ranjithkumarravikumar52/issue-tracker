@@ -217,6 +217,18 @@ public class DataLoader implements CommandLineRunner {
             issue.setClosedBy(null);
             issue.setIssueStatus(IssueStatus.OPEN);
         }
+        // i % 3 == 0 then mobileApp
+        if(i % 3 == 0){
+            issue.setProject(mobileApp);
+        }
+        // i % 3 == 1 then machineLearningDemo
+        if(i % 3 == 1){
+            issue.setProject(machineLearningDemo);
+        }
+        // i % 3 == 2 then nlpProject
+        if(i % 3 == 2) {
+            issue.setProject(nlpProject);
+        }
         issueService.save(issue);
     }
 

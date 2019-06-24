@@ -2,6 +2,7 @@ package issuetracker.repository;
 
 import issuetracker.entity.Issue;
 import issuetracker.entity.IssueStatus;
+import issuetracker.entity.Project;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -86,6 +87,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
                 .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
+                .project(project1)
                 .build();
 
         //action - save
@@ -93,6 +95,16 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
 
         //assert - throws no exception, savedObject is same as saveObject
         assertEquals(actualIssue, validIssue);
+
+        //action when project has updated relationship with issues
+        project1.getIssues().add(validIssue);
+        projectRepository.save(project1); //update bi-directional relationship
+        Project project = projectRepository.findById(project1.getId())
+                .orElse(null);
+        assertNotNull(project);
+
+        //assert - project1 contains valid issue
+        assertTrue(project.getIssues().contains(validIssue));
 
     }
 
@@ -121,6 +133,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
                 .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
+                .project(project1)
                 .build();
         Issue validIssue2 = Issue.builder()
                 .title("title 2")
@@ -128,6 +141,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
                 .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
+                .project(project1)
                 .build();
 
         //action - saveAll
@@ -147,6 +161,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
                 .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
+                .project(project1)
                 .build();
         Issue validIssue2 = Issue.builder()
                 .title("title 1")
@@ -154,6 +169,7 @@ public class UserAndIssuesRepositoryTest extends AbstractClassRepositoryTest {
                 .openedBy(johnDoe)
                 .closedBy(null)
                 .issueStatus(IssueStatus.OPEN)
+                .project(project1)
                 .build();
 
         //action - saveAll
