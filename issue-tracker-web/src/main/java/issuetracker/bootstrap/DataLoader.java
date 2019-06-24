@@ -11,10 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @Profile({"dev", "prod"})
@@ -38,6 +35,46 @@ public class DataLoader implements CommandLineRunner {
     private Project mobileApp;
     private Project machineLearningDemo;
     private Project nlpProject;
+    private User adminUser = User.builder()
+            .userName("rk1234")
+            .password("password")
+            .email("ranjith@gmail.com")
+            .firstName("ranjith")
+            .lastName("kumar")
+            .image(null)
+            .build();
+    private User devUser = User.builder()
+            .userName("dev123")
+            .password("password")
+            .email("dev@gmail.com")
+            .firstName("john")
+            .lastName("dev")
+            .image(null)
+            .build();
+    private User testerUser = User.builder()
+            .userName("test12")
+            .password("password")
+            .email("tester@gmail.com")
+            .firstName("john")
+            .lastName("tester")
+            .image(null)
+            .build();
+    private User salesUser = User.builder()
+            .userName("sales1")
+            .password("password")
+            .email("sales@gmail.com")
+            .firstName("john")
+            .lastName("sales")
+            .image(null)
+            .build();
+    private User hrUser = User.builder()
+            .userName("hr1234")
+            .password("password")
+            .email("hr@gmail.com")
+            .firstName("john")
+            .lastName("hr")
+            .image(null)
+            .build();
 
 
     public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
@@ -53,6 +90,14 @@ public class DataLoader implements CommandLineRunner {
         initProjectsData();
         initRolesData();
         createTestUserWithRoles();
+        List<User> testUserList = new ArrayList<>(Arrays.asList(adminUser, devUser, testerUser, salesUser, hrUser));
+
+        for (User user : testUserList) {
+            initIssuesData(user);
+            initIssuesData(user);
+        }
+
+
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
             if (i % 2 == 0) {
@@ -114,51 +159,56 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
-    private void createTestUserWithRoles(){
+    private void createTestUserWithRoles() {
         //saving admin user
-        User user = User.builder().userName("rk1234").password("password").email("ranjith@gmail.com").firstName(
-                "ranjith").lastName("kumar").image(null).build();
-        user.setRole(admin);
+        adminUser.setRole(admin);
+        userService.save(adminUser);
 
-        //update user with projects
+        //saving dev user
+        devUser.setRole(developer);
+        userService.save(devUser);
+
+        //saving tester user
+        testerUser.setRole(tester);
+        userService.save(testerUser);
+
+        //saving sales user
+        salesUser.setRole(sales);
+        userService.save(salesUser);
+
+        //saving hr user
+        hrUser.setRole(humanResources);
+        userService.save(hrUser);
+
+        //update admin user with projects
         Set<Project> projectSet = new HashSet<>();
         projectSet.add(mobileApp);
         projectSet.add(machineLearningDemo);
         projectSet.add(nlpProject);
-        user.setProjects(projectSet);
-        userService.save(user);
+        adminUser.setProjects(projectSet);
+        userService.save(adminUser);
 
-        //update project with users
-        mobileApp.getUsers().add(user);
-        machineLearningDemo.getUsers().add(user);
-        nlpProject.getUsers().add(user);
+        //update project with admin user
+        mobileApp.getUsers()
+                .add(adminUser);
+        machineLearningDemo.getUsers()
+                .add(adminUser);
+        nlpProject.getUsers()
+                .add(adminUser);
         projectService.save(mobileApp);
         projectService.save(machineLearningDemo);
         projectService.save(nlpProject);
 
-        //saving dev user
-        user = User.builder().userName("dev123").password("password").email("dev@gmail.com").firstName(
-                "john").lastName("dev").image(null).build();
-        user.setRole(developer);
-        userService.save(user);
+        //update dev user with one project
+        devUser.getProjects().add(nlpProject);
+        userService.save(devUser);
 
-        //saving tester user
-        user = User.builder().userName("test12").password("password").email("tester@gmail.com").firstName(
-                "john").lastName("tester").image(null).build();
-        user.setRole(tester);
-        userService.save(user);
 
-        //saving sales user
-        user = User.builder().userName("sales1").password("password").email("sales@gmail.com").firstName(
-                "john").lastName("sales").image(null).build();
-        user.setRole(sales);
-        userService.save(user);
+        Project project = projectService.findById(nlpProject.getId());
+        project.getUsers().add(devUser);
+        projectService.save(project);
 
-        //saving hr user
-        user = User.builder().userName("hr1234").password("password").email("hr@gmail.com").firstName(
-                "john").lastName("hr").image(null).build();
-        user.setRole(humanResources);
-        userService.save(user);
+
     }
 
     private User initUsersData() {
@@ -218,15 +268,15 @@ public class DataLoader implements CommandLineRunner {
             issue.setIssueStatus(IssueStatus.OPEN);
         }
         // i % 3 == 0 then mobileApp
-        if(i % 3 == 0){
+        if (i % 3 == 0) {
             issue.setProject(mobileApp);
         }
         // i % 3 == 1 then machineLearningDemo
-        if(i % 3 == 1){
+        if (i % 3 == 1) {
             issue.setProject(machineLearningDemo);
         }
         // i % 3 == 2 then nlpProject
-        if(i % 3 == 2) {
+        if (i % 3 == 2) {
             issue.setProject(nlpProject);
         }
         issueService.save(issue);
