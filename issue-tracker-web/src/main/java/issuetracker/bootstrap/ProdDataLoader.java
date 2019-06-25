@@ -1,7 +1,7 @@
 package issuetracker.bootstrap;
 
-import issuetracker.entity.Project;
-import issuetracker.entity.Role;
+import com.github.javafaker.Faker;
+import issuetracker.entity.*;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.*;
 
 @Component
 @Profile("prod")
@@ -40,7 +40,6 @@ public class ProdDataLoader implements CommandLineRunner {
     private Project nlpProject;
 
 
-
     public ProdDataLoader(UserService userService, IssueService issueService, ProjectService projectService,
                           RoleService roleService) {
         this.userService = userService;
@@ -54,18 +53,27 @@ public class ProdDataLoader implements CommandLineRunner {
         initProjectsData();
         initRolesData();
 
-        /*for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
-            User user = initUsersData();
-            if (i % 2 == 0) {
-                initIssuesData(user);
+        //init users based on data count
+        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
+            initUsersData();
+        }
+
+        //get me all users
+        List<User> userList = new ArrayList<>(userService.findAll());
+        //get me all projects
+        List<Project> projectList = new ArrayList<>(projectService.findAll());
+
+        //for each user, post one open and one closed issues, across all the projects
+        for(Project project: projectList){
+            for(User user: userList){
+                Issue openIssue = initOpenIssuesData(user, project);
+                Issue closedIssue = initClosedIssuesData(user, project);
+                issueService.saveAll(Arrays.asList(openIssue, closedIssue)); //save 2 new issues
+                projectService.save(project); //update project with issue relationship
             }
-            if (i % 3 == 0) {
-                initIssuesData(user);
-            }
-            if (i % 5 == 0) {
-                initIssuesData(user);
-            }
-        }*/
+        }
+
+
     }
 
     private void initProjectsData() {
@@ -109,94 +117,98 @@ public class ProdDataLoader implements CommandLineRunner {
 
     }
 
-    /*private User initUsersData() {
+    private void initUsersData() {
         //faker init
         Faker faker = new Faker(new Locale(LOCALE_LIST[new Random().nextInt(LOCALE_LIST.length)]));
-
-        //create phone number
-        PhoneNumber phoneNumber = getPhoneNumber(faker);
 
         //prep johnDoe fake data
         User johnDoe = getUser(faker);
 
         //set the phone number child objects for the user
-        johnDoe.setPhoneNumber(phoneNumber);
+        johnDoe.setPhoneNumber(getPhoneNumber(faker));
 
-        //save user objects - with phone number
+        //update user with random role
+        Role role = getRandomRole();
+        johnDoe.setRole(role);
+
+        //update user and random project
+        Project project = getRandomProject();
+        johnDoe.addProject(project);
+
         userService.save(johnDoe);
-
-        //update user and role
-        updateUserAndRole(johnDoe);
-
-        //update project and user
-        updateProjectAndUser(johnDoe);
-
-        //return user
-        return johnDoe;
+        roleService.save(role); //update
+        projectService.save(project); //update
     }
 
-    private void initIssuesData(User user) {
-        int i = user.getId();
-        User userById = userService.findById(i);
-        Issue issue = Issue.builder()
-                .title(new Faker().weather()
-                        .description() + " " + new Faker().address()
-                        .cityName() + " " + new Faker().numerify("####"))
-                .issueDescription(
-                        new Faker().gameOfThrones()
-                                .quote() + " - "
-                                + new Faker().gameOfThrones()
-                                .dragon()
-                                + new Faker().numerify("####")
-                )
-                .openedBy(userById)
-                .closedBy(userById)
-                .issueStatus(IssueStatus.CLOSED)
-                .build();
+    private Role getRandomRole() {
+        int randomId = 1 + new Random().nextInt(5); //id is 1 based, hence added 1
+        return roleService.findById(randomId);
+    }
 
-        //even issue are opened issues
-        if (i % 2 == 0) {
-            issue.setClosedBy(null);
-            issue.setIssueStatus(IssueStatus.OPEN);
-        }
-        // i % 3 == 0 then mobileApp
-        if (i % 3 == 0) {
-            issue.setProject(mobileApp);
-        }
-        // i % 3 == 1 then machineLearningDemo
-        if (i % 3 == 1) {
-            issue.setProject(machineLearningDemo);
-        }
-        // i % 3 == 2 then nlpProject
-        if (i % 3 == 2) {
-            issue.setProject(nlpProject);
-        }
-        issueService.save(issue);
+    private Project getRandomProject() {
+        int randomId = 1 + new Random().nextInt(3); //id is 1 based, hence added 1
+        return projectService.findById(randomId);
+    }
+
+    private Issue initOpenIssuesData(User user, Project project) {
+        return Issue.builder()
+                .title(getIssueTitle())
+                .issueDescription(getIssueDescription())
+                .openedBy(user)
+                .closedBy(null)
+                .issueStatus(IssueStatus.OPEN)
+                .project(project)
+                .build();
+    }
+
+    private Issue initClosedIssuesData(User user, Project project) {
+        return Issue.builder()
+                .title(getIssueTitle())
+                .issueDescription(getIssueDescription())
+                .openedBy(user)
+                .closedBy(user)
+                .issueStatus(IssueStatus.CLOSED)
+                .project(project)
+                .build();
     }
 
     private User getUser(Faker faker) {
-        String firstName = faker.name()
-                .firstName()
-                .toLowerCase();
-        String lastName = faker.name()
-                .firstName()
-                .toLowerCase();
-
-        if (firstName.length() <= 2) {
-            firstName = firstName + faker.letterify("?");
-        }
-
-        String userName = lastName.charAt(0) + firstName.substring(0, 3) + faker.numerify("##");
-        String password = faker.bothify("????####");
-        String email = userName + "@gmail.com";
+        String firstName = getUserFirstName(faker);
+        String lastName = getUserLastName(faker);
+        String userName = getUserName(firstName, lastName);
+        String email = getEmail(userName);
 
         return User.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .userName(userName)
-                .password(password)
+                .password("password") //password default for users
                 .email(email)
                 .build();
+    }
+
+    private String getUserName(String firstName, String lastName) {
+        Faker faker = new Faker();
+        if (firstName.length() <= 2) {
+            firstName = firstName + faker.letterify("?");
+        }
+        return lastName.charAt(0) + firstName.substring(0, 3) + faker.numerify("##");
+    }
+
+    private String getEmail(String userName) {
+        return userName + "@gmail.com";
+    }
+
+    private String getUserLastName(Faker faker) {
+        return faker.name()
+                .lastName()
+                .toLowerCase();
+    }
+
+    private String getUserFirstName(Faker faker) {
+        return faker.name()
+                .firstName()
+                .toLowerCase();
     }
 
     private PhoneNumber getPhoneNumber(Faker faker) {
@@ -206,21 +218,19 @@ public class ProdDataLoader implements CommandLineRunner {
                 .build();
     }
 
-    private void updateUserAndRole(User johnDoe) {
-        int randomId = 1 + new Random().nextInt(5); //id is 1 based, hence added 1
-        Role role = roleService.findById(randomId);
-        johnDoe.setRole(role);
-        userService.save(johnDoe);
-        roleService.save(role);
+    private String getIssueDescription() {
+        return new Faker().gameOfThrones()
+                .quote() + " - "
+                + new Faker().gameOfThrones()
+                .dragon()
+                + new Faker().numerify("####");
     }
 
-    private void updateProjectAndUser(User johnDoe) {
-        int randomId = 1 + new Random().nextInt(3); //id is 1 based, hence added 1
-        Project projectById = projectService.findById(randomId);
-        projectById.addUser(johnDoe);
-        projectService.save(projectById);
-        userService.save(johnDoe);
-    }*/
+    private String getIssueTitle() {
+        return new Faker().weather()
+                .description() + " " + new Faker().address()
+                .cityName() + " " + new Faker().numerify("####");
+    }
 
 
 }
