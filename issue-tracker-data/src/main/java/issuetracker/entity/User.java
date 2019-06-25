@@ -96,5 +96,12 @@ public class User extends BaseEntity {
         this.image = image;
     }
 
-
+    /**
+     * Helper method to establish bi-directional relationship
+     * @param role assign a role to current user
+     */
+    public void setRole(Role role) {
+        this.role = role;
+        role.getUserSet().add(this);
+    }
 }

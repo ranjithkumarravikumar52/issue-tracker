@@ -48,4 +48,12 @@ public class Issue extends BaseEntity {
         this.issueStatus = issueStatus;
         this.project = project;
     }
+
+    /**
+     * Helper method for bi-directional relationship between issue and project
+     */
+    public void setProject(Project project){
+        this.project = project;
+        project.getIssues().add(this);
+    }
 }

@@ -53,4 +53,12 @@ public class Project extends BaseEntity {
         this.projectDescription = projectDescription;
         this.title = title;
     }
+
+    /**
+     * Helper method for establishing bi-directional relationship between user and project
+     */
+    public void addUser(User user){
+        this.users.add(user);
+        user.getProjects().add(this);
+    }
 }
