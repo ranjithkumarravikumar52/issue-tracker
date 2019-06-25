@@ -6,6 +6,7 @@ import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
 import issuetracker.service.UserService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -13,9 +14,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @Component
 @Profile("prod")
 public class ProdDataLoader implements CommandLineRunner {
+
+    private static final Logger log = getLogger(ProdDataLoader.class);
 
     @Value("#{new Integer('${dataloader.value}')}")
     private Integer FAKE_USER_DATA_COUNT;
@@ -39,6 +44,10 @@ public class ProdDataLoader implements CommandLineRunner {
     private Project machineLearningDemo;
     private Project nlpProject;
 
+    //2 lists
+    private List<Role> roleList = new ArrayList<>();
+    private List<Project> projectList = new ArrayList<>();
+
 
     public ProdDataLoader(UserService userService, IssueService issueService, ProjectService projectService,
                           RoleService roleService) {
@@ -51,29 +60,36 @@ public class ProdDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         initProjectsData();
+        log.info("finished init projects data");
         initRolesData();
+        log.info("finished init roles data");
+        initUsersData();
+        log.info("finished init users data");
+        initIssuesData();
+        log.info("finished init issues data");
+    }
 
-        //init users based on data count
-        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
-            initUsersData();
-        }
+    /**
+     * for each user, post one open and one closed issues, across all the projects
+     * for 3 projects and 100 users, total issues 600, open issues 300
+     * for 1 project, 200 issues, 100 open and 100 closed
+     */
+    private void initIssuesData() {
+        Set<Issue> issueSet = new HashSet<>();
+        Set<Project> projectSet = new HashSet<>();
 
-        //get me all users
-        List<User> userList = new ArrayList<>(userService.findAll());
-        //get me all projects
-        List<Project> projectList = new ArrayList<>(projectService.findAll());
-
-        //for each user, post one open and one closed issues, across all the projects
-        for(Project project: projectList){
-            for(User user: userList){
+        for (Project project : projectService.findAll()) {
+            for (User user : userService.findAll()) {
                 Issue openIssue = initOpenIssuesData(user, project);
                 Issue closedIssue = initClosedIssuesData(user, project);
-                issueService.saveAll(Arrays.asList(openIssue, closedIssue)); //save 2 new issues
-                projectService.save(project); //update project with issue relationship
+                issueSet.add(openIssue);
+                issueSet.add(closedIssue);
+                projectSet.add(project);
             }
         }
 
-
+        issueService.saveAll(issueSet); //save all issues
+        projectService.saveAll(projectSet); //update project with issue relationship
     }
 
     private void initProjectsData() {
@@ -91,7 +107,8 @@ public class ProdDataLoader implements CommandLineRunner {
                 .projectDescription("Social media sentiment analysis")
                 .build();
 
-        projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
+        Iterable<Project> projects = projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
+        projects.forEach(projectList::add);
 
     }
 
@@ -113,41 +130,49 @@ public class ProdDataLoader implements CommandLineRunner {
                 .name("human resources")
                 .build();
 
-        roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
+        Iterable<Role> roles = roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
+        roles.forEach(roleList::add);
 
     }
 
     private void initUsersData() {
-        //faker init
-        Faker faker = new Faker(new Locale(LOCALE_LIST[new Random().nextInt(LOCALE_LIST.length)]));
+        Set<User> userSet = new HashSet<>();
+        Set<Role> roleSet = new HashSet<>();
+        Set<Project> projectSet = new HashSet<>();
 
-        //prep johnDoe fake data
-        User johnDoe = getUser(faker);
+        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
+            //faker init
+            Faker faker = new Faker(new Locale(LOCALE_LIST[new Random().nextInt(LOCALE_LIST.length)]));
 
-        //set the phone number child objects for the user
-        johnDoe.setPhoneNumber(getPhoneNumber(faker));
+            //prep johnDoe fake data
+            User johnDoe = getUser(faker);
 
-        //update user with random role
-        Role role = getRandomRole();
-        johnDoe.setRole(role);
+            //set the phone number child objects for the user
+            johnDoe.setPhoneNumber(getPhoneNumber(faker));
 
-        //update user and random project
-        Project project = getRandomProject();
-        johnDoe.addProject(project);
+            //update user with random role
+            Role role = getRandomRole();
+            johnDoe.setRole(role);
 
-        userService.save(johnDoe);
-        roleService.save(role); //update
-        projectService.save(project); //update
+            //update user and random project
+            Project project = getRandomProject();
+            johnDoe.addProject(project);
+
+            userSet.add(johnDoe);
+            roleSet.add(role);
+            projectSet.add(project);
+        }
+        userService.saveAll(userSet);
+        roleService.saveAll(roleSet); //update
+        projectService.saveAll(projectSet); //update
     }
 
     private Role getRandomRole() {
-        int randomId = 1 + new Random().nextInt(5); //id is 1 based, hence added 1
-        return roleService.findById(randomId);
+        return roleList.get(new Random().nextInt(5));
     }
 
     private Project getRandomProject() {
-        int randomId = 1 + new Random().nextInt(3); //id is 1 based, hence added 1
-        return projectService.findById(randomId);
+        return projectList.get(new Random().nextInt(3));
     }
 
     private Issue initOpenIssuesData(User user, Project project) {
