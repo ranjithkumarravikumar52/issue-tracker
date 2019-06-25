@@ -1,7 +1,8 @@
 package issuetracker.bootstrap;
 
-import com.github.javafaker.Faker;
-import issuetracker.entity.*;
+import issuetracker.entity.Project;
+import issuetracker.entity.Role;
+import issuetracker.entity.User;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -11,10 +12,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Arrays;
 
 @Component
-@Profile({"dev", "prod"})
+@Profile("dev")
 public class DevDataLoader implements CommandLineRunner {
 
     @Value("#{new Integer('${dataloader.value}')}")
@@ -89,27 +90,6 @@ public class DevDataLoader implements CommandLineRunner {
     public void run(String... args) {
         initProjectsData();
         initRolesData();
-        createTestUserWithRoles();
-        List<User> testUserList = new ArrayList<>(Arrays.asList(adminUser, devUser, testerUser, salesUser, hrUser));
-
-        for (User user : testUserList) {
-            initIssuesData(user);
-            initIssuesData(user);
-        }
-
-
-        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
-            User user = initUsersData();
-            if (i % 2 == 0) {
-                initIssuesData(user);
-            }
-            if (i % 3 == 0) {
-                initIssuesData(user);
-            }
-            if (i % 5 == 0) {
-                initIssuesData(user);
-            }
-        }
     }
 
     private void initProjectsData() {
@@ -127,9 +107,7 @@ public class DevDataLoader implements CommandLineRunner {
                 .projectDescription("Social media sentiment analysis")
                 .build();
 
-        projectService.save(mobileApp);
-        projectService.save(machineLearningDemo);
-        projectService.save(nlpProject);
+        projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
 
     }
 
@@ -151,131 +129,20 @@ public class DevDataLoader implements CommandLineRunner {
                 .name("human resources")
                 .build();
 
-        roleService.save(developer);
-        roleService.save(tester);
-        roleService.save(admin);
-        roleService.save(sales);
-        roleService.save(humanResources);
+        roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
 
     }
 
     private void createTestUserWithRoles() {
-        //saving admin user
-        adminUser.setRole(admin);
-        userService.save(adminUser);
-
-        //saving dev user
-        devUser.setRole(developer);
-        userService.save(devUser);
-
-        //saving tester user
-        testerUser.setRole(tester);
-        userService.save(testerUser);
-
-        //saving sales user
-        salesUser.setRole(sales);
-        userService.save(salesUser);
-
-        //saving hr user
-        hrUser.setRole(humanResources);
-        userService.save(hrUser);
-
-        //update admin user with projects
-        Set<Project> projectSet = new HashSet<>();
-        projectSet.add(mobileApp);
-        projectSet.add(machineLearningDemo);
-        projectSet.add(nlpProject);
-        adminUser.setProjects(projectSet);
-        userService.save(adminUser);
-
-        //update project with admin user
-        mobileApp.getUsers()
-                .add(adminUser);
-        machineLearningDemo.getUsers()
-                .add(adminUser);
-        nlpProject.getUsers()
-                .add(adminUser);
-        projectService.save(mobileApp);
-        projectService.save(machineLearningDemo);
-        projectService.save(nlpProject);
-
-        //update dev user with one project
-        devUser.getProjects()
-                .add(nlpProject);
-        userService.save(devUser);
-
-
-        Project project = projectService.findById(nlpProject.getId());
-        project.getUsers()
-                .add(devUser);
-        projectService.save(project);
-
 
     }
 
     private User initUsersData() {
-        //faker init
-        Faker faker = new Faker(new Locale(LOCALE_LIST[new Random().nextInt(LOCALE_LIST.length)]));
-
-        //create phone number
-        PhoneNumber phoneNumber = getPhoneNumber(faker);
-
-        //prep johnDoe fake data
-        User johnDoe = getUser(faker);
-
-        //set the phone number child objects for the user
-        johnDoe.setPhoneNumber(phoneNumber);
-
-        //save user objects - with phone number
-        userService.save(johnDoe);
-
-        //update user and role
-        updateUserAndRole(johnDoe);
-
-        //update project and user
-        updateProjectAndUser(johnDoe);
-
-        //return user
-        return johnDoe;
+        return null;
     }
 
     private void initIssuesData(User user) {
-        int i = user.getId();
-        User userById = userService.findById(i);
-        Issue issue = Issue.builder()
-                .title(new Faker().weather()
-                        .description() + " " + new Faker().address()
-                        .cityName() + " " + new Faker().numerify("####"))
-                .issueDescription(
-                        new Faker().gameOfThrones()
-                                .quote() + " - "
-                                + new Faker().gameOfThrones()
-                                .dragon()
-                                + new Faker().numerify("####")
-                )
-                .openedBy(userById)
-                .closedBy(userById)
-                .issueStatus(IssueStatus.CLOSED)
-                .build();
 
-        //even issue are opened issues
-        if (i % 2 == 0) {
-            issue.setClosedBy(null);
-            issue.setIssueStatus(IssueStatus.OPEN);
-        }
-        // i % 3 == 0 then mobileApp
-        if (i % 3 == 0) {
-            issue.setProject(mobileApp);
-        }
-        // i % 3 == 1 then machineLearningDemo
-        if (i % 3 == 1) {
-            issue.setProject(machineLearningDemo);
-        }
-        // i % 3 == 2 then nlpProject
-        if (i % 3 == 2) {
-            issue.setProject(nlpProject);
-        }
-        issueService.save(issue);
     }
 
 
