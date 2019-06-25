@@ -229,11 +229,8 @@ public class DataLoader implements CommandLineRunner {
         //save user objects - with phone number
         userService.save(johnDoe);
 
-        //update user with role
-        Role role = updateUserWithRole(johnDoe);
-
-        //update role with user
-        updateRoleWithUser(johnDoe, role);
+        //update user and role
+        updateUserAndRole(johnDoe);
 
         //update project with user
         Project projectById = updateProjectWithUser(johnDoe);
@@ -316,18 +313,12 @@ public class DataLoader implements CommandLineRunner {
                 .build();
     }
 
-    private void updateRoleWithUser(User johnDoe, Role role) {
-        role.getUserSet()
-                .add(johnDoe);
-        roleService.save(role);
-    }
-
-    private Role updateUserWithRole(User johnDoe) {
+    private void updateUserAndRole(User johnDoe) {
         int randomId = 1 + new Random().nextInt(5); //id is 1 based, hence added 1
         Role role = roleService.findById(randomId);
         johnDoe.setRole(role);
         userService.save(johnDoe);
-        return role;
+        roleService.save(role);
     }
 
     private void updateUserWithProject(User johnDoe, Project projectById) {
