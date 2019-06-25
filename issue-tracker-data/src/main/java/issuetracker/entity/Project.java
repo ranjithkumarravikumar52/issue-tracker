@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"users", "issues"})
+@ToString(callSuper = true, doNotUseGetters = true, exclude = {"users", "issues"})
 public class Project extends BaseEntity {
 
     @Column(unique = true)
@@ -44,7 +44,7 @@ public class Project extends BaseEntity {
     /**
      * A project can have multiple issues. An issue can have only one project assigned
      */
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
     private Set<Issue> issues = new HashSet<>();
 
     @Builder

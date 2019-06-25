@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"projects"})
+@ToString(callSuper = true)
 public class User extends BaseEntity {
 
     @Column
@@ -103,5 +103,13 @@ public class User extends BaseEntity {
     public void setRole(Role role) {
         this.role = role;
         role.getUserSet().add(this);
+    }
+
+    /**
+     * helper method for bi-directional relationship
+     */
+    public void addProject(Project project){
+        this.projects.add(project);
+        project.getUsers().add(this);
     }
 }

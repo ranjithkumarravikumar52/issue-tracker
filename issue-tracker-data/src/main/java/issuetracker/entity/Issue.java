@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@ToString(exclude = {"openedBy", "closedBy"})
+@ToString(callSuper = true, exclude = {"openedBy", "closedBy"})
 @NoArgsConstructor
 public class Issue extends BaseEntity {
 
@@ -47,6 +47,7 @@ public class Issue extends BaseEntity {
         this.closedBy = closedBy;
         this.issueStatus = issueStatus;
         this.project = project;
+        project.getIssues().add(this);
     }
 
     /**
