@@ -53,6 +53,16 @@ public class IssueServiceSDJPAImpl implements IssueService {
     }
 
     @Override
+    public Iterable<Issue> saveAll(Iterable<Issue> entities) {
+        for(Issue object: entities){
+            if(object.getIssueStatus() == null){
+                object.setIssueStatus(IssueStatus.OPEN);
+            }
+        }
+        return issueRepository.saveAll(entities);
+    }
+
+    @Override
     public Page<Issue> findPaginated(Pageable pageable) {
         List<Issue> allIssues = new ArrayList<>(this.findAll());
 

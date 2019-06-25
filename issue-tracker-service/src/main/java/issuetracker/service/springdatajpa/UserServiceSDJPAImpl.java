@@ -60,6 +60,17 @@ public class UserServiceSDJPAImpl implements UserService {
         userRepository.deleteById(integer);
     }
 
+    @Override
+    public Iterable<User> saveAll(Iterable<User> entities) {
+        for(User object: entities){
+            if(object.getActive() != 1){
+                object.setPassword(bCryptPasswordEncoder.encode(object.getPassword())); //bcrypt password
+                object.setActive(1); //for jdbc authentication
+            }
+        }
+        return userRepository.saveAll(entities);
+    }
+
     /**
      * This method will generate a Pageable object based on controller request
      *

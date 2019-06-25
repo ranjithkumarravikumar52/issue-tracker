@@ -55,6 +55,11 @@ public class ProjectServiceSDJPAImpl implements ProjectService {
         projectRepository.deleteById(integer);
     }
 
+    @Override
+    public Iterable<Project> saveAll(Iterable<Project> entities) {
+        return projectRepository.saveAll(entities);
+    }
+
     /**
      * find all issues(postedBy) in a given project
      * @param projectId - given project
