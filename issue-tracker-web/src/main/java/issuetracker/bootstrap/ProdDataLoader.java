@@ -1,8 +1,7 @@
-/*
 package issuetracker.bootstrap;
 
-import com.github.javafaker.Faker;
-import issuetracker.entity.*;
+import issuetracker.entity.Project;
+import issuetracker.entity.Role;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -12,10 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Arrays;
 
 @Component
-@Profile({"dev", "prod"})
+@Profile("prod")
 public class ProdDataLoader implements CommandLineRunner {
 
     @Value("#{new Integer('${dataloader.value}')}")
@@ -27,55 +26,19 @@ public class ProdDataLoader implements CommandLineRunner {
     private final IssueService issueService;
     private final ProjectService projectService;
     private final RoleService roleService;
+
+    //5 roles
     private Role admin;
     private Role developer;
     private Role tester;
     private Role sales;
     private Role humanResources;
 
+    //3 projects
     private Project mobileApp;
     private Project machineLearningDemo;
     private Project nlpProject;
-    private User adminUser = User.builder()
-            .userName("rk1234")
-            .password("password")
-            .email("ranjith@gmail.com")
-            .firstName("ranjith")
-            .lastName("kumar")
-            .image(null)
-            .build();
-    private User devUser = User.builder()
-            .userName("dev123")
-            .password("password")
-            .email("dev@gmail.com")
-            .firstName("john")
-            .lastName("dev")
-            .image(null)
-            .build();
-    private User testerUser = User.builder()
-            .userName("test12")
-            .password("password")
-            .email("tester@gmail.com")
-            .firstName("john")
-            .lastName("tester")
-            .image(null)
-            .build();
-    private User salesUser = User.builder()
-            .userName("sales1")
-            .password("password")
-            .email("sales@gmail.com")
-            .firstName("john")
-            .lastName("sales")
-            .image(null)
-            .build();
-    private User hrUser = User.builder()
-            .userName("hr1234")
-            .password("password")
-            .email("hr@gmail.com")
-            .firstName("john")
-            .lastName("hr")
-            .image(null)
-            .build();
+
 
 
     public ProdDataLoader(UserService userService, IssueService issueService, ProjectService projectService,
@@ -90,16 +53,8 @@ public class ProdDataLoader implements CommandLineRunner {
     public void run(String... args) {
         initProjectsData();
         initRolesData();
-        createTestUserWithRoles();
-        List<User> testUserList = new ArrayList<>(Arrays.asList(adminUser, devUser, testerUser, salesUser, hrUser));
 
-        for (User user : testUserList) {
-            initIssuesData(user);
-            initIssuesData(user);
-        }
-
-
-        for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
+        /*for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             User user = initUsersData();
             if (i % 2 == 0) {
                 initIssuesData(user);
@@ -110,7 +65,7 @@ public class ProdDataLoader implements CommandLineRunner {
             if (i % 5 == 0) {
                 initIssuesData(user);
             }
-        }
+        }*/
     }
 
     private void initProjectsData() {
@@ -128,9 +83,7 @@ public class ProdDataLoader implements CommandLineRunner {
                 .projectDescription("Social media sentiment analysis")
                 .build();
 
-        projectService.save(mobileApp);
-        projectService.save(machineLearningDemo);
-        projectService.save(nlpProject);
+        projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
 
     }
 
@@ -152,69 +105,11 @@ public class ProdDataLoader implements CommandLineRunner {
                 .name("human resources")
                 .build();
 
-        roleService.save(developer);
-        roleService.save(tester);
-        roleService.save(admin);
-        roleService.save(sales);
-        roleService.save(humanResources);
+        roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
 
     }
 
-    private void createTestUserWithRoles() {
-        //saving admin user
-        adminUser.setRole(admin);
-        userService.save(adminUser);
-
-        //saving dev user
-        devUser.setRole(developer);
-        userService.save(devUser);
-
-        //saving tester user
-        testerUser.setRole(tester);
-        userService.save(testerUser);
-
-        //saving sales user
-        salesUser.setRole(sales);
-        userService.save(salesUser);
-
-        //saving hr user
-        hrUser.setRole(humanResources);
-        userService.save(hrUser);
-
-        //update admin user with projects
-        Set<Project> projectSet = new HashSet<>();
-        projectSet.add(mobileApp);
-        projectSet.add(machineLearningDemo);
-        projectSet.add(nlpProject);
-        adminUser.setProjects(projectSet);
-        userService.save(adminUser);
-
-        //update project with admin user
-        mobileApp.getUsers()
-                .add(adminUser);
-        machineLearningDemo.getUsers()
-                .add(adminUser);
-        nlpProject.getUsers()
-                .add(adminUser);
-        projectService.save(mobileApp);
-        projectService.save(machineLearningDemo);
-        projectService.save(nlpProject);
-
-        //update dev user with one project
-        devUser.getProjects()
-                .add(nlpProject);
-        userService.save(devUser);
-
-
-        Project project = projectService.findById(nlpProject.getId());
-        project.getUsers()
-                .add(devUser);
-        projectService.save(project);
-
-
-    }
-
-    private User initUsersData() {
+    /*private User initUsersData() {
         //faker init
         Faker faker = new Faker(new Locale(LOCALE_LIST[new Random().nextInt(LOCALE_LIST.length)]));
 
@@ -324,9 +219,8 @@ public class ProdDataLoader implements CommandLineRunner {
         Project projectById = projectService.findById(randomId);
         projectById.addUser(johnDoe);
         projectService.save(projectById);
-        userService.save(johnDoe); //TODO do we need to call user service too?
-    }
+        userService.save(johnDoe);
+    }*/
 
 
 }
-*/
