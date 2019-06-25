@@ -1,3 +1,4 @@
+/*
 package issuetracker.bootstrap;
 
 import com.github.javafaker.Faker;
@@ -15,7 +16,7 @@ import java.util.*;
 
 @Component
 @Profile({"dev", "prod"})
-public class DataLoader implements CommandLineRunner {
+public class ProdDataLoader implements CommandLineRunner {
 
     @Value("#{new Integer('${dataloader.value}')}")
     private Integer FAKE_USER_DATA_COUNT;
@@ -77,8 +78,8 @@ public class DataLoader implements CommandLineRunner {
             .build();
 
 
-    public DataLoader(UserService userService, IssueService issueService, ProjectService projectService,
-                      RoleService roleService) {
+    public ProdDataLoader(UserService userService, IssueService issueService, ProjectService projectService,
+                          RoleService roleService) {
         this.userService = userService;
         this.issueService = issueService;
         this.projectService = projectService;
@@ -328,3 +329,4 @@ public class DataLoader implements CommandLineRunner {
 
 
 }
+*/
