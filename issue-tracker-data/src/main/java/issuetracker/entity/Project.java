@@ -7,12 +7,14 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is a primary entity, so we do have project repo.
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"users", "issues"}) //for displaying and logging
-//primary table so we have a project repo
+@ToString(doNotUseGetters = true, exclude = {"users", "issues"})
 public class Project extends BaseEntity {
 
     @Column(unique = true)
@@ -28,13 +30,15 @@ public class Project extends BaseEntity {
      * User can work on multiple projects
      * A project can have multiple users
      * Bi-directional
-     * No cascading delete
-     * fetch type lazy
+     * No cascading delete <br>
+     * JoinTable meaning:
+     * creates a table called project_user with columns project_id and user_id
+     * and when the inverse table is also annotated by mappedBy then we get one table
      */
-    @ManyToMany(fetch = FetchType.EAGER) //needed this for bi-directional relationship
-    @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    //creates a table called project_user with columns project_id and user_id
-    //and when the inverse table is also annotated by mappedBy then we get one table
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "project_user",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
     /**
@@ -43,8 +47,6 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project")
     private Set<Issue> issues = new HashSet<>();
 
-
-    //avoid using other entities inside the builder
     @Builder
     public Project(int id, String projectDescription, String title) {
         super(id);

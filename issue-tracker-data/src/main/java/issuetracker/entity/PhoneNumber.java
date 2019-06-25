@@ -5,12 +5,18 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity //this will close the bridge between object world and relational world
+/**
+ * Entity - this will close the bridge between object world and relational world
+ * NoArgsConstructor - jpa entities need this
+ * doNotUseGetters - have been assigned true for display and logging. (Avoiding stack over flow error)
+ * <br>
+ *     Also this class is not a primary entity. Hence we don't have repository class for this.
+ */
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor //jpa entities need this
-@ToString(doNotUseGetters = true) //for displaying and logging
-//assuming that this table is a secondary/child of user and we don't need to create a repository of this.
+@NoArgsConstructor
+@ToString(doNotUseGetters = true)
 public class PhoneNumber extends BaseEntity {
     /**
      * The reason being this...

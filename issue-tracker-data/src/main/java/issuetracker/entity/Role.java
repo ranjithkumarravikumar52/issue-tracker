@@ -12,11 +12,13 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Primary table so we have a role repo
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-//primary table so we have a role repo
 public class Role extends BaseEntity {
 
     @Column(unique = true)
