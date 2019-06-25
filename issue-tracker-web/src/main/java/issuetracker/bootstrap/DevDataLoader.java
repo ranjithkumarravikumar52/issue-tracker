@@ -1,6 +1,9 @@
 package issuetracker.bootstrap;
 
-import issuetracker.entity.*;
+import issuetracker.entity.Issue;
+import issuetracker.entity.IssueStatus;
+import issuetracker.entity.Project;
+import issuetracker.entity.User;
 import issuetracker.service.IssueService;
 import issuetracker.service.ProjectService;
 import issuetracker.service.RoleService;
@@ -9,33 +12,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @Profile("dev")
-public class DevDataLoader implements CommandLineRunner {
+public class DevDataLoader extends AbstractDataLoader implements CommandLineRunner {
 
     //static issue id counter
     private static int issueCounter = 1;
-
-    private final UserService userService;
-    private final IssueService issueService;
-    private final ProjectService projectService;
-    private final RoleService roleService;
-
-    //5 roles
-    private Role admin;
-    private Role developer;
-    private Role tester;
-    private Role sales;
-    private Role humanResources;
-
-    //3 projects
-    private Project mobileApp;
-    private Project machineLearningDemo;
-    private Project nlpProject;
 
     //5 users
     private User adminUser;
@@ -58,62 +44,20 @@ public class DevDataLoader implements CommandLineRunner {
         initRolesData();
         createTestUserWithRoles();
 
-        //2 lists - project and user for init issues and 1 list for issue to user saveAll() on issues
-        List<Project> projectList = new ArrayList<>(projectService.findAll());
-        List<User> userList = new ArrayList<>(userService.findAll());
+        //2 sets to store issues and projects, so that all of them could be saved using saveAll()
+        Set<Issue> issueSet = new HashSet<>();
+        Set<Project> projectSet = new HashSet<>();
 
         //each user post one open and one closed issue, for all the projects
-        for(User user: userList){
-            for(Project project : projectList){
-                Issue issueOpen = initOpenIssuesData(user, project);
-                Issue issueClosed = initClosedIssuesData(user, project);
-                issueService.saveAll(Arrays.asList(issueOpen, issueClosed));
-                projectService.save(project); //update project with issue relationship
+        for (User user : userService.findAll()) {
+            for (Project project : projectService.findAll()) {
+                issueSet.add(initOpenIssuesData(user, project));
+                issueSet.add(initClosedIssuesData(user, project));
+                projectSet.add(project);
             }
         }
-    }
-
-    private void initProjectsData() {
-        //init 3 projects
-        mobileApp = Project.builder()
-                .title("mobile app")
-                .projectDescription("An android mobile application")
-                .build();
-        machineLearningDemo = Project.builder()
-                .title("machine learning demo")
-                .projectDescription("Demo project to practice introduction to machine learning course")
-                .build();
-        nlpProject = Project.builder()
-                .title("nlp assignment")
-                .projectDescription("Social media sentiment analysis")
-                .build();
-
-        //save all the 3 projects
-        projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
-
-    }
-
-    private void initRolesData() {
-        //init 5 roles
-        developer = Role.builder()
-                .name("developer")
-                .build();
-        tester = Role.builder()
-                .name("tester")
-                .build();
-        admin = Role.builder()
-                .name("admin")
-                .build();
-        sales = Role.builder()
-                .name("sales")
-                .build();
-        humanResources = Role.builder()
-                .name("human resources")
-                .build();
-
-        //save all 5 roles
-        roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
-
+        issueService.saveAll(issueSet);
+        projectService.saveAll(projectSet); //update project with issue relationship
     }
 
     private void createTestUserWithRoles() {
@@ -194,6 +138,7 @@ public class DevDataLoader implements CommandLineRunner {
                 .project(project)
                 .build();
     }
+
     private Issue initClosedIssuesData(User user, Project project) {
         return Issue.builder()
                 .title("closed issue title " + issueCounter)

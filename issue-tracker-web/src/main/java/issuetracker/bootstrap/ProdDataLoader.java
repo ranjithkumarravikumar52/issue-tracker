@@ -18,7 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
 @Profile("prod")
-public class ProdDataLoader implements CommandLineRunner {
+public class ProdDataLoader extends AbstractDataLoader implements CommandLineRunner {
 
     private static final Logger log = getLogger(ProdDataLoader.class);
 
@@ -26,23 +26,6 @@ public class ProdDataLoader implements CommandLineRunner {
     private Integer FAKE_USER_DATA_COUNT;
 
     private static final String[] LOCALE_LIST = {"de-CH", "en-GB", "en-IND", "en-PAK", "en-US"};
-
-    private final UserService userService;
-    private final IssueService issueService;
-    private final ProjectService projectService;
-    private final RoleService roleService;
-
-    //5 roles
-    private Role admin;
-    private Role developer;
-    private Role tester;
-    private Role sales;
-    private Role humanResources;
-
-    //3 projects
-    private Project mobileApp;
-    private Project machineLearningDemo;
-    private Project nlpProject;
 
     //2 lists
     private List<Role> roleList = new ArrayList<>();
@@ -70,75 +53,37 @@ public class ProdDataLoader implements CommandLineRunner {
     }
 
     /**
-     * for each user, post one open and one closed issues, across all the projects
-     * for 3 projects and 100 users, total issues 600, open issues 300
-     * for 1 project, 200 issues, 100 open and 100 closed
+     * for each user, post one open and closed in each of their assigned project
+     * total issues = total users * projects * 2 = 100 * 3 * 2 = 600 issues (worst case)
      */
     private void initIssuesData() {
+        //for saveAll
         Set<Issue> issueSet = new HashSet<>();
         Set<Project> projectSet = new HashSet<>();
 
-        for (Project project : projectService.findAll()) {
-            for (User user : userService.findAll()) {
+        for (User user : userService.findAll()) {
+            for (Project project : user.getProjects()) {
                 Issue openIssue = initOpenIssuesData(user, project);
                 Issue closedIssue = initClosedIssuesData(user, project);
                 issueSet.add(openIssue);
                 issueSet.add(closedIssue);
                 projectSet.add(project);
             }
+            log.info("Posted issues by " + user.getId() + " -> " + user.getEmail());
         }
 
         issueService.saveAll(issueSet); //save all issues
         projectService.saveAll(projectSet); //update project with issue relationship
     }
 
-    private void initProjectsData() {
-        //init 3 projects
-        mobileApp = Project.builder()
-                .title("mobile app")
-                .projectDescription("An android mobile application")
-                .build();
-        machineLearningDemo = Project.builder()
-                .title("machine learning demo")
-                .projectDescription("Demo project to practice introduction to machine learning course")
-                .build();
-        nlpProject = Project.builder()
-                .title("nlp assignment")
-                .projectDescription("Social media sentiment analysis")
-                .build();
-
-        Iterable<Project> projects = projectService.saveAll(Arrays.asList(mobileApp, machineLearningDemo, nlpProject));
-        projects.forEach(projectList::add);
-
-    }
-
-    private void initRolesData() {
-        //init 5 roles
-        developer = Role.builder()
-                .name("developer")
-                .build();
-        tester = Role.builder()
-                .name("tester")
-                .build();
-        admin = Role.builder()
-                .name("admin")
-                .build();
-        sales = Role.builder()
-                .name("sales")
-                .build();
-        humanResources = Role.builder()
-                .name("human resources")
-                .build();
-
-        Iterable<Role> roles = roleService.saveAll(Arrays.asList(developer, tester, admin, sales, humanResources));
-        roles.forEach(roleList::add);
-
-    }
-
     private void initUsersData() {
         Set<User> userSet = new HashSet<>();
         Set<Role> roleSet = new HashSet<>();
         Set<Project> projectSet = new HashSet<>();
+
+        //list for random object
+        projectList = new ArrayList<>(projectService.findAll());
+        roleList = new ArrayList<>(roleService.findAll());
 
         for (int i = 0; i < FAKE_USER_DATA_COUNT; i++) {
             //faker init
@@ -161,6 +106,9 @@ public class ProdDataLoader implements CommandLineRunner {
             userSet.add(johnDoe);
             roleSet.add(role);
             projectSet.add(project);
+
+            //log
+            log.info("Created user: " + (i + 1) + " -> " + johnDoe.getEmail());
         }
         userService.saveAll(userSet);
         roleService.saveAll(roleSet); //update
@@ -256,6 +204,5 @@ public class ProdDataLoader implements CommandLineRunner {
                 .description() + " " + new Faker().address()
                 .cityName() + " " + new Faker().numerify("####");
     }
-
 
 }
