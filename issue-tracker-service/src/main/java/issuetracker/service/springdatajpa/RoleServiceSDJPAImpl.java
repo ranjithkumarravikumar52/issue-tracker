@@ -43,4 +43,9 @@ public class RoleServiceSDJPAImpl implements RoleService {
     public void deleteById(Integer integer) {
         roleRepository.deleteById(integer);
     }
+
+    @Override
+    public Iterable<Role> saveAll(Iterable<Role> entities) {
+        return roleRepository.saveAll(entities);
+    }
 }

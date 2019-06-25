@@ -14,12 +14,12 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(doNotUseGetters = true, exclude = {"projects"})
+@ToString(callSuper = true)
 public class User extends BaseEntity {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 3, max = 10, message = "min is 3, max is 10")
+    @Size(max = 20, message = "max is 20")
     private String userName;
 
     @Column
@@ -36,12 +36,12 @@ public class User extends BaseEntity {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 2, max = 50, message = "min is 3, max is 50")
+    @Size(max = 50, message = "max is 50")
     private String firstName;
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 2, max = 50, message = "min is 3, max is 50")
+    @Size(max = 50, message = "max is 50")
     private String lastName;
 
     /**
@@ -103,5 +103,13 @@ public class User extends BaseEntity {
     public void setRole(Role role) {
         this.role = role;
         role.getUserSet().add(this);
+    }
+
+    /**
+     * helper method for bi-directional relationship
+     */
+    public void addProject(Project project){
+        this.projects.add(project);
+        project.getUsers().add(this);
     }
 }
