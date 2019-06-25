@@ -232,11 +232,8 @@ public class DataLoader implements CommandLineRunner {
         //update user and role
         updateUserAndRole(johnDoe);
 
-        //update project with user
-        Project projectById = updateProjectWithUser(johnDoe);
-
-        //update user with project
-        updateUserWithProject(johnDoe, projectById);
+        //update project and user
+        updateProjectAndUser(johnDoe);
 
         //return user
         return johnDoe;
@@ -321,19 +318,12 @@ public class DataLoader implements CommandLineRunner {
         roleService.save(role);
     }
 
-    private void updateUserWithProject(User johnDoe, Project projectById) {
-        johnDoe.getProjects()
-                .add(projectById);
-        userService.save(johnDoe);
-    }
-
-    private Project updateProjectWithUser(User johnDoe) {
+    private void updateProjectAndUser(User johnDoe) {
         int randomId = 1 + new Random().nextInt(3); //id is 1 based, hence added 1
         Project projectById = projectService.findById(randomId);
-        projectById.getUsers()
-                .add(johnDoe);
+        projectById.addUser(johnDoe);
         projectService.save(projectById);
-        return projectById;
+        userService.save(johnDoe); //TODO do we need to call user service too?
     }
 
 
